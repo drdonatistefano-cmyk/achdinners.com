@@ -292,8 +292,8 @@ footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);font-si
   <a href="#metodo" data-v="metodo"><span class="t">📐 Metodo</span><span class="n">regole</span></a>
 </nav>
 <header class="hero">
-  <div class="kick">Ach’s Dinners Guide · prototipo · Italia</div>
-  <h1>Osterie e ristoranti, <em>la sintesi delle guide italiane.</em></h1>
+  <div class="kick">Ach’s Dinners Guide · Italia</div>
+  <h1>Osterie e ristoranti</h1>
   <p class="lede" id="lede">Locali di tutta Italia, in ordine secondo guide e stampa.</p>
   <p class="decl">Fatta solo con informazioni pubbliche, disponibili sul web: guide, articoli, blog, siti dei locali e anagrafi aperte. Nessun voto o recensione delle piattaforme.</p>
   <div class="stats" id="stats"></div>
@@ -446,7 +446,7 @@ function avvia(d){D=d;const z=d.dz;const C=d.col;
   // (la classifica generale arriva già calcolata con la regola: qui solo i totali)
   S.n_rico=INL.n_rico;S.n_piz=L.filter(x=>x.pz&&x.s>0).length;
   $("n-rico").textContent=fmt(S.n_rico);$("n-piz").textContent=fmt(L.filter(x=>x.pz).length);$("n-tutti").textContent=fmt(L.length);
-  $("lede").innerHTML=`<b>${fmt(S.n_rico)}</b> locali citati da guide e stampa, su ${fmt(L.length)} in ${fmt(new Set(L.map(x=>x.p+x.c)).size)} comuni.`;
+  
   memo.pulisci(new Set([IDXF,AUXF,EXF,...Object.values(FILES)]));setTimeout(()=>caricaExtra().catch(()=>{}),1500);
   document.querySelectorAll(".ms").forEach(prepara);
   window.addEventListener("hashchange",rotta);rotta();caricaAux().catch(()=>{});preparaParole();
@@ -651,10 +651,15 @@ function apri(x){aperto=x;try{localStorage.setItem("achfood_ultp",x.p);}catch(e)
 $("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close();});
 $("dlg").addEventListener("close",()=>{aperto=null;});
 // ---- rotte (#classifica, #pizzerie, #tutti, #metodo) ----
+// frase sotto il titolo: numeri della scheda aperta (Pizzerie: solo le pizzerie)
+const LEDE={};
+function lede(){const piz=S.v==="piz",k=piz?"piz":"tutti";
+  if(!LEDE[k]){const B=piz?L.filter(x=>x.pz):L;let c=0;for(const x of B)if(x.s>0)c++;LEDE[k]=[c,B.length,new Set(B.map(x=>x.p+x.c)).size];}
+  const [c,t,co]=LEDE[k];$("lede").innerHTML=piz?`<b>${fmt(c)}</b> pizzerie citate da guide e stampa, su ${fmt(t)} in ${fmt(co)} comuni.`:`<b>${fmt(c)}</b> locali citati da guide e stampa, su ${fmt(t)} in ${fmt(co)} comuni.`;}
 function rotta(){const h=(location.hash||"#ordina").slice(1);const v={ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti",metodo:"metodo"}[h]||"rico";
   document.querySelectorAll("nav.tabs a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
   $("lista").hidden=v==="metodo";$("metodo").hidden=v!=="metodo";if(v==="metodo"){metodo();return;}
-  S.v=v;$("sp-cit").hidden=v==="rico";
+  S.v=v;$("sp-cit").hidden=v==="rico";lede();
   cascata();opzioni("f-cuc",vociPerFrequenza("f-cuc"));opzioni("f-sti",vociPerFrequenza("f-sti"));opzioni("f-ric",vociPerFrequenza("f-ric"));opzioni("f-fon",vociPerFrequenza("f-fon"));
   $("f-cuc").hidden=v==="piz";opzOrd();S.shown=40;draw();}
 // ---- metodo ----
