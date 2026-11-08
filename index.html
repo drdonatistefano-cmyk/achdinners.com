@@ -400,7 +400,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_46921deb";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_d75e1025";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -738,6 +738,10 @@ const live=()=>{VK=+$("vkr").value>100?null:+$("vkr").value;VT=+$("vtr").value>9
 ["vkr","vtr"].forEach(id=>{$(id).addEventListener("input",live);$(id).addEventListener("change",()=>{live();vicCambiato();});});
 $("vkc").onclick=e=>{const b=e.target.closest("button");if(!b)return;VK=VK===+b.dataset.k?null:+b.dataset.k;vicCambiato();};
 $("vtc").onclick=e=>{const b=e.target.closest("button");if(!b)return;VT=VT===+b.dataset.t?null:+b.dataset.t;vicCambiato();};
+// ---- statistiche (GoatCounter, come achevents.com): solo visite alle pagine, senza cookie, solo sul dominio vero achdinners.com (non sull'artefatto claude.ai) ----
+const GC="achdinners";/* nome del contatore su goatcounter.com */
+const ON_WEB=/(^|\.)achdinners\.com$/.test(location.hostname);
+if(GC&&ON_WEB){try{const s=document.createElement("script");s.async=true;s.dataset.goatcounter=`https://${GC}.goatcounter.com/count`;s.src="https://gc.zgo.at/count.js";document.body.appendChild(s);}catch(_){}}
 </script>
 </body>
 </html>
