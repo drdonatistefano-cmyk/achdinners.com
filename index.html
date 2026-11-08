@@ -400,7 +400,7 @@ if(["","classifica","ordina"].includes((location.hash||"").slice(1))){
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_9f5e8332";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -420,7 +420,7 @@ async function avvioVeloce(){
   return dati;}
 function caricaAux(){return AUXP||(AUXP=scarica(AUXF).then(a=>{let la=0,lo=0;for(let i=0;i<L.length;i++){la+=a.la[i];lo+=a.lo[i];L[i].la=la/1e4;L[i].lo=lo/1e4;}
   RN=new Int32Array(L.length);a.ordN.forEach((i,k)=>{RN[i]=k;});AUX=1;return a;}).catch(e=>{AUXP=null;throw e;}));}
-const serveRN=()=>S.v!=="rico"||S.ord==="nome"||S.ord==="fonti";
+const serveRN=()=>S.v==="tutti"||S.ord==="nome"||S.ord==="fonti";
 // indice delle parole: per ogni parola (inizio di parola nel nome, comune, provincia) i locali che la contengono; preparato in sottofondo
 let IW=null;
 function preparaParole(){const mp=new Map();let i=0;const passo=dl=>{const fine=Math.min(L.length,i+2500);
@@ -445,7 +445,7 @@ function avvia(d){D=d;const z=d.dz;const C=d.col;
   // 4) più articoli di stampa e blog; 5) locale storico o con storia documentata; 6) nome in ordine alfabetico.
   // (la classifica generale arriva già calcolata con la regola: qui solo i totali)
   S.n_rico=INL.n_rico;S.n_piz=L.filter(x=>x.pz&&x.s>0).length;
-  $("n-rico").textContent=fmt(S.n_rico);$("n-piz").textContent=fmt(L.filter(x=>x.pz).length);$("n-tutti").textContent=fmt(L.length);
+  $("n-rico").textContent=fmt(S.n_rico);$("n-piz").textContent=fmt(S.n_piz);$("n-tutti").textContent=fmt(L.length);
   
   memo.pulisci(new Set([IDXF,AUXF,EXF,...Object.values(FILES)]));setTimeout(()=>caricaExtra().catch(()=>{}),1500);
   document.querySelectorAll(".ms").forEach(prepara);
@@ -458,7 +458,7 @@ function carica(p){if(DET[p])return Promise.resolve(DET[p]);if(INC[p])return INC
 let pre=null;function precarica(v){clearTimeout(pre);pre=setTimeout(()=>{const ps=[...new Set(v.slice(0,12).map(x=>x.p))].filter(p=>!DET[p]).slice(0,3);
   const go=()=>ps.forEach(p=>carica(p).catch(()=>{}));(window.requestIdleCallback||setTimeout)(go,{timeout:2000});},600);}
 // ---- viste e ordinamenti (calcolati una volta e memorizzati) ----
-const VISTE={rico:x=>x.s>0,piz:x=>x.pz,tutti:()=>true};
+const VISTE={rico:x=>x.s>0,piz:x=>x.pz&&x.s>0,tutti:()=>true};
 // ordinamenti su numeri già pronti (posizione in classifica, ordine alfabetico): niente confronti di testo su 48.000 righe
 const ORDS={punteggio:["Citazioni",(a,b)=>(a.pos||1e9)-(b.pos||1e9)||RN[a.i]-RN[b.i]],nome:["Nome (A-Z)",(a,b)=>RN[a.i]-RN[b.i]],comune:["Comune",null],
   fonti:["Più fonti",(a,b)=>b.nf-a.nf||(a.pos||1e9)-(b.pos||1e9)||RN[a.i]-RN[b.i]],dist:["Distanza",(a,b)=>(a._d??1e9)-(b._d??1e9)]};
@@ -528,7 +528,7 @@ const vicOk=x=>!vicAttivo()||(x._d!=null&&(!VK||x._d<=VK)&&(!VT||x._t<=VT));
 const tTxt=(t,l)=>t<60?t+(l?" minuti":" min"):t===60?(l?"1 ora":"1 h"):t===90?(l?"1 ora e mezza":"1 h ½"):Math.floor(t/60)+" h "+t%60;
 const distTxt=x=>x._d==null?"":`${x._d<10?x._d.toLocaleString("it-IT",{maximumFractionDigits:1}):Math.round(x._d)} km · ~${Math.max(5,Math.round(x._t/5)*5)} min`;
 // ---- filtro complessivo ----
-const SP=()=>({cit:$("c-cit").checked&&S.v==="tutti"||S.v==="piz"&&$("c-cit").checked,sto:$("c-sto").checked,sito:$("c-sito").checked});
+const SP=()=>({cit:$("c-cit").checked&&S.v==="tutti",sto:$("c-sto").checked,sito:$("c-sito").checked});
 function passa(x,salta,Q,sp=SP()){for(const id in FACCE){if(id!==salta&&SEL[id].size&&!ok(id,FACCE[id](x)))return false;}
   if(sp.cit&&!(x.s>0))return false;if(sp.sto&&!x.h)return false;if(sp.sito&&!x.w)return false;if(!vicOk(x))return false;return cercaOk(x,Q);}
 function filtrati(){const Q=cercaPrep(),sp=SP();let r=ordinati().filter(x=>passa(x,null,Q,sp));
@@ -545,7 +545,7 @@ $("fok").onclick=()=>{chiudiF();$("count").scrollIntoView({block:"start",behavio
 $("fazz").onclick=()=>azzera();$("fazzd").onclick=()=>azzera();
 function azzera(){for(const id in SEL){SEL[id].clear();}["c-cit","c-sto","c-sito"].forEach(i=>$(i).checked=false);$("q").value="";S.q="";$("qx").hidden=true;
   cascata();document.querySelectorAll(".ms").forEach(etichetta);S.shown=40;draw();}
-function nAttivi(){let n=0;for(const id in SEL)n+=SEL[id].size;return n+["c-sto","c-sito"].filter(i=>$(i).checked).length+(S.v!=="rico"&&$("c-cit").checked?1:0);}
+function nAttivi(){let n=0;for(const id in SEL)n+=SEL[id].size;return n+["c-sto","c-sito"].filter(i=>$(i).checked).length+(S.v==="tutti"&&$("c-cit").checked?1:0);}
 // ---- disegno ----
 let ULT=[];
 function draw(){if(!L.length)return;if(!RN&&serveRN()){$("count").innerHTML='<span class="avviso">Carico…</span>';caricaAux().then(draw).catch(()=>{});return;}vicEtichetta();const r=filtrati();ULT=r;const Q=cercaPrep();
@@ -553,8 +553,8 @@ function draw(){if(!L.length)return;if(!RN&&serveRN()){$("count").innerHTML='<sp
   let nr=0;for(const x of r)if(x.s>0)nr++;const sel=nr>0&&(nr!==S.n_rico||S.ord!=="punteggio");
   let k=0;for(const x of r.slice(0,S.shown)){x._sel=sel&&x.s>0?++k:0;}S.sel=sel;S.k=k;
   stats(r);$("qconta").textContent=Q.qs?fmt(r.length):"";
-  const lab={rico:"locali citati",piz:"pizzerie",tutti:"locali"}[S.v];
-  $("count").innerHTML=`<b>${fmt(r.length)}</b> ${lab}${r.length<base().length?" su "+fmt(base().length):""} · ordinati per ${ORDS[S.ord][0].toLowerCase()}`;
+  const lab={rico:"locali citati",piz:"pizzerie citate",tutti:"locali"}[S.v];
+  $("count").innerHTML=`<b>${fmt(r.length)}</b> ${lab}${r.length<base().length?" su "+fmt(base().length):""} · ${S.v==="piz"?"ordinate":"ordinati"} per ${ORDS[S.ord][0].toLowerCase()}`;
   $("grid").innerHTML=r.length?r.slice(0,S.shown).map(x=>card(x,Q)).join(""):`<div class="empty">Nessun locale con questi filtri.${nAttivi()||Q.qs||vicAttivo()?`<br><button type="button" onclick="azzera()">Azzera i filtri</button>`:""}</div>`;
   $("more").hidden=r.length<=S.shown;$("more").textContent=`Mostra altri (${fmt(r.length-S.shown)})`;
   attivi();const n=nAttivi();$("fazzd").hidden=!n&&!S.q;$("nfil").hidden=!n;$("nfil").textContent=n;$("mfil").classList.toggle("on",n>0);aggiornaPiede();
@@ -570,12 +570,12 @@ if("IntersectionObserver" in window)new IntersectionObserver(es=>{if(es[0].isInt
 let suT=0;window.addEventListener("scroll",()=>{if(suT)return;suT=requestAnimationFrame(()=>{suT=0;$("su").hidden=scrollY<1400;});},{passive:true});
 $("su").onclick=()=>window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});
 function stats(v){let cl=0,sto=0;const co=new Set(),rg=new Set();for(const x of v){if(x.s>0)cl++;if(x.h)sto++;co.add(x.p+x.c);rg.add(x.r);}
-  const t2=S.v==="rico"?[fmt(rg.size),"regioni"]:[fmt(cl),"citati"];
-  $("stats").innerHTML=[[fmt(v.length),{rico:"citati",piz:"pizzerie",tutti:"locali"}[S.v]],t2,[fmt(sto),"storici"],[fmt(co.size),"comuni"]].map(([a,b])=>`<div class="stat"><b>${a}</b><span>${b}</span></div>`).join("");}
+  const t2=S.v!=="tutti"?[fmt(rg.size),"regioni"]:[fmt(cl),"citati"];
+  $("stats").innerHTML=[[fmt(v.length),{rico:"citati",piz:"pizzerie citate",tutti:"locali"}[S.v]],t2,[fmt(sto),"storici"],[fmt(co.size),"comuni"]].map(([a,b])=>`<div class="stat"><b>${a}</b><span>${b}</span></div>`).join("");}
 function attivi(){const out=[];
   for(const id in SEL){const et=ETI[id]||(v=>v);SEL[id].forEach(v=>out.push(`<button type="button" class="at" data-f="${id}" data-v="${esc(v)}">${esc(et(v))}<b aria-hidden="true">×</b></button>`));}
   [["c-sto","🏛️ Storici"],["c-sito","🔗 Con sito"]].forEach(([i,t])=>{if($(i).checked)out.push(`<button type="button" class="at" data-c="${i}">${t}<b aria-hidden="true">×</b></button>`);});
-  if(S.v!=="rico"&&$("c-cit").checked)out.push(`<button type="button" class="at" data-c="c-cit">🏅 Solo citati<b aria-hidden="true">×</b></button>`);
+  if(S.v==="tutti"&&$("c-cit").checked)out.push(`<button type="button" class="at" data-c="c-cit">🏅 Solo citati<b aria-hidden="true">×</b></button>`);
   if(out.length>1)out.push(`<button type="button" class="at az" data-az="1">Azzera tutto</button>`);
   $("attivi").innerHTML=out.join("");$("attivi").hidden=!out.length;}
 $("attivi").onclick=e=>{const b=e.target.closest(".at");if(!b)return;if(b.dataset.az){azzera();return;}
@@ -659,7 +659,7 @@ function lede(){const piz=S.v==="piz",k=piz?"piz":"tutti";
 function rotta(){const h=(location.hash||"#ordina").slice(1);const v={ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti",metodo:"metodo"}[h]||"rico";
   document.querySelectorAll("nav.tabs a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
   $("lista").hidden=v==="metodo";$("metodo").hidden=v!=="metodo";if(v==="metodo"){metodo();return;}
-  S.v=v;$("sp-cit").hidden=v==="rico";lede();
+  S.v=v;$("sp-cit").hidden=v!=="tutti";lede();
   cascata();opzioni("f-cuc",vociPerFrequenza("f-cuc"));opzioni("f-sti",vociPerFrequenza("f-sti"));opzioni("f-ric",vociPerFrequenza("f-ric"));opzioni("f-fon",vociPerFrequenza("f-fon"));
   $("f-cuc").hidden=v==="piz";opzOrd();S.shown=40;draw();}
 // ---- metodo ----
