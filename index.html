@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ach’s Dinners Guide</title>
+<style>
+/* Ach's Dinners Guide v3 — carta calda e rosso vino; soluzioni della Dashboard principale: dati a due livelli, filtri multipli
+   con conteggi incrociati, ricerca per inizio di parola, ordinamenti, pannello filtri a scomparsa su telefono */
+:root{
+  --bg:#f6efe4;--paper:#fffdf9;--ink:#231d18;--mute:#7a6f63;--faint:#a99d8f;--line:#e8ddcc;--sunk:#f1e8da;
+  --acc:#8a3b2e;--acc-soft:#f4e3de;--acc-ink:#6e2c22;--on:#fff;
+  --ok:#3f7a4c;--ok-soft:#e3efe5;--gold:#9a6400;--gold-soft:#fbefd6;--blue:#3d5f7d;--blue-soft:#e4ecf3;
+  --shadow:0 1px 2px rgba(60,40,20,.06),0 4px 14px rgba(60,40,20,.06);--pop:0 10px 30px rgba(60,40,20,.18);--r:16px;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#161311;--paper:#201c19;--ink:#f1e9df;--mute:#ab9f92;--faint:#7d7268;--line:#332d28;--sunk:#1b1815;
+  --acc:#e09482;--acc-soft:#3a221d;--acc-ink:#f0b9ab;--on:#2a120d;
+  --ok:#6fb07d;--ok-soft:#1c2c20;--gold:#e3b35a;--gold-soft:#352a16;--blue:#8fb3d3;--blue-soft:#1f2a35;--shadow:none;--pop:0 12px 34px rgba(0,0,0,.6);color-scheme:dark}}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}a{color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.wrap{max-width:1320px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left)) 40px max(16px,env(safe-area-inset-right))}
+@media (min-width:760px){.wrap{padding:0 28px 48px}}
+nav.tabs{display:flex;gap:6px;padding:max(14px,env(safe-area-inset-top)) 0 4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs a{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:7px 12px;font-weight:600;font-size:14px;white-space:nowrap;display:inline-flex;gap:6px;align-items:center;text-decoration:none;color:var(--ink)}
+nav.tabs a.on{background:var(--acc);border-color:var(--acc);color:var(--on)}
+nav.tabs .n{font-size:12px;opacity:.8;font-weight:700}
+nav.tabs a .t{white-space:nowrap}
+@media (max-width:560px){nav.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;overflow:visible}
+  nav.tabs a{flex-direction:column;gap:0;padding:6px 2px 5px;border-radius:14px;font-size:13px;line-height:1.2;justify-content:center;text-align:center}
+  nav.tabs .n{font-size:10.5px;font-weight:600;opacity:.75}}
+@media (max-width:360px){nav.tabs a{font-size:12px}}
+.hero{padding:18px 0 6px}
+@media (max-width:560px){.hero{padding:12px 0 2px}.lede{font-size:14.5px;margin-top:8px}.kick{margin-bottom:6px;font-size:11px}}
+.avviso{font-size:13px;color:var(--mute);display:inline-flex;align-items:center;gap:8px}
+.avviso::before{content:"";width:12px;height:12px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--acc);animation:giro .8s linear infinite}
+@keyframes giro{to{transform:rotate(360deg)}}
+.kick{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:8px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,5vw,3rem);line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h1 em{color:var(--acc);font-style:italic}
+.lede{color:var(--mute);margin:10px 0 0;font-size:15.5px;max-width:64ch}
+.decl{color:var(--mute);margin:6px 0 0;font-size:12.5px;line-height:1.4;max-width:64ch;opacity:.85}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 2px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:10px 12px;box-shadow:var(--shadow)}
+.stat b{display:block;font:600 1.7rem/1 var(--serif);color:var(--acc)}
+.stat span{display:block;font-size:12.5px;color:var(--mute);margin-top:4px;font-weight:600}
+@media (max-width:520px){.stats{gap:6px}.stat{padding:8px}.stat b{font-size:1.25rem}.stat span{font-size:11px}}
+/* barra di ricerca fissa */
+.tools{position:sticky;top:0;z-index:15;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:10px 0 8px;margin:8px 0 0}
+.row{display:flex;gap:8px;align-items:center}
+.search{flex:1;min-width:0;position:relative}
+.search input{width:100%;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:0 66px 0 38px;font-size:16px}
+.search svg{position:absolute;left:12px;top:13px;width:18px;height:18px;color:var(--mute)}
+#qconta{position:absolute;right:36px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:var(--acc);pointer-events:none}
+#qx{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--mute);font-size:22px;width:32px;height:32px;line-height:1}
+.tbtn{flex:none;height:44px;display:inline-flex;align-items:center;gap:6px;padding:0 13px;border:1px solid var(--line);border-radius:12px;background:var(--paper);font-weight:600;font-size:14.5px;white-space:nowrap}
+.tbtn svg{width:16px;height:16px}
+.tbtn.on{background:var(--acc);border-color:var(--acc);color:var(--on)}
+.tbtn .k{display:inline-flex;align-items:center;justify-content:center;min-width:19px;height:19px;padding:0 5px;border-radius:10px;background:var(--acc);color:var(--on);font-size:11.5px;font-weight:800}
+.tbtn.on .k{background:var(--on);color:var(--acc)}
+#mfil{display:none}
+#su{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:calc(18px + env(safe-area-inset-bottom));z-index:30;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--paper);color:var(--acc);font-size:20px;font-weight:700;box-shadow:var(--pop)}
+.card:active{transform:scale(.985)}
+@media (hover:hover){.card{transition:border-color .15s,box-shadow .15s,transform .15s}.card:hover{box-shadow:0 2px 4px rgba(60,40,20,.06),0 10px 24px rgba(60,40,20,.10);transform:translateY(-1px)}}
+@media (max-width:480px){.tbtn{padding:0 11px}#mvic:not(.on) span{display:none}#mvic:not(.on){width:44px;justify-content:center;padding:0}.search input{padding-right:58px}}
+/* pannello filtri: in riga sul computer, foglio dal basso sul telefono */
+#fpan{padding:10px 0 2px}
+.fgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:980px){.fgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.ms{position:relative;min-width:0}
+.ms>button{width:100%;height:42px;padding:0 28px 0 12px;border:1px solid var(--line);border-radius:12px;background:var(--paper);font-size:14.5px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative}
+.ms>button::after{content:"";position:absolute;right:12px;top:50%;width:7px;height:7px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:translateY(-70%) rotate(45deg)}
+.ms.attivo>button{border-color:var(--acc);background:var(--acc-soft);color:var(--acc-ink);font-weight:700}
+.ms.attivo>button::after{border-color:var(--acc)}
+.ms.dx .pan{left:auto;right:0}
+.ms .pan{display:none;position:absolute;z-index:25;top:calc(100% + 6px);left:0;min-width:100%;width:max-content;max-width:min(340px,90vw);max-height:360px;overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:var(--pop);padding:6px}
+.ms.aperto .pan{display:block}
+.ms .testa{display:flex;gap:6px;align-items:center;padding:4px 4px 8px;border-bottom:1px solid var(--line);margin-bottom:4px;position:sticky;top:-6px;background:var(--paper)}
+.ms .testa input{flex:1;min-width:0;height:36px;padding:0 10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);font-size:16px}
+.ms .testa button{background:none;border:0;color:var(--acc);font-weight:700;font-size:13.5px;white-space:nowrap;padding:4px 6px}
+.ms .voci label{display:flex;gap:9px;align-items:center;padding:7px 8px;border-radius:9px;cursor:pointer;font-size:14.5px}
+.ms .voci label:hover{background:var(--sunk)}
+.ms .voci label.zero{opacity:.42}
+.ms .voci label i{margin-left:auto;font-style:normal;font-size:12.5px;color:var(--mute);font-variant-numeric:tabular-nums;padding-left:12px}
+.ms input[type=checkbox]{accent-color:var(--acc);width:17px;height:17px;flex:none;margin:0}
+.fsec{display:none}
+.spunte{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.sp{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600;cursor:pointer;user-select:none;white-space:nowrap}
+.sp input{display:none}
+.sp:has(input:checked){background:var(--acc-soft);border-color:var(--acc);color:var(--acc-ink)}
+.ordina{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--mute);font-weight:600}
+.ordina select{height:36px;border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:0 8px;font-size:14px;color:var(--ink);font-weight:600}
+#fback,#fpiede,.fhead{display:none}
+.fazzd{display:block;width:100%;margin-top:12px;border:0;background:none;color:var(--acc);font-weight:700;font-size:14px;padding:6px 0;text-align:left}
+@media (min-width:700px){
+  #fpan{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:14px 14px 12px;box-shadow:var(--shadow);margin:8px 0 2px}
+  .fgrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .ms>button{background:var(--bg);height:44px}
+  .sp{background:var(--bg)}
+  .ordina select{background:var(--bg)}
+  .spunte{margin-top:10px}
+  .fazzd{display:inline-block;width:auto;margin:8px 0 0;padding:4px 0}
+}
+@media (min-width:700px) and (max-width:979px){.fgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:699px){
+  #mfil{display:inline-flex}
+  #fpan{display:none}
+  body.fopen{overflow:hidden}
+  body.fopen #fback{display:block;position:fixed;inset:0;background:rgba(20,15,10,.45);z-index:40}
+  body.fopen #fpan{display:block;position:fixed;left:50%;transform:translateX(-50%);width:min(640px,100%);bottom:0;z-index:41;max-height:90dvh;overflow:auto;overscroll-behavior:contain;background:var(--paper);border-radius:22px 22px 0 0;padding:10px 16px 0;box-shadow:0 -10px 40px rgba(0,0,0,.25);animation:sale .22s ease-out}
+  .fazzd{display:none!important}
+}
+@keyframes sale{from{transform:translate(-50%,24px);opacity:.6}to{transform:translate(-50%,0);opacity:1}}
+@media (prefers-reduced-motion:reduce){body.fopen #fpan{animation:none}}
+@media (max-width:699px){
+  .fhead{display:flex;align-items:center;justify-content:space-between;margin:2px 0 10px}
+  .fhead h2{font:600 1.35rem/1.1 var(--serif);margin:0}
+  .fhead button{border:0;background:none;color:var(--acc);font-weight:700;font-size:14.5px;padding:6px 2px}
+  .grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 8px}
+  .fgrid{grid-template-columns:1fr;gap:0}
+  .fsec{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:14px 0 6px}
+  .fsec:first-child{margin-top:4px}
+  .ms{margin-bottom:8px}
+  .ms>button{height:46px;background:var(--bg);font-size:15.5px}
+  .ms .pan{position:static;max-width:none;width:auto;box-shadow:none;margin-top:6px;max-height:46vh;background:var(--bg)}
+  .ms .testa{background:var(--bg)}
+  .spunte{margin-top:4px}
+  .sp{background:var(--bg);font-size:14.5px;padding:8px 13px}
+  .ordina{margin:12px 0 0;width:100%;justify-content:space-between;font-size:14px}
+  .ordina select{height:42px;flex:1;max-width:70%;background:var(--bg)}
+  #fpiede{display:flex;gap:10px;align-items:center;position:sticky;bottom:0;background:var(--paper);padding:12px 0 calc(14px + env(safe-area-inset-bottom));margin-top:12px;border-top:1px solid var(--line)}
+  #fpiede button{height:48px;border-radius:12px;font-weight:700;font-size:15.5px}
+  #fazz{border:0;background:none;color:var(--mute);padding:0 6px}
+  #fok{flex:1;border:0;background:var(--acc);color:var(--on)}
+}
+/* filtri attivi, togliibili uno per uno */
+.attivi{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+.at{display:inline-flex;align-items:center;gap:4px;border-radius:999px;background:var(--acc-soft);color:var(--acc-ink);font-size:13px;font-weight:700;padding:3px 4px 3px 11px;border:0}
+.at b{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:15px;line-height:1}
+.at:hover b{background:color-mix(in srgb,var(--acc) 18%,transparent)}
+.at.az{background:none;color:var(--mute);padding:3px 6px;text-decoration:underline;text-underline-offset:2px}
+.count{font-size:13.5px;color:var(--mute);margin:12px 0 10px}
+.selk{display:inline-block;padding:0 6px;border-radius:999px;background:var(--acc);color:var(--on);font:800 10.5px/1.5 var(--sans);vertical-align:1px}.count b{color:var(--ok);font-size:15px}
+/* schede dell'elenco */
+.grid{display:grid;gap:12px}@media (min-width:700px){.grid{grid-template-columns:1fr 1fr}}@media (min-width:1100px){.grid{grid-template-columns:1fr 1fr 1fr}}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px 14px 12px;display:flex;gap:12px;text-align:left;width:100%;align-items:flex-start;content-visibility:auto;contain-intrinsic-size:auto 150px}
+.card:hover{border-color:color-mix(in srgb,var(--acc) 45%,var(--line))}
+.rank{flex:none;width:44px;text-align:center;position:relative}
+/* gettoni delle citazioni */
+.rank.ico{width:66px;display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-start;gap:6px 5px;padding-top:1px}
+.tk{position:relative;flex:none;width:29px;height:29px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:15.5px;line-height:1;
+  background:var(--tb);box-shadow:inset 0 0 0 1.5px var(--tl);--tb:var(--sunk);--tl:var(--line);--tn:var(--mute)}
+.tk i{position:absolute;right:-5px;bottom:-4px;min-width:15px;height:15px;padding:0 3px;border-radius:8px;background:var(--tn);color:#fff;font:800 9.5px/15px var(--sans);font-style:normal;text-align:center;box-shadow:0 0 0 2px var(--paper)}
+.tk.f-mi{--tb:#fdf1d3;--tl:#efd28a;--tn:#b07a00}
+.tk.f-gr{--tb:#f8e4df;--tl:#e8b3a6;--tn:#a3402f}
+.tk.f-sf{--tb:#e2f0e3;--tl:#9fcca6;--tn:#3f7a4c}
+.tk.f-sf2{--tb:#eef6ef;--tl:#c9e2cc;--tn:#5c8c66}
+.tk.f-es{--tb:#ece6f6;--tl:#c7b8e2;--tn:#6b4ea3}
+.tk.f-t5{--tb:#fbf0dc;--tl:#e9c98a;--tn:#8a5a00}
+.tk.f-ig{--tb:#e0f2f1;--tl:#9fd3cf;--tn:#2f7d77}
+.tk.f-w5{--tb:#e3edf8;--tl:#a9c4e6;--tn:#3d5f7d}
+.tk.f-rg{--tb:#e6eef6;--tl:#b7cbe0;--tn:#3d5f7d}
+.tk.f-st{--tb:var(--blue-soft);--tl:#a9c0d6;--tn:var(--blue)}
+.tk.f-t5 i{min-width:19px}
+@media (prefers-color-scheme:dark){
+ .tk.f-mi{--tb:#3a2f14;--tl:#6b5520;--tn:#c9952a}.tk.f-gr{--tb:#3a221d;--tl:#6e3a2f;--tn:#c0614f}.tk.f-sf{--tb:#1d3122;--tl:#3d6b47;--tn:#5f9e6c}
+ .tk.f-sf2{--tb:#1a2a1e;--tl:#2f5137;--tn:#4f8a5c}.tk.f-es{--tb:#2a2238;--tl:#4d3f6b;--tn:#8f74c9}.tk.f-t5{--tb:#352a16;--tl:#5e4a1f;--tn:#b8862b}
+ .tk.f-ig{--tb:#16302e;--tl:#2f5e5a;--tn:#4fa59e}.tk.f-w5,.tk.f-rg,.tk.f-st{--tb:#1f2a35;--tl:#3a5068;--tn:#6f97bd}
+ .tk i{color:#fff}}
+@media (max-width:560px){.rank.ico{width:62px;gap:6px 4px}.tk{width:27px;height:27px;font-size:14.5px}}
+/* posizione nella selezione (filtri o altro ordinamento), sovrapposta a quella nazionale, come nella Dashboard */
+.rank .sel{position:absolute;top:-8px;left:50%;transform:translateX(-50%);white-space:nowrap;min-width:24px;padding:2px 6px;border-radius:999px;background:var(--acc);color:var(--on);font:800 11px/1.25 var(--sans);letter-spacing:0;box-shadow:0 0 0 2px var(--paper),0 1px 3px rgba(0,0,0,.18)}
+.rank.consel{padding-top:14px}
+.rank b{display:block;font:700 19px/1 var(--serif);color:var(--acc)}
+.rank small{display:block;font-size:10.5px;color:var(--mute);margin-top:3px;letter-spacing:.04em}
+.rank small.no{font-size:9px;font-weight:700;margin:0 0 1px;letter-spacing:.06em}
+.cbody{flex:1;min-width:0}
+.cname{font-weight:700;font-size:16.5px;line-height:1.25}
+.cname mark{background:var(--gold-soft);color:inherit;border-radius:3px;padding:0 1px}
+.cmeta{font-size:13.5px;color:var(--mute);margin-top:2px}
+.com{font-weight:700;color:var(--ink)}
+.cmeta.pos{color:var(--acc);font-weight:600}
+.dist{color:var(--acc);font-weight:600}
+.badges{margin-top:8px}
+.brow{display:flex;flex-wrap:wrap;gap:5px}.brow+.brow{margin-top:5px}
+.b{font-size:12px;font-weight:600;border-radius:999px;padding:2px 8px;background:var(--gold-soft);color:var(--gold);white-space:nowrap}
+.b.sf{background:var(--ok-soft);color:var(--ok)}.b.gr{background:var(--acc-soft);color:var(--acc-ink)}
+.brow.r2 .b{background:transparent;border:1px solid var(--line);color:var(--mute)}
+.brow.r2 .b.st{border-color:currentColor;color:var(--blue)}
+.bar{height:5px;border-radius:3px;background:var(--line);margin-top:10px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc);border-radius:3px}
+.more{display:block;margin:18px auto 0;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:11px 22px;font-weight:600}
+@media (max-width:700px){.more{width:100%}}
+.empty{grid-column:1/-1;color:var(--mute);padding:34px 0;text-align:center}
+.empty button{margin-top:10px;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:8px 16px;font-weight:600}
+/* scheletro di caricamento */
+.sk{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);height:132px;position:relative;overflow:hidden}
+.sk::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--line) 55%,transparent),transparent);transform:translateX(-100%);animation:sk 1.2s infinite}
+@keyframes sk{to{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){.sk::after{animation:none}}
+/* schede di dettaglio */
+dialog{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100%;height:100%;margin:0}
+dialog::backdrop{background:rgba(20,15,10,.45)}
+.sheet{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(640px,100%);max-height:92dvh;overflow:auto;overscroll-behavior:contain;background:var(--paper);color:var(--ink);border-radius:22px 22px 0 0;padding:10px 18px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(0,0,0,.25)}
+@media (min-width:760px){.sheet{bottom:auto;top:50%;transform:translate(-50%,-50%);border-radius:22px;max-height:88dvh;padding:18px 24px 24px}.sheet .grab{display:none}}
+.grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 8px}
+.sx{position:sticky;top:0;float:right;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--paper);font-size:20px;line-height:1}
+.sheet h2{font:600 1.55rem/1.15 var(--serif);margin:4px 46px 4px 0}
+.where{color:var(--mute);font-size:14.5px}
+.box{margin:14px 0;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--acc) 6%,var(--paper));border:1px solid var(--line)}
+.box h3{margin:0 0 6px;font-size:15px}
+.calc{font-size:14px;line-height:1.5}.calc b{color:var(--acc)}
+.fonti{list-style:none;margin:6px 0 0;padding:0}
+.fonti li{padding:8px 0;border-top:1px solid var(--line);font-size:14px;display:flex;gap:10px}
+.fonti li:first-child,.fonti .grp+li{border-top:0}
+.fonti .grp{display:block;margin:12px 0 2px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);border-top:0;padding:0}
+.fonti .grp:first-child{margin-top:0}
+.fonti .fi{flex:none;min-width:34px;display:flex;justify-content:center;padding-top:1px}
+.fonti a{font-weight:600;color:var(--ink)}.fonti small{display:block;color:var(--mute);font-size:12.5px}
+.fonti small q{display:block;font-style:italic;quotes:none;margin-top:2px;color:var(--ink);opacity:.8}
+.attesa{color:var(--mute);font-size:14px;padding:4px 0}
+.actions{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px;margin:14px 0 6px}
+.actions .btn{justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:10px 14px;font-weight:600;font-size:14.5px;text-decoration:none}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:var(--on)}
+details.near{margin:12px 0 4px}
+details.near>summary{list-style:none;display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:999px;border:1px solid var(--line);background:var(--paper);font:600 14.5px var(--sans);cursor:pointer;user-select:none}
+details.near>summary::-webkit-details-marker{display:none}
+details.near>summary .nn{min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--blue);color:var(--paper);font-size:12px;display:inline-flex;align-items:center;justify-content:center}
+details.near>summary .fr{font-size:11px;color:var(--mute);transition:transform .15s}
+details.near[open]>summary{border-color:var(--blue)}details.near[open]>summary .fr{transform:rotate(180deg)}
+.nbox{margin-top:8px;padding:2px 14px 4px;border-radius:14px;border:1px solid var(--line);background:color-mix(in srgb,var(--blue) 6%,var(--paper))}
+.nbox ul{list-style:none;margin:0;padding:0}.nbox li{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}.nbox li:first-child{border-top:0}
+.nbox .t{flex:none;min-width:46px;font-weight:700;color:var(--blue);font-size:13px;padding-top:1px}
+.nbox small{display:block;color:var(--mute);font-size:12.5px}
+.note{font-size:12.5px;color:var(--mute);margin:10px 0 0}
+/* metodo */
+.met{max-width:820px}.met h2{font:600 1.5rem var(--serif);margin:26px 0 8px;scroll-margin-top:16px}.met p,.met li{font-size:15px}
+.indice{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 4px}
+.indice a{padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--paper);text-decoration:none;font-size:13.5px;font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:14px;background:var(--paper);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+td.v{text-align:right;font-weight:700;color:var(--acc)}
+.pvf{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0 10px}
+.pvf input,.pvf select{height:40px;border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:0 10px;font-size:15px;min-width:0}
+.pvf input{flex:1 1 180px}
+.pvf span{margin-left:auto;font-size:13px;color:var(--mute)}
+.pvr{margin:16px 0 6px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:4px}
+.pvg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px}
+.pv{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:9px 12px;background:var(--paper);border:1px solid var(--line);border-radius:12px;text-align:left;width:100%}
+.pv:hover{border-color:var(--acc)}
+.pv b{font-weight:600;font-size:14.5px}
+.pv span{color:var(--mute);font-size:12px;white-space:nowrap;text-align:right}.pv span i{font-style:normal;color:var(--acc);font-weight:700}
+/* vicino */
+.vriga{display:flex;align-items:center;gap:8px;margin:8px 0 0;padding:7px 8px 7px 12px;border-radius:10px;background:var(--acc-soft);font-size:14px}
+.vriga span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vriga button{border:0;background:none;color:var(--acc-ink);font-weight:600;padding:2px 6px}
+#vdlg .sheet{padding-top:16px}
+.vtit{display:flex;justify-content:space-between;align-items:baseline;font-weight:700;font-size:15px;margin:0 0 10px}
+.vtit output{color:var(--acc);font-weight:800}
+.vsez{padding:14px 0;border-top:1px solid var(--line)}
+.vsez:first-of-type{border-top:0;padding-top:4px}
+#geo{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:46px;border:1.5px solid var(--acc);border-radius:12px;background:var(--acc-soft);color:var(--acc-ink);font-weight:700;font-size:15.5px}
+#luogo{display:block;width:100%;height:46px;margin-top:8px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:16px}
+#geost{display:block;margin-top:8px;font-size:13px;color:var(--mute)}
+#geost.ok{color:var(--acc);font-weight:600}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;margin:0 0 8px;background:transparent;--p:100%}
+input[type=range]::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:linear-gradient(to right,var(--acc) var(--p),var(--line) var(--p))}
+input[type=range]::-moz-range-track{height:5px;border-radius:3px;background:linear-gradient(to right,var(--acc) var(--p),var(--line) var(--p))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-9.5px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.12);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.12)}
+.vch{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}#vkc{grid-template-columns:repeat(6,1fr)}
+@media (max-width:520px){#vkc{grid-template-columns:repeat(3,1fr)}}
+.vch button{padding:8px 4px;border:1px solid var(--line);border-radius:999px;background:var(--paper);font-weight:600;font-size:14px;white-space:nowrap}
+.vch button.on{background:var(--acc);border-color:var(--acc);color:var(--on)}
+.vpiede{display:flex;gap:10px;align-items:center;margin-top:6px}
+#vtogli{border:0;background:none;color:var(--mute);font-weight:600;padding:10px 4px}
+#vok{flex:1;height:48px;border:0;border-radius:12px;background:var(--acc);color:var(--on);font-weight:700;font-size:16px}
+#vok:disabled{opacity:.45}
+footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mute)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="tabs" role="tablist">
+  <a href="#ordina" data-v="rico"><span class="t">🏅 Ordina</span><span class="n" id="n-rico"></span></a>
+  <a href="#pizzerie" data-v="piz"><span class="t">🍕 Pizzerie</span><span class="n" id="n-piz"></span></a>
+  <a href="#tutti" data-v="tutti"><span class="t">🍽️ Tutti</span><span class="n" id="n-tutti"></span></a>
+  <a href="#metodo" data-v="metodo"><span class="t">📐 Metodo</span><span class="n">regole</span></a>
+</nav>
+<header class="hero">
+  <div class="kick">Ach’s Dinners Guide · prototipo · Italia</div>
+  <h1>Osterie e ristoranti, <em>la sintesi delle guide italiane.</em></h1>
+  <p class="lede" id="lede">Locali di tutta Italia, in ordine secondo guide e stampa.</p>
+  <p class="decl">Fatta solo con informazioni pubbliche, disponibili sul web: guide, articoli, blog, siti dei locali e anagrafi aperte. Nessun voto o recensione delle piattaforme.</p>
+  <div class="stats" id="stats"></div>
+</header>
+<section id="lista">
+  <div class="tools">
+    <div class="row">
+      <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="text" inputmode="search" enterkeyhint="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Cerca locale o comune"><span id="qconta"></span><button type="button" id="qx" aria-label="Cancella" hidden>×</button></label>
+      <button type="button" class="tbtn" id="mfil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filtri</span><span class="k" id="nfil" hidden></span></button>
+      <button type="button" class="tbtn" id="mvic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Vicino a…</span></button>
+    </div>
+    <div class="vriga" id="vriga" hidden><span id="vrt"></span><button type="button" id="vcambia">Cambia</button><button type="button" id="vx" aria-label="Togli">×</button></div>
+  </div>
+  <div id="fback"></div>
+  <div class="lay">
+  <aside id="fpan" aria-label="Filtri">
+    <div class="grab" hidden></div>
+    <div class="fhead"><h2>Filtri</h2><button type="button" id="fchiudi">Chiudi</button></div>
+    <div class="fgrid">
+      <div class="fsec">Dove</div>
+      <div class="ms" id="f-reg" data-vuoto="Tutte le regioni"></div>
+      <div class="ms" id="f-prov" data-vuoto="Tutte le province"></div>
+      <div class="ms" id="f-com" data-vuoto="Tutti i comuni"></div>
+      <div class="fsec">Cosa</div>
+      <div class="ms" id="f-cuc" data-vuoto="Ogni cucina"></div>
+      <div class="ms" id="f-sti" data-vuoto="Ogni tipo di locale"></div>
+      <div class="fsec">Chi lo cita</div>
+      <div class="ms" id="f-ric" data-vuoto="Ogni riconoscimento"></div>
+      <div class="ms" id="f-fon" data-vuoto="Stampa, blog e storia"></div>
+    </div>
+    <div class="fsec">In più</div>
+    <div class="spunte">
+      <label class="sp" id="sp-cit"><input type="checkbox" id="c-cit">🏅 Solo citati</label>
+      <label class="sp"><input type="checkbox" id="c-sto">🏛️ Locali storici</label>
+      <label class="sp"><input type="checkbox" id="c-sito">🔗 Con sito</label>
+      <label class="ordina">Ordina <select id="ord"></select></label>
+    </div>
+    <div id="fpiede"><button type="button" id="fazz">Azzera</button><button type="button" id="fok">Mostra i locali</button></div>
+    <button type="button" class="fazzd" id="fazzd" hidden>Azzera tutti i filtri</button>
+  </aside>
+  <div class="ris">
+  <div class="attivi" id="attivi"></div>
+  <p class="count" id="count"></p>
+  <div class="grid" id="grid"><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
+  <button class="more" id="more" type="button" hidden>Mostra altri</button>
+  </div>
+  </div>
+</section>
+<section id="metodo" class="met" hidden></section>
+<footer>Guida costruita solo con informazioni pubbliche disponibili sul web (guide, articoli, blog, siti dei locali, anagrafi aperte). Anagrafe dei locali: <a href="https://overturemaps.org" target="_blank" rel="noopener">Overture Maps Foundation</a> (CDLA-Permissive 2.0) e © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributori di OpenStreetMap</a> (ODbL). Riconoscimenti: guide e testate citate in ogni scheda, con link. Luoghi vicini: Ach's Places Guide. Nessun voto o recensione di Google, TripAdvisor o altre piattaforme.</footer>
+</div>
+<dialog id="vdlg"><div class="sheet" role="document"><div class="grab"></div><button class="sx" type="button" aria-label="Chiudi" id="vchiudi">×</button>
+  <h2 style="margin-bottom:12px">🍽️ Locali vicino a te</h2>
+  <div class="vsez"><div class="vtit">Da dove parti</div><button type="button" id="geo">◎ Usa la mia posizione</button>
+    <input id="luogo" list="lcom" placeholder="o scrivi un comune" autocomplete="off" enterkeyhint="done"><datalist id="lcom"></datalist><span id="geost">Nessuna partenza scelta.</span></div>
+  <div class="vsez"><div class="vtit">Raggio <output id="vkv">Qualsiasi</output></div><input type="range" id="vkr" min="1" max="101" value="101" aria-label="Raggio in km"><div class="vch" id="vkc"></div></div>
+  <div class="vsez"><div class="vtit"><span>Tempo in auto <small style="font-weight:500;color:var(--mute)">(stima)</small></span><output id="vtv">Qualsiasi</output></div><input type="range" id="vtr" min="5" max="95" step="5" value="95" aria-label="Tempo in minuti"><div class="vch" id="vtc"></div></div>
+  <div class="vpiede"><button type="button" id="vtogli">Togli</button><button type="button" id="vok">Scegli da dove parti</button></div>
+</div></dialog>
+<button type="button" id="su" aria-label="Torna su" hidden>↑</button>
+<dialog id="dlg"><div class="sheet" id="sheet" role="document"></div></dialog>
+<script>
+"use strict";
+let IDXF="idx.0120df2288.json",AUXF="aux.e6505162df.json",EXF=null,INL={"primi":[{"n":"Osteria Francescana","c":"Modena","p":"MO","la":44.64481,"lo":10.9216,"k":354,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":100.0,"g2":["MICH_3","W50","GR_3F","ESP_5","TOP50GR","ERT"],"ns":0,"nb":0,"nst":0,"h":0,"pos":1},{"n":"Enoteca Pinchiorri","c":"Firenze","p":"FI","la":43.77002,"lo":11.26228,"k":239,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":100.0,"g2":["MICH_3","GR_3F","ESP_5","TOP50GR","GR_PREMIO"],"ns":0,"nb":0,"nst":1,"h":0,"pos":2},{"n":"Piazza Duomo","c":"Alba","p":"CN","la":44.70063,"lo":8.03581,"k":23,"cu":"","st":"Alta cucina","w":1,"s":100.0,"g2":["MICH_3","W50","GR_3F","ESP_5","TOP50GR"],"ns":0,"nb":0,"nst":0,"h":0,"pos":3},{"n":"Uliassi","c":"Senigallia","p":"AN","la":43.71948,"lo":13.22073,"k":379,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":100.0,"g2":["MICH_3","GR_3F","ESP_5","TOP50GR","GR_PREMIO"],"ns":0,"nb":0,"nst":0,"h":0,"pos":4},{"n":"Le Calandre","c":"Rubano","p":"PD","la":45.42176,"lo":11.8096,"k":553,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":100.0,"g2":["MICH_3","W50","GR_3F","TOP50GR"],"ns":1,"nb":0,"nst":0,"h":0,"pos":5},{"n":"Ristorante Dal Pescatore Santini","c":"Canneto sull'Oglio","p":"MN","la":45.17105,"lo":10.35758,"k":33,"cu":"Pesce","st":"Alta cucina","w":1,"s":100.0,"g2":["MICH_3","GR_3F","ESP_5","TOP50GR"],"ns":0,"nb":0,"nst":1,"h":1,"pos":6},{"n":"12 Apostoli","c":"Verona","p":"VR","la":45.44268,"lo":10.99611,"k":618,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":99.9,"g2":["MICH_3","GR_3F","TOP50GR"],"ns":3,"nb":0,"nst":1,"h":1,"pos":7},{"n":"Atelier Moessmer Norbert Niederkofler","c":"Brunico","p":"BZ","la":46.79273,"lo":11.94921,"k":173,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":99.8,"g2":["MICH_3","GR_3F","TOP50GR"],"ns":1,"nb":0,"nst":0,"h":0,"pos":8},{"n":"Ristorante Villa Crespi","c":"Orta San Giulio","p":"NO","la":45.7964,"lo":8.41601,"k":281,"cu":"","st":"Alta cucina","w":0,"s":99.3,"g2":["MICH_3","ESP_5","GR_3F"],"ns":1,"nb":0,"nst":0,"h":0,"pos":9},{"n":"Da Vittorio","c":"Brusaporto","p":"BG","la":45.67603,"lo":9.76955,"k":252,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":97.2,"g2":["MICH_3","ESP_5","GR_3F"],"ns":0,"nb":0,"nst":0,"h":0,"pos":10},{"n":"La Pergola","c":"Roma","p":"RM","la":41.91905,"lo":12.44684,"k":1383,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":97.2,"g2":["MICH_3","ESP_5","GR_3F"],"ns":0,"nb":0,"nst":0,"h":0,"pos":11},{"n":"Ristorante Reale","c":"Castel di Sangro","p":"AQ","la":41.78017,"lo":14.09466,"k":86,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":97.2,"g2":["MICH_3","ESP_5","GR_3F"],"ns":0,"nb":0,"nst":0,"h":0,"pos":12},{"n":"Agli Amici","c":"Udine","p":"UD","la":46.10226,"lo":13.26621,"k":517,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":97.2,"g2":["MICH_2","GR_3F","TOP50GR","GR_PREMIO"],"ns":1,"nb":0,"nst":0,"h":0,"pos":13},{"n":"La Peca","c":"Lonigo","p":"VI","la":45.38485,"lo":11.39906,"k":284,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":97.2,"g2":["MICH_2","GR_3F","ESP_5","TOP50GR"],"ns":1,"nb":0,"nst":0,"h":0,"pos":14},{"n":"Ristorante San Domenico Imola","c":"Imola","p":"BO","la":44.3556,"lo":11.71237,"k":719,"cu":"","st":"Alta cucina","w":1,"s":97.2,"g2":["MICH_2","TOP50GR","GR_2F","ERT"],"ns":0,"nb":0,"nst":2,"h":1,"pos":15},{"n":"D'O - Davide Oldani","c":"Cornaredo","p":"MI","la":45.48707,"lo":9.01184,"k":346,"cu":"","st":"Alta cucina","w":1,"s":97.2,"g2":["MICH_2","GR_3F","ESP_5","TOP50GR"],"ns":0,"nb":0,"nst":0,"h":0,"pos":16},{"n":"Il Pagliaccio","c":"Roma","p":"RM","la":41.89786,"lo":12.4674,"k":1257,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":97.2,"g2":["MICH_2","GR_3F","TOP50GR","GR_PREMIO"],"ns":0,"nb":0,"nst":0,"h":0,"pos":17},{"n":"Madonnina del Pescatore","c":"Senigallia","p":"AN","la":43.68168,"lo":13.28011,"k":349,"cu":"Pesce","st":"Alta cucina","w":1,"s":97.2,"g2":["MICH_2","GR_3F","ESP_5","TOP50GR"],"ns":0,"nb":0,"nst":0,"h":0,"pos":18},{"n":"Quattro Passi","c":"Massa Lubrense","p":"NA","la":40.58563,"lo":14.35352,"k":526,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":95.4,"g2":["MICH_3","ESP_5"],"ns":1,"nb":0,"nst":0,"h":0,"pos":19},{"n":"La Torre del Saracino","c":"Sorrento","p":"NA","la":40.62703,"lo":14.37116,"k":1348,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":95.4,"g2":["MICH_2","GR_3F","TOP50GR"],"ns":1,"nb":0,"nst":0,"h":0,"pos":20},{"n":"daGorini","c":"Bagno di Romagna","p":"FC","la":43.85876,"lo":11.97458,"k":14,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":95.4,"g2":["GR_3F","TOP50GR","MICH_1","GR_PREMIO","ERT"],"ns":1,"nb":0,"nst":1,"h":0,"pos":21},{"n":"Dalla Gioconda","c":"Gabicce Mare","p":"PU","la":43.96395,"lo":12.77251,"k":135,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":95.4,"g2":["GR_3F","ESP_5","TOP50GR","MICH_1","IDG"],"ns":1,"nb":0,"nst":0,"h":0,"pos":22},{"n":"Ristorante Materia Cernobbio","c":"Cernobbio","p":"CO","la":45.83826,"lo":9.06852,"k":167,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":95.4,"g2":["GR_3F","TOP50GR","MICH_1","GR_PREMIO"],"ns":2,"nb":0,"nst":0,"h":0,"pos":23},{"n":"L'Argine a Venco","c":"Dolegna del Collio","p":"GO","la":46.00148,"lo":13.46257,"k":19,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":95.4,"g2":["GR_3F","ESP_5","TOP50GR","MICH_1"],"ns":1,"nb":0,"nst":0,"h":0,"pos":24},{"n":"Al Gatto Verde","c":"Modena","p":"MO","la":44.60965,"lo":10.98051,"k":261,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":95.4,"g2":["ESP_5","MICH_1","GR_2F","ERT"],"ns":0,"nb":0,"nst":1,"h":0,"pos":25},{"n":"Cracco","c":"Milano","p":"MI","la":45.46568,"lo":9.18994,"k":707,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":95.2,"g2":["ESP_5","GR_3F","MICH_1"],"ns":1,"nb":0,"nst":0,"h":0,"pos":26},{"n":"Ristorante Condividere","c":"Torino","p":"TO","la":45.08018,"lo":7.69092,"k":1264,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":95.2,"g2":["GR_3F","TOP50GR","MICH_1"],"ns":1,"nb":0,"nst":0,"h":0,"pos":27},{"n":"Ristorante Duomo","c":"Ragusa","p":"RG","la":36.92667,"lo":14.74164,"k":149,"cu":"","st":"Alta cucina","w":1,"s":94.9,"g2":["MICH_2","ESP_5","TOP50GR"],"ns":1,"nb":0,"nst":0,"h":0,"pos":28},{"n":"Ristorante Famiglia Rana","c":"Oppeano","p":"VR","la":45.31426,"lo":11.11921,"k":372,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":94.6,"g2":["MICH_2","GR_3F"],"ns":3,"nb":0,"nst":0,"h":0,"pos":29},{"n":"Enrico Bartolini","c":"Milano","p":"MI","la":45.4515,"lo":9.16163,"k":752,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":94.5,"g2":["MICH_3","TOP50GR"],"ns":0,"nb":0,"nst":0,"h":0,"pos":30},{"n":"Antica Corona Reale","c":"Cervere","p":"CN","la":44.63502,"lo":7.78856,"k":211,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":94.5,"g2":["MICH_2","ESP_5","GR_3F"],"ns":0,"nb":0,"nst":2,"h":1,"pos":31},{"n":"Magnolia Ristorante","c":"Longiano","p":"FC","la":44.07273,"lo":12.34964,"k":289,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":94.5,"g2":["MICH_2","GR_2F","ERT"],"ns":0,"nb":0,"nst":1,"h":0,"pos":32},{"n":"Andrea Aprea","c":"Milano","p":"MI","la":45.47437,"lo":9.2052,"k":633,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":94.5,"g2":["MICH_2","GR_3F","TOP50GR"],"ns":0,"nb":0,"nst":0,"h":0,"pos":33},{"n":"Antica Osteria Cera","c":"Camponogara","p":"VE","la":45.38797,"lo":12.13038,"k":20,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":94.5,"g2":["MICH_2","GR_3F","TOP50GR"],"ns":0,"nb":0,"nst":0,"h":0,"pos":34},{"n":"Dani Maison","c":"Ischia","p":"NA","la":40.72595,"lo":13.94766,"k":439,"cu":"","st":"Alta cucina","w":1,"s":94.5,"g2":["MICH_2","GR_3F","TOP50GR"],"ns":0,"nb":0,"nst":0,"h":0,"pos":35},{"n":"Kresios","c":"Amorosi","p":"BN","la":41.20301,"lo":14.49938,"k":4,"cu":"","st":"Alta cucina","w":0,"s":94.5,"g2":["MICH_2","GR_3F","GR_PREMIO"],"ns":0,"nb":0,"nst":0,"h":0,"pos":36},{"n":"Ristorante la Madia","c":"Licata","p":"AG","la":37.10544,"lo":13.9349,"k":168,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":94.5,"g2":["MICH_2","GR_3F","TOP50GR"],"ns":0,"nb":0,"nst":0,"h":0,"pos":37},{"n":"La Rei Natura by Michelangelo Mammoliti","c":"Serralunga d'Alba","p":"CN","la":44.59432,"lo":7.99974,"k":715,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":94.0,"g2":["MICH_3"],"ns":1,"nb":0,"nst":0,"h":0,"pos":38},{"n":"Harry's Piccolo Trieste","c":"Trieste","p":"TS","la":45.65118,"lo":13.76987,"k":75,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":93.8,"g2":["MICH_2","GR_3F"],"ns":1,"nb":0,"nst":0,"h":0,"pos":39},{"n":"Ristorante Caino","c":"Manciano","p":"GR","la":42.622,"lo":11.49063,"k":168,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":93.8,"g2":["MICH_2","GR_3F"],"ns":1,"nb":0,"nst":0,"h":0,"pos":40},{"n":"Ristorante Campo Del Drago - Rosewood Castiglion del Bosco","c":"Montalcino","p":"SI","la":43.0839,"lo":11.42215,"k":120,"cu":"","st":"Alta cucina","w":0,"s":92.8,"g2":["MICH_2","GR_2F"],"ns":1,"nb":0,"nst":0,"h":0,"pos":41},{"n":"Piazzetta Milu","c":"Castellammare di Stabia","p":"NA","la":40.70205,"lo":14.48305,"k":253,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":92.7,"g2":["MICH_2","TOP50GR"],"ns":1,"nb":0,"nst":0,"h":0,"pos":42},{"n":"Villa Maiella","c":"Guardiagrele","p":"CH","la":42.18883,"lo":14.20442,"k":168,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":92.7,"g2":["GR_3F","TOP50GR","MICH_1"],"ns":1,"nb":0,"nst":2,"h":0,"pos":43},{"n":"Contrada Bricconi","c":"Oltressenda Alta","p":"BG","la":45.92032,"lo":9.94859,"k":633,"cu":"","st":"Alta cucina","w":1,"s":92.7,"g2":["GR_3F","TOP50GR","MICH_1"],"ns":0,"nb":0,"nst":0,"h":0,"pos":44},{"n":"Idylio by Apreda","c":"Roma","p":"RM","la":41.89814,"lo":12.47585,"k":1237,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":92.7,"g2":["GR_3F","MICH_1","IDG"],"ns":0,"nb":0,"nst":0,"h":0,"pos":45},{"n":"La Locanda","c":"Massa Lubrense","p":"NA","la":40.6079,"lo":14.3736,"k":517,"cu":"Italiana e del territorio","st":"Alta cucina","w":0,"s":92.7,"g2":["GR_3F","MICH_1","GR_PREMIO"],"ns":0,"nb":0,"nst":0,"h":0,"pos":46},{"n":"Orma Roma","c":"Roma","p":"RM","la":41.90838,"lo":12.49324,"k":1578,"cu":"","st":"Alta cucina","w":1,"s":92.7,"g2":["GR_3F","TOP50GR","MICH_1"],"ns":0,"nb":0,"nst":0,"h":0,"pos":47},{"n":"Pascucci al Porticciolo","c":"Fiumicino","p":"RM","la":41.77012,"lo":12.22733,"k":353,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":92.7,"g2":["GR_3F","TOP50GR","MICH_1"],"ns":0,"nb":0,"nst":0,"h":0,"pos":48},{"n":"Ristorante Berton","c":"Milano","p":"MI","la":45.48202,"lo":9.19433,"k":1252,"cu":"","st":"Alta cucina","w":1,"s":92.7,"g2":["GR_3F","TOP50GR","MICH_1"],"ns":0,"nb":0,"nst":0,"h":0,"pos":49},{"n":"Zia Restaurant","c":"Roma","p":"RM","la":41.88698,"lo":12.46807,"k":2297,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":92.7,"g2":["GR_3F","TOP50GR","MICH_1"],"ns":0,"nb":0,"nst":0,"h":0,"pos":50},{"n":"Il Piccolo Principe","c":"Viareggio","p":"LU","la":43.88141,"lo":10.2354,"k":338,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":91.7,"g2":["MICH_2","GR_3F"],"ns":1,"nb":0,"nst":0,"h":0,"pos":51},{"n":"Arnolfo Ristorante | 2 Stelle Michelin","c":"Colle di Val d'Elsa","p":"SI","la":43.42357,"lo":11.11625,"k":89,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":91.7,"g2":["MICH_2","GR_2F"],"ns":0,"nb":0,"nst":0,"h":0,"pos":52},{"n":"Castel Fine Dining","c":"Tirolo","p":"BZ","la":46.68635,"lo":11.1564,"k":620,"cu":"","st":"Alta cucina","w":1,"s":91.7,"g2":["MICH_2","GR_2F"],"ns":0,"nb":0,"nst":0,"h":0,"pos":53},{"n":"Enoteca La Torre","c":"Roma","p":"RM","la":41.91638,"lo":12.46923,"k":1107,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":91.7,"g2":["MICH_2","GR_3F"],"ns":0,"nb":0,"nst":0,"h":0,"pos":54},{"n":"I Tenerumi Restaurant","c":"Lipari","p":"ME","la":38.43059,"lo":14.95655,"k":139,"cu":"","st":"Alta cucina","w":1,"s":91.7,"g2":["MICH_2","GR_3F"],"ns":0,"nb":0,"nst":0,"h":0,"pos":55},{"n":"Seta by Antonio Guida","c":"Milano","p":"MI","la":45.4696,"lo":9.19117,"k":1342,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":91.7,"g2":["MICH_2","GR_3F"],"ns":0,"nb":0,"nst":0,"h":0,"pos":56},{"n":"Taverna Estia","c":"Brusciano","p":"NA","la":40.90834,"lo":14.42327,"k":122,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":91.7,"g2":["MICH_2","TOP50GR"],"ns":0,"nb":0,"nst":0,"h":0,"pos":57},{"n":"Terra The Magic Place","c":"Sarentino","p":"BZ","la":46.6427,"lo":11.35624,"k":558,"cu":"","st":"Alta cucina","w":0,"s":91.7,"g2":["MICH_2","GR_2F"],"ns":0,"nb":0,"nst":0,"h":0,"pos":58},{"n":"Verso Ristorante, Capitaneo","c":"Milano","p":"MI","la":45.4643,"lo":9.1897,"k":1482,"cu":"","st":"Alta cucina","w":0,"s":91.7,"g2":["MICH_2","TOP50GR"],"ns":0,"nb":0,"nst":0,"h":0,"pos":59},{"n":"Locanda del Sant'Uffizio","c":"Penango","p":"AT","la":45.02695,"lo":8.27765,"k":202,"cu":"Italiana e del territorio","st":"Alta cucina","w":1,"s":91.4,"g2":["MICH_2"],"ns":2,"nb":0,"nst":1,"h":0,"pos":60}],"files":{"AG":"d/AG.d8ba17a3d0.json","AL":"d/AL.a1ec08cc15.json","AN":"d/AN.9b546a9806.json","AO":"d/AO.2d8f8f9a90.json","AP":"d/AP.bd66faee95.json","AQ":"d/AQ.d23ab53c06.json","AR":"d/AR.7a38d12560.json","AT":"d/AT.737a9e74c8.json","AV":"d/AV.e925a9b841.json","BA":"d/BA.e1cabb8f2a.json","BG":"d/BG.22a46a283b.json","BI":"d/BI.9734c6e75f.json","BL":"d/BL.a90e439690.json","BN":"d/BN.fba963b81f.json","BO":"d/BO.a6c2532de2.json","BR":"d/BR.9b9758fcc6.json","BS":"d/BS.12d6244ae8.json","BT":"d/BT.d3a82e974b.json","BZ":"d/BZ.0ee7f76bab.json","CA":"d/CA.0ba7ee76c6.json","CB":"d/CB.4e6a5f9600.json","CE":"d/CE.ce0f2e1775.json","CH":"d/CH.4af901e8e6.json","CL":"d/CL.9d6a93028e.json","CN":"d/CN.21529c832b.json","CO":"d/CO.f8cf851cf4.json","CR":"d/CR.40e4a59c04.json","CS":"d/CS.08bd98940b.json","CT":"d/CT.88e64ae95d.json","CZ":"d/CZ.71d079aaed.json","EN":"d/EN.37f12534fe.json","FC":"d/FC.69cc229a9b.json","FE":"d/FE.171c199f68.json","FG":"d/FG.57f2e0ee5a.json","FI":"d/FI.01b9ddb8a6.json","FM":"d/FM.faa7e492d9.json","FR":"d/FR.e0f42c17bf.json","GE":"d/GE.7beed4bba6.json","GO":"d/GO.0600e49df3.json","GR":"d/GR.1011a7a1a7.json","IM":"d/IM.478ccd1c47.json","IS":"d/IS.f124701406.json","KR":"d/KR.093fa136a1.json","LC":"d/LC.cd13eb240e.json","LE":"d/LE.c865965cd4.json","LI":"d/LI.2e069636c5.json","LO":"d/LO.0fe0255695.json","LT":"d/LT.dbacc4a4e8.json","LU":"d/LU.9d73af2499.json","MB":"d/MB.3700af4225.json","MC":"d/MC.e9b94fcb7b.json","ME":"d/ME.85d50f81ec.json","MI":"d/MI.2d1852db7f.json","MN":"d/MN.d33c4119f0.json","MO":"d/MO.24559f6c03.json","MS":"d/MS.dec6f7959e.json","MT":"d/MT.177bfa5684.json","NA":"d/NA.deca1c5dc2.json","NO":"d/NO.7a0e4b5079.json","NU":"d/NU.9d510a2b1f.json","OR":"d/OR.73abaff1fb.json","PA":"d/PA.410cd0d15b.json","PC":"d/PC.f0c698fdb3.json","PD":"d/PD.50b07605ed.json","PE":"d/PE.8f57841ceb.json","PG":"d/PG.2fe86f2fcc.json","PI":"d/PI.ff0f589d09.json","PN":"d/PN.91e331b8f0.json","PO":"d/PO.b925cfceda.json","PR":"d/PR.409b01f6ee.json","PT":"d/PT.714c257e29.json","PU":"d/PU.623394bb9d.json","PV":"d/PV.5489f46457.json","PZ":"d/PZ.654703e4e7.json","RA":"d/RA.d77915050d.json","RC":"d/RC.d81208c9e9.json","RE":"d/RE.676856b6d1.json","RG":"d/RG.6472d4f591.json","RI":"d/RI.4191cb74d0.json","RM":"d/RM.01d23e03a8.json","RN":"d/RN.08bfaeac23.json","RO":"d/RO.829a736909.json","SA":"d/SA.b11102ffaf.json","SI":"d/SI.0632dfdb1d.json","SO":"d/SO.e16f295a0d.json","SP":"d/SP.ea6a4bae8f.json","SR":"d/SR.e8b6261c9c.json","SS":"d/SS.5116751b88.json","SU":"d/SU.8d376c17bc.json","SV":"d/SV.dc6da8bb3c.json","TA":"d/TA.1a0283dd54.json","TE":"d/TE.ea00a56792.json","TN":"d/TN.9eba13c88c.json","TO":"d/TO.c78794eb32.json","TP":"d/TP.43810e4304.json","TR":"d/TR.824fc9dfed.json","TS":"d/TS.ded6c036e9.json","TV":"d/TV.03b0a37534.json","UD":"d/UD.a2733169f0.json","VA":"d/VA.64ae1cce5c.json","VB":"d/VB.b8f054bc3d.json","VC":"d/VC.01f883a415.json","VE":"d/VE.d62d491f03.json","VI":"d/VI.530d5f149a.json","VR":"d/VR.e632eac591.json","VT":"d/VT.87a613f8c0.json","VV":"d/VV.30657273d0.json"},"extra":"extra.68ffa292b7.json","legenda":{"MICH_3":["Michelin ★★★",100,"⭐⭐⭐"],"MICH_2":["Michelin ★★",97,"⭐⭐"],"MICH_1":["Michelin ★",85,"⭐"],"MICH_BIB":["Michelin Bib Gourmand",70,"😋"],"MICH_SEL":["Michelin selezionato",40,"🍽️"],"GR_3F":["Gambero Rosso Tre Forchette",95,"🍴🍴🍴"],"GR_3G":["Gambero Rosso Tre Gamberi",90,"🦐🦐🦐"],"GR_3S":["Gambero Rosso Tre Spicchi",90,"🍕🍕🍕"],"GR_3B":["Gambero Rosso Tre Bottiglie",75,"🍷🍷🍷"],"GR_PREMIO":["Gambero Rosso premio speciale",70,"🏆"],"GR_PIZZA_ANNO":["Gambero Rosso Pizza dell'anno",80,"🏆🍕"],"GR_GUIDA":["Gambero Rosso – presente in guida",50,"🦐"],"SF_CH":["Slow Food Osterie d'Italia – Chiocciola",80,"🐌"],"TOP50PIZZA":["50 Top Pizza Italia",90,"🏅50"],"IDG":["Identità Golose",60,"✳️"],"GR_2F":["Gambero Rosso Due Forchette",75,"🍴🍴"],"GR_1F":["Gambero Rosso Una Forchetta",60,"🍴"],"GR_2G":["Gambero Rosso Due Gamberi",70,"🦐🦐"],"GR_1G":["Gambero Rosso Un Gambero",55,"🦐"],"GR_2S":["Gambero Rosso Due Spicchi",70,"🍕🍕"],"GR_1S":["Gambero Rosso Uno Spicchio",55,"🍕"],"GR_2B":["Gambero Rosso Due Bottiglie",60,"🍷🍷"],"GR_1B":["Gambero Rosso Una Bottiglia",50,"🍷"],"SF_SEG":["Slow Food Osterie d'Italia – segnalata",60,"📗"],"ESP":["Guide de L'Espresso",55,"🎩"],"ERT":["Emilia-Romagna a Tavola",50,"📘"],"TOP50TR":["50 Top Italy – Trattorie",85,"🏅50"],"CRIT":["Critica e stampa",40,"✍️"],"BLOG":["Blog e food writer",30,"📝"],"SOCIAL":["Social di critici e food writer",25,"📱"],"ESP_5":["Guide de L'Espresso – 5 cappelli",95,"🎩"],"TOP50GR":["50 Top Italy – Grandi ristoranti",90,"🏅50"],"W50":["World's 50 Best – Best of the Best",100,"🌍"],"STORIA":["Storia e ambiente",0,"📜"]},"solo":["ERT","ESP","GR_1G","GR_2G","SF_SEG"],"n_rico":3166,"n_tot":48571};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm=t=>String(t||"").normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’‘`´]/g,"'").toLowerCase();
+const pul=t=>norm(t).replace(/[\s'.,;:()\-\/&!]+/g," ").trim();
+const fmt=n=>n.toLocaleString("it-IT");
+const COL=new Intl.Collator("it",{sensitivity:"base"});
+const AGG=new Set(["CRIT","BLOG","SOCIAL"]);
+// ---- memoria nel telefono (IndexedDB): i file con l'hash nel nome non cambiano, si scaricano una volta sola ----
+const memo={db:null,
+  apri(){if(this.db)return this.db;this.db=new Promise(ok=>{try{const r=indexedDB.open("achfood",1);r.onupgradeneeded=()=>r.result.createObjectStore("f");r.onsuccess=()=>ok(r.result);r.onerror=()=>ok(null);setTimeout(()=>ok(null),1500);}catch(e){ok(null);}});return this.db;},
+  async leggi(k){const db=await this.apri();if(!db)return null;return new Promise(ok=>{try{const q=db.transaction("f").objectStore("f").get(k);q.onsuccess=()=>ok(q.result||null);q.onerror=()=>ok(null);}catch(e){ok(null);}});},
+  async scrivi(k,v){const db=await this.apri();if(!db)return;try{db.transaction("f","readwrite").objectStore("f").put(v,k);}catch(e){}},
+  async pulisci(tieni){const db=await this.apri();if(!db)return;try{const s=db.transaction("f","readwrite").objectStore("f");const q=s.getAllKeys();q.onsuccess=()=>q.result.forEach(k=>{if(!tieni.has(k))s.delete(k);});}catch(e){}}};
+async function scarica(nome){const m=await memo.leggi(nome);if(m)return m;const r=await fetch(nome);if(!r.ok)throw new Error("HTTP "+r.status);const j=await r.json();memo.scrivi(nome,j);return j;}
+// ---- riconoscimenti ----
+let LEG=INL.legenda,SOLO=new Set(INL.solo);let FILES=INL.files;EXF=INL.extra;let EX=null,EXP=null;
+function caricaExtra(){return EXP||(EXP=scarica(EXF).then(e=>{EX=e;return e;}).catch(e=>{EXP=null;throw e;}));}
+const corto={MICH_3:"★★★ Michelin",MICH_2:"★★ Michelin",MICH_1:"★ Michelin",MICH_BIB:"Bib Gourmand",MICH_SEL:"Michelin",SF_CH:"🐌 Chiocciola",SF_SEG:"Osterie d'Italia",
+ GR_3F:"Tre Forchette",GR_2F:"Due Forchette",GR_1F:"Una Forchetta",GR_3G:"Tre Gamberi",GR_2G:"Due Gamberi",GR_1G:"Un Gambero",GR_3S:"Tre Spicchi",GR_2S:"Due Spicchi",GR_1S:"Uno Spicchio",
+ GR_3B:"Tre Bottiglie",GR_2B:"Due Bottiglie",GR_1B:"Una Bottiglia",GR_PREMIO:"Premio Gambero Rosso",GR_PIZZA_ANNO:"Pizza dell'anno",GR_GUIDA:"Gambero Rosso",
+ TOP50PIZZA:"50 Top Pizza",TOP50TR:"50 Top Trattorie",TOP50GR:"50 Top Italy",IDG:"Identità Golose",ESP:"L'Espresso",ESP_5:"L'Espresso 5 cappelli",ERT:"Emilia-Romagna a Tavola",W50:"World's 50 Best"};
+const famCol=c=>c.startsWith("SF_")?"sf":c.startsWith("GR_")?"gr":"";
+const badge=c=>`<span class="b ${famCol(c)}">${esc(corto[c]||LEG[c]?.[0]||c)}</span>`;
+// famiglie per il filtro "riconoscimento" (un locale può averne più d'una)
+const FAMIGLIA=c=>/^MICH_[123]$/.test(c)?"Stelle Michelin":c==="MICH_BIB"?"Bib Gourmand":c==="MICH_SEL"?"Guida Michelin":c==="SF_CH"?"Chiocciola Slow Food":c.startsWith("SF_")?"Osterie d'Italia (Slow Food)":
+ /^GR_\dF$/.test(c)?"Forchette Gambero Rosso":/^GR_\dG$/.test(c)?"Gamberi Gambero Rosso":(/^GR_\dS$/.test(c)||c==="GR_PIZZA_ANNO")?"Spicchi Gambero Rosso":c.startsWith("GR_")?"Altri premi Gambero Rosso":
+ c.startsWith("TOP50")?"50 Top (Pizza, Italy, Trattorie)":c==="IDG"?"Identità Golose":c.startsWith("ESP")?"Guide de L'Espresso":c==="ERT"?"Emilia-Romagna a Tavola":c==="W50"?"World's 50 Best":"Altre guide";
+// ---- dati ----
+let D=null,L=[],RX={},DET={},INC={};
+const S={v:"rico",shown:40,q:"",ord:"",ordUtente:false};
+let PT=null,VK=null,VT=null;
+const kmd=(a,b,c,d)=>{const r=Math.PI/180,x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return 12742*Math.asin(Math.sqrt(x));};
+const minu=d=>{const s=d*(d<5?1.45:1.3),v=28+47*(1-Math.exp(-s/30));return 3+s/v*60;};
+// prima vista: i primi 60 della classifica sono già nella pagina, si vedono prima che arrivi l'elenco completo
+const PRIMI=INL.primi.map((x,j)=>Object.assign(x,{i:-1-j,r:"",pz:false,fam:[],fo:[],nf:x.g2.length+x.ns+x.nb+x.nst}));
+if(innerWidth<480)$("q").placeholder="Cerca";
+const trovaI=i=>i>=0?L[i]:PRIMI[-1-i];
+if(["","classifica","ordina"].includes((location.hash||"").slice(1))){
+  $("n-rico").textContent=fmt(INL.n_rico);$("n-tutti").textContent=fmt(INL.n_tot);
+  $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
+  $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
+// ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
+const LSK="achfood_man",ISK="achfood_ist";let TOCCO=null,AUX=null,AUXP=null;
+function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
+function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
+const HIDX=IDXF,M0=lsL(LSK);if(M0&&M0.h===HIDX)usaMan(M0);
+const VISTAH=()=>({"":"rico",ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti"})[(location.hash||"").slice(1)];
+(function istantanea(){const s=lsL(ISK),v=VISTAH();if(!s||!v||s.idx!==IDXF||!s[v])return;const h=s[v];
+  for(const id in h){const e=$(id);if(e)e.innerHTML=h[id];}$("more").hidden=!h.more;})();
+function salvaIst(){if(!L.length||S.q||nAttivi()||vicAttivo()||S.ordUtente||S.shown!==40)return;const s=lsL(ISK)||{};if(s.idx!==IDXF){for(const k in s)delete s[k];s.idx=IDXF;}
+  const h={};["grid","count","stats","lede","n-rico","n-piz","n-tutti"].forEach(id=>{h[id]=$(id).innerHTML;});h.more=!$("more").hidden?1:0;s[S.v]=h;lsS(ISK,s);}
+async function avvioVeloce(){
+  const fresco=fetch("manifest.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null);
+  const p=scarica(IDXF).catch(async e=>{const m=await fresco;if(!m||!m.idx||m.idx===IDXF)throw e;usaMan(m);lsS(LSK,Object.assign({},m,{h:HIDX}));return scarica(IDXF);});
+  await new Promise(r=>requestAnimationFrame(()=>setTimeout(r,0)));
+  const dati=await p;
+  fresco.then(async m=>{if(!m||!m.idx)return;lsS(LSK,Object.assign({},m,{h:HIDX}));if(m.idx===IDXF){usaMan(m);return;}
+    try{await scarica(m.idx);if(sessionStorage.getItem("achfood_rl")!==m.idx){sessionStorage.setItem("achfood_rl",m.idx);location.reload();}}catch(e){}});
+  return dati;}
+function caricaAux(){return AUXP||(AUXP=scarica(AUXF).then(a=>{let la=0,lo=0;for(let i=0;i<L.length;i++){la+=a.la[i];lo+=a.lo[i];L[i].la=la/1e4;L[i].lo=lo/1e4;}
+  RN=new Int32Array(L.length);a.ordN.forEach((i,k)=>{RN[i]=k;});AUX=1;return a;}).catch(e=>{AUXP=null;throw e;}));}
+const serveRN=()=>S.v!=="rico"||S.ord==="nome"||S.ord==="fonti";
+// indice delle parole: per ogni parola (inizio di parola nel nome, comune, provincia) i locali che la contengono; preparato in sottofondo
+let IW=null;
+function preparaParole(){const mp=new Map();let i=0;const passo=dl=>{const fine=Math.min(L.length,i+2500);
+  for(;i<fine;i++){for(const t of qOf(L[i]).split(" ")){if(!t)continue;let a=mp.get(t);if(!a)mp.set(t,a=[]);if(a[a.length-1]!==i)a.push(i);}}
+  if(i<L.length){(window.requestIdleCallback||setTimeout)(passo,{timeout:1000});return;}
+  const ks=[...mp.keys()].sort();IW={ks,ls:ks.map(k=>mp.get(k))};Qc={k:null};};(window.requestIdleCallback||setTimeout)(passo,{timeout:1000});}
+const WS={};
+function perParola(w){if(WS[w])return WS[w];const ks=IW.ks;let lo=0,hi=ks.length;while(lo<hi){const m=(lo+hi)>>1;if(ks[m]<w)lo=m+1;else hi=m;}
+  const f=new Uint8Array(L.length);for(let j=lo;j<ks.length&&ks[j].startsWith(w);j++){for(const i of IW.ls[j])f[i]=1;}return WS[w]=f;}
+avvioVeloce().then(avvia).catch(e=>{$("lede").textContent="Non riesco a caricare l'elenco ("+e.message+"). Riprova tra poco.";$("grid").innerHTML="";});
+// pizzeria: guide della pizza, oppure cucina "pizzeria" senza riconoscimenti da ristorante (come le due classifiche della Dashboard)
+const REGOLA=(a,b)=>b.s-a.s||b.top-a.top||b.g2.length-a.g2.length||(b.ns+b.nb)-(a.ns+a.nb)||((b.h||b.nst?1:0)-(a.h||a.nst?1:0))||COL.compare(a.n,b.n);
+const PIZ=/^GR_\dS$|^GR_PIZZA_ANNO$|^TOP50PIZZA$/,RIST=/^MICH_[123]$|^GR_\d[FG]$|^SF_|^TOP50(TR|GR)$|^ESP/;
+let RN=null;
+function avvia(d){D=d;const z=d.dz;const C=d.col;
+  L=C.n.map((n0,i)=>{const g2=C.g[i].map(j=>z.g[j]),cu=C.cu[i],st=C.st[i];const x={i,n:n0,c:z.c[C.c[i]],p:z.p[C.p[i]],la:null,lo:null,k:C.k[i],cu:cu<0?"":z.cu[cu],st:st<0?"":z.st[st],w:C.w[i],s:C.s[i]/10,g2,ns:C.ns[i],nb:C.nb[i],nst:C.nst[i],h:C.h[i],pos:C.pos[i]};
+    x.r=d.regp[x.p]||"";x.pz=g2.some(c=>PIZ.test(c))||(x.cu==="Pizzeria"&&!g2.some(c=>RIST.test(c)));
+    x.fam=[...new Set(g2.map(FAMIGLIA))];x.fo=[x.ns?"📰 Stampa":"",x.nb?"✍️ Blog":"",x.nst?"📜 Storia e ambiente":""].filter(Boolean);x.nf=g2.length+x.ns+x.nb+x.nst;
+    (RX[x.p]||(RX[x.p]=[]))[x.k]=x;return x;});
+  // CLASSIFICA GENERALE: una sola per tutti i locali citati (ristoranti e pizzerie), un numero diverso per ciascuno.
+  // Regola: 1) punteggio delle guide; a pari punteggio 2) riconoscimento principale più alto; 3) più guide diverse;
+  // 4) più articoli di stampa e blog; 5) locale storico o con storia documentata; 6) nome in ordine alfabetico.
+  // (la classifica generale arriva già calcolata con la regola: qui solo i totali)
+  S.n_rico=INL.n_rico;S.n_piz=L.filter(x=>x.pz&&x.s>0).length;
+  $("n-rico").textContent=fmt(S.n_rico);$("n-piz").textContent=fmt(L.filter(x=>x.pz).length);$("n-tutti").textContent=fmt(L.length);
+  $("lede").innerHTML=`<b>${fmt(S.n_rico)}</b> locali citati da guide e stampa, su ${fmt(L.length)} in ${fmt(new Set(L.map(x=>x.p+x.c)).size)} comuni.`;
+  memo.pulisci(new Set([IDXF,AUXF,EXF,...Object.values(FILES)]));setTimeout(()=>caricaExtra().catch(()=>{}),1500);
+  document.querySelectorAll(".ms").forEach(prepara);
+  window.addEventListener("hashchange",rotta);rotta();caricaAux().catch(()=>{});preparaParole();
+  if(TOCCO!=null){const x=L[TOCCO];TOCCO=null;if(x)apri(x);}
+  try{const u=localStorage.getItem("achfood_ultp");if(u&&FILES[u])(window.requestIdleCallback||setTimeout)(()=>carica(u).catch(()=>{}),{timeout:3000});}catch(e){}}
+function carica(p){if(DET[p])return Promise.resolve(DET[p]);if(INC[p])return INC[p];
+  return INC[p]=scarica(FILES[p]).then(v=>{DET[p]=v;return v;}).catch(e=>{delete INC[p];throw e;});}
+// in sottofondo: le schede delle province delle prime righe, così si aprono subito
+let pre=null;function precarica(v){clearTimeout(pre);pre=setTimeout(()=>{const ps=[...new Set(v.slice(0,12).map(x=>x.p))].filter(p=>!DET[p]).slice(0,3);
+  const go=()=>ps.forEach(p=>carica(p).catch(()=>{}));(window.requestIdleCallback||setTimeout)(go,{timeout:2000});},600);}
+// ---- viste e ordinamenti (calcolati una volta e memorizzati) ----
+const VISTE={rico:x=>x.s>0,piz:x=>x.pz,tutti:()=>true};
+// ordinamenti su numeri già pronti (posizione in classifica, ordine alfabetico): niente confronti di testo su 48.000 righe
+const ORDS={punteggio:["Citazioni",(a,b)=>(a.pos||1e9)-(b.pos||1e9)||RN[a.i]-RN[b.i]],nome:["Nome (A-Z)",(a,b)=>RN[a.i]-RN[b.i]],comune:["Comune",null],
+  fonti:["Più fonti",(a,b)=>b.nf-a.nf||(a.pos||1e9)-(b.pos||1e9)||RN[a.i]-RN[b.i]],dist:["Distanza",(a,b)=>(a._d??1e9)-(b._d??1e9)]};
+const BASE={},ORD={};
+const base=()=>BASE[S.v]||(BASE[S.v]=L.filter(VISTE[S.v]));
+function ordinati(){const o=S.ord,k=S.v+"|"+o;if(o==="dist")return base().slice().sort(ORDS.dist[1]);return ORD[k]||(ORD[k]=o==="comune"?base():base().slice().sort(ORDS[o][1]));}
+function opzOrd(){const o=Object.entries(ORDS).filter(([k])=>k!=="dist"||PT);if(!S.ordUtente||!ORDS[S.ord]||(S.ord==="dist"&&!PT))S.ord=PT&&vicAttivo()?"dist":"punteggio";
+  $("ord").innerHTML=o.map(([k,[t]])=>`<option value="${k}"${k===S.ord?" selected":""}>${t}</option>`).join("");}
+$("ord").onchange=()=>{S.ord=$("ord").value;S.ordUtente=true;S.shown=40;draw();};
+// ---- filtri a scelta multipla (come nella Dashboard): un insieme di valori per filtro, vuoto = tutti ----
+const SEL={};
+const FACCE={"f-reg":x=>x.r,"f-prov":x=>x.p,"f-com":x=>x.p+"|"+x.c,"f-cuc":x=>x.cu,"f-sti":x=>x.st,"f-ric":x=>x.fam,"f-fon":x=>x.fo};
+const ETI={"f-prov":v=>D.provn[v]||v,"f-com":v=>v.split("|")[1]};
+function prepara(m){SEL[m.id]=new Set();
+  m.innerHTML='<button type="button"></button><div class="pan"><div class="testa"><input type="search" placeholder="Filtra…" autocomplete="off"><button type="button" class="tutti">Tutti</button></div><div class="voci"></div></div>';
+  m.querySelector("button").onclick=()=>{const ap=m.classList.contains("aperto");chiudiMs();if(!ap){m.classList.add("aperto");const i=m.querySelector(".testa input");i.value="";conta(m.id);voci(m);
+    m.classList.remove("dx");if(matchMedia("(min-width:700px)").matches){const r=m.querySelector(".pan").getBoundingClientRect();if(r.right>innerWidth-8)m.classList.add("dx");}if(matchMedia("(min-width:700px) and (hover:hover)").matches&&m.querySelector(".testa").style.display!=="none")i.focus();}};
+  m.querySelector(".tutti").onclick=()=>{SEL[m.id].clear();m.querySelectorAll(".voci input").forEach(c=>c.checked=false);cambiato(m);};
+  const fi=m.querySelector(".testa input");fi.addEventListener("input",()=>filtraVoci(m));
+  fi.onkeydown=e=>{if(e.key!=="Enter")return;e.preventDefault();const vis=[...m.querySelectorAll(".voci label")].filter(l=>!l.hidden).map(l=>l.querySelector("input"));
+    if(!vis.length||vis.length===m.querySelectorAll(".voci label").length)return;vis.forEach(c=>{c.checked=true;SEL[m.id].add(c.value);});m.classList.remove("aperto");cambiato(m);};
+  m.querySelector(".voci").onchange=e=>{const c=e.target;c.checked?SEL[m.id].add(c.value):SEL[m.id].delete(c.value);cambiato(m);};}
+function chiudiMs(){document.querySelectorAll(".ms.aperto").forEach(x=>x.classList.remove("aperto"));}
+document.addEventListener("click",e=>{if(!e.target.closest(".ms")&&!e.target.closest("#fpan"))chiudiMs();});
+document.addEventListener("keydown",e=>{if(e.key==="/"&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();$("q").focus();}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){chiudiMs();if(document.body.classList.contains("fopen"))chiudiF();}});
+function filtraVoci(m){const q=pul(m.querySelector(".testa input").value);if((m._vals||[]).length>TETTO){voci(m,q);return;}m.querySelectorAll(".voci label").forEach(l=>{l.hidden=!!q&&!(" "+pul(l.dataset.t)).includes(" "+q);});}
+function etichetta(m){const s=SEL[m.id],b=m.querySelector("button"),et=ETI[m.id]||(v=>v);const nomi=[...s].map(et);
+  b.textContent=!s.size?m.dataset.vuoto:s.size<=2?nomi.join(", "):`${nomi[0]} e altri ${s.size-1}`;m.classList.toggle("attivo",s.size>0);}
+function opzioni(id,vals){const m=$(id),s=SEL[id],set=new Set(vals);[...s].forEach(v=>{if(!set.has(v))s.delete(v);});
+  m._vals=vals;m.querySelector(".testa").style.display=vals.length>6?"":"none";if(m.classList.contains("aperto"))voci(m);else m.querySelector(".voci").innerHTML="";etichetta(m);}
+// elenchi lunghi (7.000 comuni): si mostrano le prime 250 voci, le altre si trovano scrivendo nella casella
+const TETTO=250;
+function voci(m,q=""){const s=SEL[m.id],et=ETI[m.id]||(v=>v);let v=m._vals||[];
+  if(q)v=v.filter(x=>(" "+pul(et(x))).includes(" "+q));const tot=v.length;
+  if(tot>TETTO){v=[...v.filter(x=>s.has(x)),...v.filter(x=>!s.has(x))].slice(0,TETTO);}
+  m.querySelector(".voci").innerHTML=v.map(x=>`<label data-t="${esc(et(x))}"><input type="checkbox" value="${esc(x)}"${s.has(x)?" checked":""}><span>${esc(et(x))}</span><i></i></label>`).join("")+
+   (tot>TETTO?`<p class="attesa" style="padding:6px 8px">Altre ${fmt(tot-TETTO)} voci: scrivi nella casella per trovarle.</p>`:"")||`<p class="attesa" style="padding:8px">Nessuna voce</p>`;
+  numeri(m);}
+function numeri(m){const c=m._cnt;if(!c)return;m.querySelectorAll(".voci label").forEach(l=>{const i=l.querySelector("input"),n=c[i.value]||0;l.querySelector("i").textContent=fmt(n);l.classList.toggle("zero",!n&&!i.checked);});}
+const ok=(id,v)=>!SEL[id].size||(Array.isArray(v)?v.some(t=>SEL[id].has(t)):SEL[id].has(v));
+// regione -> province -> comuni: ogni filtro mostra solo le voci compatibili con quelli sopra
+function cascata(){const B=base();
+  opzioni("f-reg",[...new Set(B.map(x=>x.r))].sort(COL.compare));
+  opzioni("f-prov",[...new Set(B.filter(x=>ok("f-reg",x.r)).map(x=>x.p))].sort((a,b)=>COL.compare(D.provn[a],D.provn[b])));
+  const cs=[...new Set(B.filter(x=>ok("f-reg",x.r)&&ok("f-prov",x.p)).map(x=>x.p+"|"+x.c))];
+  const dop=new Set(cs.map(v=>v.split("|")[1]).filter((c,i,a)=>a.indexOf(c)!==i));
+  ETI["f-com"]=v=>{const [p,c]=v.split("|");return dop.has(c)||!SEL["f-prov"].size?c+" ("+p+")":c;};
+  opzioni("f-com",cs.sort((a,b)=>COL.compare(a.split("|")[1],b.split("|")[1])));}
+function vociPerFrequenza(id){const c={},f=FACCE[id];base().forEach(x=>{const v=f(x);(Array.isArray(v)?v:[v]).forEach(t=>{if(t)c[t]=(c[t]||0)+1;});});return Object.keys(c).sort((a,b)=>c[b]-c[a]);}
+function cambiato(m){etichetta(m);if(m.id==="f-reg"||m.id==="f-prov")cascata();if(m.classList.contains("aperto"))conta(m.id);S.shown=40;draw();}
+// conteggi incrociati (2/11 nella Dashboard): ogni voce conta i locali che passano TUTTI GLI ALTRI filtri; calcolati solo per il filtro aperto
+function conta(id){const m=$(id),f=FACCE[id],c={},Q=cercaPrep();
+  base().forEach(x=>{if(passa(x,id,Q)){const v=f(x);(Array.isArray(v)?v:[v]).forEach(t=>{if(t)c[t]=(c[t]||0)+1;});}});
+  m._cnt=c;numeri(m);}
+// ---- ricerca: frase intera nel nome in testa, poi tutte le parole a inizio di parola (nome, comune, provincia) ----
+let Qc={k:null};
+function cercaPrep(){const qs=pul(S.q);if(Qc.k===qs+"|"+S.v)return Qc;const q=qs?qs.split(" "):[];
+  return Qc={k:qs+"|"+S.v,qs,q,frase:qs&&qs.includes(" ")?" "+qs:"",f:IW&&q.length?q.map(perParola):null};}
+const qOf=x=>x._q||(x._q=" "+pul(x.n+" "+x.c+" "+(D.provn[x.p]||""))+" ");
+const nOf=x=>x._n||(x._n=" "+pul(x.n)+" ");
+const cercaOk=(x,Q)=>!Q.q.length||(Q.f&&x.i>=0?Q.f.every(f=>f[x.i]===1):Q.q.every(w=>qOf(x).includes(" "+w)));
+// ---- distanza ----
+function calcDist(){for(const x of L){if(PT&&x.la!=null){x._d=kmd(PT.la,PT.lo,x.la,x.lo);x._t=minu(x._d);}else x._d=x._t=null;}}
+const vicAttivo=()=>!!(PT&&(VK||VT));
+const vicOk=x=>!vicAttivo()||(x._d!=null&&(!VK||x._d<=VK)&&(!VT||x._t<=VT));
+const tTxt=(t,l)=>t<60?t+(l?" minuti":" min"):t===60?(l?"1 ora":"1 h"):t===90?(l?"1 ora e mezza":"1 h ½"):Math.floor(t/60)+" h "+t%60;
+const distTxt=x=>x._d==null?"":`${x._d<10?x._d.toLocaleString("it-IT",{maximumFractionDigits:1}):Math.round(x._d)} km · ~${Math.max(5,Math.round(x._t/5)*5)} min`;
+// ---- filtro complessivo ----
+const SP=()=>({cit:$("c-cit").checked&&S.v==="tutti"||S.v==="piz"&&$("c-cit").checked,sto:$("c-sto").checked,sito:$("c-sito").checked});
+function passa(x,salta,Q,sp=SP()){for(const id in FACCE){if(id!==salta&&SEL[id].size&&!ok(id,FACCE[id](x)))return false;}
+  if(sp.cit&&!(x.s>0))return false;if(sp.sto&&!x.h)return false;if(sp.sito&&!x.w)return false;if(!vicOk(x))return false;return cercaOk(x,Q);}
+function filtrati(){const Q=cercaPrep(),sp=SP();let r=ordinati().filter(x=>passa(x,null,Q,sp));
+  if(Q.frase){const a=r.filter(x=>nOf(x).includes(Q.frase));if(a.length&&a.length<r.length){const s=new Set(a);r=a.concat(r.filter(x=>!s.has(x)));}}return r;}
+["c-cit","c-sto","c-sito"].forEach(id=>$(id).onchange=()=>{S.shown=40;draw();});
+let tq=null;$("q").addEventListener("input",()=>{$("qx").hidden=!$("q").value;clearTimeout(tq);tq=setTimeout(()=>{S.q=$("q").value;S.shown=40;draw();},150);});
+$("qx").onclick=()=>{$("q").value="";$("qx").hidden=true;S.q="";S.shown=40;draw();$("q").focus();};
+$("q").addEventListener("keydown",e=>{if(e.key==="Enter")$("q").blur();});
+// ---- pannello filtri su telefono ----
+function apriF(){document.body.classList.add("fopen");document.querySelector("#fpan .grab").hidden=false;aggiornaPiede();}
+function chiudiF(){document.body.classList.remove("fopen");chiudiMs();}
+$("mfil").onclick=apriF;$("fchiudi").onclick=chiudiF;$("fback").onclick=chiudiF;
+$("fok").onclick=()=>{chiudiF();$("count").scrollIntoView({block:"start",behavior:"smooth"});};
+$("fazz").onclick=()=>azzera();$("fazzd").onclick=()=>azzera();
+function azzera(){for(const id in SEL){SEL[id].clear();}["c-cit","c-sto","c-sito"].forEach(i=>$(i).checked=false);$("q").value="";S.q="";$("qx").hidden=true;
+  cascata();document.querySelectorAll(".ms").forEach(etichetta);S.shown=40;draw();}
+function nAttivi(){let n=0;for(const id in SEL)n+=SEL[id].size;return n+["c-sto","c-sito"].filter(i=>$(i).checked).length+(S.v!=="rico"&&$("c-cit").checked?1:0);}
+// ---- disegno ----
+let ULT=[];
+function draw(){if(!L.length)return;if(!RN&&serveRN()){$("count").innerHTML='<span class="avviso">Carico…</span>';caricaAux().then(draw).catch(()=>{});return;}vicEtichetta();const r=filtrati();ULT=r;const Q=cercaPrep();
+  // numero generale fisso; sopra, quando la selezione non è la classifica generale intera, la posizione nella selezione
+  let nr=0;for(const x of r)if(x.s>0)nr++;const sel=nr>0&&(nr!==S.n_rico||S.ord!=="punteggio");
+  let k=0;for(const x of r.slice(0,S.shown)){x._sel=sel&&x.s>0?++k:0;}S.sel=sel;S.k=k;
+  stats(r);$("qconta").textContent=Q.qs?fmt(r.length):"";
+  const lab={rico:"locali citati",piz:"pizzerie",tutti:"locali"}[S.v];
+  $("count").innerHTML=`<b>${fmt(r.length)}</b> ${lab}${r.length<base().length?" su "+fmt(base().length):""} · ordinati per ${ORDS[S.ord][0].toLowerCase()}`;
+  $("grid").innerHTML=r.length?r.slice(0,S.shown).map(x=>card(x,Q)).join(""):`<div class="empty">Nessun locale con questi filtri.${nAttivi()||Q.qs||vicAttivo()?`<br><button type="button" onclick="azzera()">Azzera i filtri</button>`:""}</div>`;
+  $("more").hidden=r.length<=S.shown;$("more").textContent=`Mostra altri (${fmt(r.length-S.shown)})`;
+  attivi();const n=nAttivi();$("fazzd").hidden=!n&&!S.q;$("nfil").hidden=!n;$("nfil").textContent=n;$("mfil").classList.toggle("on",n>0);aggiornaPiede();
+  document.querySelectorAll(".ms.aperto").forEach(m=>conta(m.id));precarica(r);salvaIst();}
+function aggiornaPiede(){$("fok").textContent=`Mostra ${fmt(ULT.length)} ${ULT.length===1?"locale":"locali"}`;}
+// altri locali: si aggiungono in fondo senza ridisegnare tutto; arrivando in fondo si caricano da soli
+function aggiungi(){const r=ULT;if(S.shown>=r.length)return;const Q=cercaPrep(),a=S.shown;S.shown+=60;
+  const nuovi=r.slice(a,S.shown);for(const x of nuovi){x._sel=S.sel&&x.s>0?++S.k:0;}
+  $("grid").insertAdjacentHTML("beforeend",nuovi.map(x=>card(x,Q)).join(""));
+  $("more").hidden=r.length<=S.shown;$("more").textContent=`Mostra altri (${fmt(r.length-S.shown)})`;}
+$("more").onclick=aggiungi;
+if("IntersectionObserver" in window)new IntersectionObserver(es=>{if(es[0].isIntersecting&&!$("more").hidden&&L.length)aggiungi();},{rootMargin:"600px"}).observe($("more"));
+let suT=0;window.addEventListener("scroll",()=>{if(suT)return;suT=requestAnimationFrame(()=>{suT=0;$("su").hidden=scrollY<1400;});},{passive:true});
+$("su").onclick=()=>window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});
+function stats(v){let cl=0,sto=0;const co=new Set(),rg=new Set();for(const x of v){if(x.s>0)cl++;if(x.h)sto++;co.add(x.p+x.c);rg.add(x.r);}
+  const t2=S.v==="rico"?[fmt(rg.size),"regioni"]:[fmt(cl),"citati"];
+  $("stats").innerHTML=[[fmt(v.length),{rico:"citati",piz:"pizzerie",tutti:"locali"}[S.v]],t2,[fmt(sto),"storici"],[fmt(co.size),"comuni"]].map(([a,b])=>`<div class="stat"><b>${a}</b><span>${b}</span></div>`).join("");}
+function attivi(){const out=[];
+  for(const id in SEL){const et=ETI[id]||(v=>v);SEL[id].forEach(v=>out.push(`<button type="button" class="at" data-f="${id}" data-v="${esc(v)}">${esc(et(v))}<b aria-hidden="true">×</b></button>`));}
+  [["c-sto","🏛️ Storici"],["c-sito","🔗 Con sito"]].forEach(([i,t])=>{if($(i).checked)out.push(`<button type="button" class="at" data-c="${i}">${t}<b aria-hidden="true">×</b></button>`);});
+  if(S.v!=="rico"&&$("c-cit").checked)out.push(`<button type="button" class="at" data-c="c-cit">🏅 Solo citati<b aria-hidden="true">×</b></button>`);
+  if(out.length>1)out.push(`<button type="button" class="at az" data-az="1">Azzera tutto</button>`);
+  $("attivi").innerHTML=out.join("");$("attivi").hidden=!out.length;}
+$("attivi").onclick=e=>{const b=e.target.closest(".at");if(!b)return;if(b.dataset.az){azzera();return;}
+  if(b.dataset.c){$(b.dataset.c).checked=false;}else{SEL[b.dataset.f].delete(b.dataset.v);const m=$(b.dataset.f);m.querySelectorAll(".voci input").forEach(c=>{if(c.value===b.dataset.v)c.checked=false;});etichetta(m);if(b.dataset.f==="f-reg"||b.dataset.f==="f-prov")cascata();}
+  S.shown=40;draw();};
+function evid(n,Q){if(!Q.q.length)return esc(n);let h=esc(n);for(const w of Q.q){if(w.length<2)continue;const re=new RegExp("(^|[^\\p{L}\\p{N}])("+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&").split("").map(ch=>{const m={a:"aàáâä",e:"eèéêë",i:"iìíîï",o:"oòóôö",u:"uùúûü"}[ch];return m?"["+m+"]":ch;}).join("")+")","iu");h=h.replace(re,"$1<mark>$2</mark>");}return h;}
+function righe(x,max,soloGuide){const g=x.g2;
+  const r1=(max?g.slice(0,max):g).map(badge).join("")+(max&&g.length>max?`<span class="b">+${g.length-max}</span>`:"");
+  const r2=soloGuide?"":(x.ns?`<span class="b">📰 Stampa${x.ns>1?" ×"+x.ns:""}</span>`:"")+(x.nb?`<span class="b">✍️ Blog${x.nb>1?" ×"+x.nb:""}</span>`:"")+(x.h?`<span class="b st">🏛️ Storico</span>`:"")+(x.nst?`<span class="b">📜 Storia e ambiente</span>`:"");
+  return r1||r2?`<div class="badges">${r1?`<div class="brow r1">${r1}</div>`:""}${r2?`<div class="brow r2">${r2}</div>`:""}</div>`:"";}
+// al posto dei numeri: TUTTE le icone delle citazioni, come gettoni rotondi colorati per famiglia; il numero piccolo dice "quante" (★★ = 2)
+function TK(c){let m;
+  if(m=c.match(/^MICH_([123])$/))return["⭐",+m[1],"mi"];if(c==="MICH_BIB")return["😋",0,"mi"];if(c==="MICH_SEL")return["🍽️",0,"mi"];
+  if(m=c.match(/^GR_(\d)([FGSB])$/))return[{F:"🍴",G:"🦐",S:"🍕",B:"🍷"}[m[2]],+m[1],"gr"];
+  if(c==="GR_PIZZA_ANNO")return["🏆",0,"gr"];if(c==="GR_PREMIO")return["🏆",0,"gr"];if(c==="GR_GUIDA")return["🦐",0,"gr"];
+  if(c==="SF_CH")return["🐌",0,"sf"];if(c.startsWith("SF_"))return["🐌",0,"sf2"];
+  if(c==="ESP_5")return["🎩",5,"es"];if(c.startsWith("ESP"))return["🎩",0,"es"];
+  if(c.startsWith("TOP50"))return["🏅",50,"t5"];if(c==="IDG")return["✳️",0,"ig"];if(c==="W50")return["🌍",0,"w5"];if(c==="ERT")return["📘",0,"rg"];
+  return[LEG[c]?.[2]||"•",0,"nt"];};
+function gettone(em,n,fam,tit){return `<span class="tk f-${fam}" title="${esc(tit)}">${em}${n>1?`<i>${n}</i>`:""}</span>`;}
+function icone(x){const v=x.g2.map(c=>{const [em,n,f]=TK(c);return gettone(em,n,f,LEG[c]?.[0]||c);});
+  if(x.ns)v.push(gettone("📰",x.ns,"nt","Stampa"));if(x.nb)v.push(gettone("✍️",x.nb,"nt","Blog"));
+  if(x.h)v.push(gettone("🏛️",0,"st","Locale storico"));if(x.nst)v.push(gettone("📜",0,"nt","Storia e ambiente"));
+  return `<div class="rank ico" aria-label="Riconoscimenti e citazioni">${v.join("")}</div>`;}
+function card(x,Q){const meta=`<b class="com">${esc(x.c)} (${esc(x.p)})</b>`+[x.cu,x.st].filter(Boolean).map(t=>" · "+esc(t)).join("");const rk=x.s>0;const posTxt="";
+  return `<button type="button" class="card" data-i="${x.i}">${rk?icone(x):""}<div class="cbody"><div class="cname">${evid(x.n,Q)}</div><div class="cmeta">${meta}</div>${posTxt}${PT&&x._d!=null?`<div class="cmeta dist">📍 ${distTxt(x)}</div>`:""}${righe(x,3,x.s>0)}${rk?`<div class="bar"><i style="width:${x.s}%"></i></div>`:""}</div></button>`;}
+$("grid").onclick=e=>{const c=e.target.closest(".card");if(!c)return;const i=+c.dataset.i;if(i>=0&&!L.length){TOCCO=i;return;}apri(trovaI(i));};
+$("grid").addEventListener("pointerdown",e=>{const c=e.target.closest(".card");if(!c)return;const x=trovaI(+c.dataset.i);if(x&&FILES[x.p])carica(x.p).catch(()=>{});},{passive:true});
+// ---- scheda: si apre subito con i dati dell'indice e si completa con le fonti della provincia ----
+const ordG=c=>-(LEG[c]?.[1]||0);
+function fontiOrd(f){const gr=t=>t[0]==="STORIA"?2:AGG.has(t[0])?1:0,visti=new Set();
+  return f.filter(t=>{if(gr(t))return true;const k=t[0]+"|"+String(t[3]).slice(0,4);if(visti.has(k))return false;visti.add(k);return true;})
+   .sort((a,b)=>gr(a)-gr(b)||(gr(a)===0?ordG(a[0])-ordG(b[0]):0)||String(b[3]).localeCompare(String(a[3])));}
+function htmlFonti(f){const GT=["Guide","Stampa e blog","Storia e ambiente"];let gl=-1;
+  return fontiOrd(f).map(t=>{const g=t[0]==="STORIA"?2:AGG.has(t[0])?1:0;const h=g!==gl?`<li class="grp">${GT[g]}</li>`:"";gl=g;
+   const ic=t[0]==="CRIT"?gettone("📰",0,"nt","Stampa"):t[0]==="BLOG"?gettone("✍️",0,"nt","Blog"):t[0]==="STORIA"?gettone("📜",0,"nt","Storia e ambiente"):(()=>{const [em,n,f]=TK(t[0]);return gettone(em,n,f,LEG[t[0]]?.[0]||t[0]);})();
+   return h+`<li><span class="fi">${ic}</span><div><a href="${esc(t[2])}" target="_blank" rel="noopener">${esc(t[1])}</a><small>${esc(LEG[t[0]]?.[0]||{CRIT:"Stampa",BLOG:"Blog"}[t[0]]||t[0])}${t[3]?" · "+esc(t[3]):""}${t[4]?`<q>${esc(t[4])}</q>`:""}</small></div></li>`;}).join("");}
+function calcolo(x){const pri=x.g2.filter(c=>!SOLO.has(c)&&LEG[c]).sort((a,b)=>LEG[b][1]-LEG[a][1]);const top=pri.length?LEG[pri[0]][1]:0;
+  const nconf=Math.max(0,Math.round((x.s*1.09-top)/3));
+  return `<div class="calc">${top?`Riconoscimento principale: <b>${esc(LEG[pri[0]][0])}</b> = ${top} punti.<br>`:"Nessun riconoscimento principale: contano solo le conferme.<br>"}${nconf?`Conferme (altre guide, stampa, blog, guide non lette ovunque): ${nconf} × 3 = +${Math.min(9,nconf*3)}${nconf*3>9?" (massimo 9)":""}.<br>`:""}Punteggio = (${top}${nconf?" + "+Math.min(9,nconf*3):""}) ÷ 1,09 = <b>${x.s.toFixed(1)}</b> su 100.</div>`;}
+// a pari punteggio: quali criteri della regola lo hanno messo prima o dopo
+function pari(x){if(!L.length)return"";if(x.top==null){const pri=x.g2.filter(c=>!SOLO.has(c)&&LEG[c]).map(c=>LEG[c][1]);x.top=pri.length?Math.max(...pri):0;}
+  const st=L.filter(y=>y.s===x.s&&y.s>0).length;if(st<2)return"";
+  return `<div class="calc" style="margin-top:6px;color:var(--mute)">Altri ${fmt(st-1)} locali hanno ${x.s.toFixed(1)} punti: tra loro decidono, nell'ordine, il riconoscimento principale (${x.top} punti), il numero di guide (${x.g2.length}), gli articoli di stampa e blog (${x.ns+x.nb}), la storia del locale (${x.h||x.nst?"sì":"no"}) e infine il nome.</div>`;}
+// collegamenti utili. Ricerche senza virgolette (i nomi nelle anagrafi spesso non coincidono parola per parola con quelli del web),
+// in italiano e dall'Italia; per le foto la vista Immagini di Google (udm=2); per prenotare, la pagina TheFork del locale se esiste.
+const GQ=(q,extra="")=>"https://www.google.com/search?hl=it&gl=it"+extra+"&q="+encodeURIComponent(q);
+const nomeQ=x=>(x.n+" "+x.c).replace(/\s+/g," ").trim();
+function azioniExtra(x){
+  return `<a class="btn" href="${GQ(nomeQ(x),"&udm=2")}" target="_blank" rel="noopener noreferrer">📷 Foto</a>`+
+   `<a class="btn" href="${GQ(nomeQ(x)+" menu")}" target="_blank" rel="noopener noreferrer">📋 Menu</a>`+
+   `<a class="btn" href="${GQ(nomeQ(x)+" TheFork prenota")}" target="_blank" rel="noopener noreferrer" title="Cerca la pagina TheFork del locale: se c'è, è il primo risultato">📅 Prenota</a>`;}
+function vicini(x){if(x.la==null||!EX)return[];return EX.luoghi.map(l=>[l,minu(kmd(x.la,x.lo,l[4],l[5]))]).filter(t=>t[1]<=15).sort((a,b)=>a[1]-b[1]).slice(0,6);}
+let aperto=null;
+function apri(x){aperto=x;try{localStorage.setItem("achfood_ultp",x.p);}catch(e){}const nf=x.nf>0;
+  const nearH=x=>{const vv=vicini(x);return vv.length?`<details class="near"><summary>🏛️ Da vedere qui vicino <span class="nn">${vv.length}</span><span class="fr" aria-hidden="true">▼</span></summary><div class="nbox"><ul>${vv.map(([l,m])=>`<li><span class="t">${Math.round(m)} min</span><div>${l[1]} <b>${esc(l[0])}</b><small>${esc(l[2])} · ${esc(l[3])}${l[6]?" (dal centro del comune)":""}</small></div></li>`).join("")}</ul></div></details>`:"";};const near=`<div id="snear">${nearH(x)}</div>`;
+  if(!EX||!AUX)Promise.all([caricaExtra(),caricaAux()]).then(()=>{if(aperto===x)$("snear").innerHTML=nearH(x);}).catch(()=>{});
+  const perche=x.s>0?`<div class="box"><h3>Perché è in quest’ordine</h3>${calcolo(x)}${pari(x)}</div>`:x.h?`<div class="box"><h3>Locale storico</h3><div class="calc">Iscritto a un registro di locali storici o con storia documentata. Non ha riconoscimenti di guide, quindi non è in Ordina.</div></div>`:nf?`<div class="box"><h3>Solo in elenco</h3><div class="calc">Le fonti qui sotto lo citano, ma valgono solo come conferma (articoli, selezioni di anni passati, descrizioni): da sole non lo portano in Ordina.</div></div>`:"";
+  const gm="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(x.n+", "+x.c+" "+x.p);
+  $("sheet").innerHTML=`<div class="grab"></div><button class="sx" type="button" aria-label="Chiudi" id="sx">×</button>
+   <h2>${esc(x.n)}</h2><div class="where">📍 <b class="com">${esc(x.c)} (${esc(x.p)})</b>${x.cu?" · "+esc(x.cu):""}${x.st?" · "+esc(x.st):""}${PT&&x._d!=null?" · "+distTxt(x):""}</div>
+   <div class="actions" id="sazioni"><a class="btn pri" href="${gm}" target="_blank" rel="noopener noreferrer">🗺️ Mappa</a>${azioniExtra(x)}</div>
+   ${righe(x,0)}${near}${perche}
+   <div id="sfonti">${nf||x.h?`<div class="box"><h3>Le fonti</h3><p class="attesa">Carico le fonti…</p></div>`:`<div class="box"><h3>Solo in elenco</h3><div class="calc">Nessuna guida, testata o registro storico lo cita per ora. È in elenco perché esiste nelle anagrafi aperte.</div></div>`}</div>
+   <p class="note" id="snota">Foto, menu e prenotazione aprono una ricerca per nome e comune: voti e recensioni dei clienti restano sulle piattaforme, qui non sono riportati.</p>`;
+  $("sx").onclick=()=>$("dlg").close();
+  try{if(!$("dlg").open)$("dlg").showModal();}catch(e){$("dlg").setAttribute("open","");}$("sheet").scrollTop=0;
+  carica(x.p).then(v=>{if(aperto!==x)return;const d=v[x.k];if(!d)return;const [f,w,src]=d;
+    if(nf||x.h)$("sfonti").innerHTML=f.length?`<div class="box"><h3>Le fonti</h3><ul class="fonti">${htmlFonti(f)}</ul></div>`:"";
+    if(w)$("sazioni").insertAdjacentHTML("beforeend",`<a class="btn" href="${esc(/^https?:\/\//i.test(w)?w:"https://"+w.replace(/^\/+/,""))}" target="_blank" rel="noopener noreferrer">🔗 Sito</a>`);
+    $("snota").textContent+=" Anagrafe: "+(src==="guida"?"nome dalla guida, posizione del comune":src)+".";},
+   ()=>{if(aperto===x&&(nf||x.h))$("sfonti").innerHTML=`<div class="box"><h3>Le fonti</h3><p class="attesa">Non riesco a caricare le fonti ora. Riprova tra poco.</p></div>`;});}
+$("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close();});
+$("dlg").addEventListener("close",()=>{aperto=null;});
+// ---- rotte (#classifica, #pizzerie, #tutti, #metodo) ----
+function rotta(){const h=(location.hash||"#ordina").slice(1);const v={ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti",metodo:"metodo"}[h]||"rico";
+  document.querySelectorAll("nav.tabs a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
+  $("lista").hidden=v==="metodo";$("metodo").hidden=v!=="metodo";if(v==="metodo"){metodo();return;}
+  S.v=v;$("sp-cit").hidden=v==="rico";
+  cascata();opzioni("f-cuc",vociPerFrequenza("f-cuc"));opzioni("f-sti",vociPerFrequenza("f-sti"));opzioni("f-ric",vociPerFrequenza("f-ric"));opzioni("f-fon",vociPerFrequenza("f-fon"));
+  $("f-cuc").hidden=v==="piz";opzOrd();S.shown=40;draw();}
+// ---- metodo ----
+function metodo(){if($("metodo").dataset.ok||!D)return;$("metodo").dataset.ok=1;
+  const righeT=Object.entries(LEG).filter(([c])=>!["GR_GUIDA","STORIA"].includes(c)).sort((a,b)=>b[1][1]-a[1][1]).map(([c,[l,v,ic]])=>`<tr><td>${(()=>{const [em,n,f]=TK(c);return gettone(em,n,f,l);})()}</td><td>${esc(l)}${AGG.has(c)?" <small>(solo conferma)</small>":SOLO.has(c)?" <small>(conferma: guida non letta in tutte le province)</small>":""}</td><td class="v">${AGG.has(c)||SOLO.has(c)?"+3":v}</td></tr>`).join("");
+  $("metodo").innerHTML=`<div class="indice"><a href="#m-rg">Come funziona Ordina</a><a href="#m-cl">Il punteggio</a><a href="#m-pt">Punti per riconoscimento</a><a href="#m-dati">Da dove vengono i dati</a><a href="#m-pv">Province</a><a href="#m-no">Cosa non c'è</a></div>
+  <h2 id="m-rg">Come funziona Ordina</h2>
+  <p>C'è <b>un solo ordine</b> per tutta Italia, con dentro tutti i locali citati da guide, stampa e blog (ristoranti e pizzerie insieme). I locali si mettono in fila così:</p>
+  <ol><li><b>Punteggio delle guide</b>, da 0 a 100 (vedi sotto come si calcola).</li>
+  <li>A pari punteggio, il <b>riconoscimento principale</b> più alto (per esempio una stella Michelin prima di un Bib Gourmand).</li>
+  <li>Poi il <b>numero di guide diverse</b> che lo citano.</li>
+  <li>Poi il <b>numero di articoli</b> di stampa e blog.</li>
+  <li>Poi i <b>locali storici</b> o con storia documentata.</li>
+  <li>Infine, solo se tutto è uguale, il <b>nome</b> in ordine alfabetico.</li></ol>
+  <p>I numeri di posizione non si mostrano: l'elenco segue sempre quest'ordine, anche quando filtri, e accanto a ogni locale trovi <b>tutte le icone delle sue citazioni</b>, dal riconoscimento più importante: il numerino dice quanti (per esempio ⭐ con 2 = due stelle Michelin, 🍴 con 3 = Tre Forchette). Il significato di ogni icona è nella tabella qui sotto; in più ${gettone("📰",0,"nt","Stampa")} articoli di stampa, ${gettone("✍️",0,"nt","Blog")} blog, ${gettone("🏛️",0,"st","Locale storico")} locale storico, ${gettone("📜",0,"nt","Storia e ambiente")} storia e ambiente.</p>
+  <h2 id="m-cl">Come si calcola il punteggio</h2>
+  <p>Conta solo ciò che è pubblico e verificabile: guide, articoli firmati con data, registri dei locali storici. <b>Nessun voto o recensione</b> di Google, TripAdvisor o altre piattaforme.</p>
+  <ol><li><b>Riconoscimento principale:</b> il più alto tra quelli del locale, con i punti della tabella.</li>
+  <li><b>Conferme:</b> ogni altro riconoscimento, articolo o blog aggiunge 3 punti, al massimo 9. Gli articoli pesano meno con gli anni (1 − anni/5) e dopo un cambio di gestione non contano.</li>
+  <li><b>Punteggio</b> = (principale + conferme) ÷ 1,09: arriva a 100 solo il massimo riconoscimento con tre conferme.</li>
+  <li><b>Omogeneità:</b> una guida entra come principale solo se è letta per intero in tutte le province; altrimenti vale come conferma.</li></ol>
+  <h2 id="m-pt">Punti per riconoscimento</h2>
+  <table><thead><tr><th></th><th>Riconoscimento</th><th>Punti</th></tr></thead><tbody>${righeT}</tbody></table>
+  <h2 id="m-dati">Da dove vengono gli altri dati</h2>
+  <p><b>Questa guida è fatta solo con informazioni pubbliche, disponibili sul web</b>: guide pubblicate, articoli firmati di giornali e riviste, blog di critici, siti dei locali, registri dei locali storici e anagrafi aperte. Ogni citazione ha la sua fonte con link nella scheda del locale. Non usa voti, recensioni o foto di Google, TripAdvisor o altre piattaforme.</p>
+  <ul><li><b>Esistenza, posizione, sito:</b> Overture Maps e OpenStreetMap, con licenza aperta. Se il record aperto più vicino ha un altro nome, se ne usa solo la posizione.</li>
+  <li><b>Tipo di cucina:</b> categorie delle anagrafi aperte, nome del locale, guide della pizza.</li>
+  <li><b>Osteria, trattoria, locanda:</b> nome del locale e guide di settore (Osterie d'Italia, Gamberi, 50 Top Trattorie).</li>
+  <li><b>Luoghi vicini:</b> Ach's Places Guide; tempi in auto stimati dalla distanza.</li></ul>
+  <h2 id="m-pv">Province</h2>
+  <div class="pvf"><input id="pv-q" type="search" placeholder="Cerca una provincia"><select id="pv-r"><option value="">Tutte le regioni</option>${[...new Set(Object.values(D.regp))].sort(COL.compare).map(r=>`<option>${esc(r)}</option>`).join("")}</select><select id="pv-o"><option value="r">Per regione</option><option value="n">Più locali</option><option value="k">Più locali citati</option></select><span id="pv-t"></span></div>
+  <div id="pv-l"></div><p class="note">Tocca una provincia per vederne tutti i locali.</p>
+  <h2 id="m-no">Cosa non c'è, per scelta</h2>
+  <p>Voti dei clienti, recensioni, foto, orari e prezzi delle piattaforme. Per quelli, ogni scheda ha il pulsante "Apri in Google Maps". Un locale non citato non è "bocciato": semplicemente nessuna fonte lo ha ancora segnalato.</p>
+  <p class="note">Prototipo del ${esc(D.oggi)}: ${fmt(L.length)} locali in ${Object.keys(D.provn).length} province. Segnalazioni e correzioni sono benvenute.</p>`;
+  const A={};for(const x of L){const a=A[x.p]||(A[x.p]={p:x.p,n:0,k:0,h:0});a.n++;if(x.s>0)a.k++;if(x.h)a.h++;}
+  const pv=()=>{const q=pul($("pv-q").value),r=$("pv-r").value,o=$("pv-o").value;
+    let v=Object.values(A).filter(a=>(!r||D.regp[a.p]===r)&&(!q||(" "+pul(D.provn[a.p]+" "+a.p)).includes(" "+q)));
+    $("pv-t").textContent=`${v.length} province · ${fmt(v.reduce((s,a)=>s+a.n,0))} locali`;
+    const box=a=>`<button type="button" class="pv" data-p="${a.p}"><b>${esc(D.provn[a.p])}</b><span><i>${fmt(a.n)}</i> locali · ${fmt(a.k)} citati</span></button>`;
+    if(o==="r"){const g={};v.forEach(a=>(g[D.regp[a.p]]||(g[D.regp[a.p]]=[])).push(a));
+      $("pv-l").innerHTML=Object.keys(g).sort(COL.compare).map(rg=>`<div class="pvr"><span>${esc(rg)}</span><span>${fmt(g[rg].reduce((s,a)=>s+a.n,0))}</span></div><div class="pvg">${g[rg].sort((a,b)=>COL.compare(D.provn[a.p],D.provn[b.p])).map(box).join("")}</div>`).join("");}
+    else $("pv-l").innerHTML=`<div class="pvg">${v.sort((a,b)=>b[o]-a[o]).map(box).join("")}</div>`;};
+  ["pv-q","pv-r","pv-o"].forEach(i=>$(i).addEventListener("input",pv));pv();
+  $("pv-l").onclick=e=>{const b=e.target.closest(".pv");if(!b)return;azzeraSilenzioso();SEL["f-prov"].add(b.dataset.p);location.hash="#tutti";window.scrollTo(0,0);};}
+function azzeraSilenzioso(){for(const id in SEL)SEL[id].clear();$("q").value="";S.q="";$("qx").hidden=true;["c-cit","c-sto","c-sito"].forEach(i=>$(i).checked=false);}
+// ---- finestra "Vicino a…" ----
+const KM=[5,10,20,30,50,100],TM=[10,15,20,30,45,60,90];
+$("vkc").innerHTML=KM.map(k=>`<button type="button" data-k="${k}">${k} km</button>`).join("");
+$("vtc").innerHTML=TM.map(t=>`<button type="button" data-t="${t}">${t===60?"1 ora":t===90?"1 ora e ½":t+" min"}</button>`).join("");
+function cursore(el,v,vuoto){el.value=v==null?vuoto:v;el.style.setProperty("--p",(el.value-el.min)/(el.max-el.min)*100+"%");}
+function vicEtichetta(){const on=vicAttivo();$("mvic").classList.toggle("on",on);
+  $("mvic").querySelector("span").textContent=on?(VT?tTxt(VT):VK+" km"):"Vicino a…";
+  $("vriga").hidden=!on;if(on)$("vrt").innerHTML="📍 Entro "+[VK?VK+" km":"",VT?tTxt(VT,1)+" in auto":""].filter(Boolean).join(" e ")+" da <b>"+esc(PT.nome)+"</b>";
+  $("vkv").textContent=VK?VK+" km":"Qualsiasi";$("vtv").textContent=VT?tTxt(VT):"Qualsiasi";cursore($("vkr"),VK,101);cursore($("vtr"),VT,95);
+  $("vkc").querySelectorAll("button").forEach(b=>b.classList.toggle("on",+b.dataset.k===VK));$("vtc").querySelectorAll("button").forEach(b=>b.classList.toggle("on",+b.dataset.t===VT));}
+function vicConta(){if(!vicAttivo()){$("vok").textContent=PT?"Scegli raggio o tempo":"Scegli da dove parti";$("vok").disabled=true;return;}
+  const n=filtrati().length;$("vok").textContent=`Mostra ${fmt(n)} ${n===1?"locale":"locali"}`;$("vok").disabled=false;}
+function statoGeo(m){$("geost").classList.toggle("ok",!!PT&&!m);$("geost").textContent=m||(PT?"Partenza: "+PT.nome:"Nessuna partenza scelta.");}
+function vicCambiato(){if(!S.ordUtente||S.ord==="dist")S.ordUtente=false;opzOrd();S.shown=40;vicEtichetta();vicConta();draw();}
+function punto(la,lo,nome){if(!AUX){caricaAux().then(()=>punto(la,lo,nome)).catch(()=>{});return;}PT={la,lo,nome};["f-reg","f-prov","f-com"].forEach(id=>SEL[id].clear());cascata();calcDist();statoGeo();vicCambiato();}
+function togli(){PT=null;VK=VT=null;$("luogo").value="";calcDist();statoGeo();vicCambiato();}
+const apriV=()=>{vicEtichetta();vicConta();caricaExtra().then(e=>{if(!$("lcom").childElementCount)$("lcom").innerHTML=e.comuni.map(c=>`<option value="${esc(c[0]+" ("+c[1]+")")}">`).join("");}).catch(()=>{});try{$("vdlg").showModal();}catch(e){$("vdlg").setAttribute("open","");}};
+$("mvic").onclick=apriV;$("vcambia").onclick=apriV;$("vx").onclick=togli;$("vtogli").onclick=togli;
+$("vchiudi").onclick=()=>$("vdlg").close();$("vdlg").addEventListener("click",e=>{if(e.target===$("vdlg"))$("vdlg").close();});
+$("vok").onclick=()=>{$("vdlg").close();$("count").scrollIntoView({block:"start",behavior:"smooth"});};
+$("luogo").onchange=async()=>{const v=norm($("luogo").value.trim());if(!v||!D)return;const CM=(await caricaExtra()).comuni;
+  const c=CM.find(c=>norm(c[0]+" ("+c[1]+")")===v)||CM.find(c=>norm(c[0])===v)||CM.find(c=>norm(c[0]).startsWith(v));
+  if(c){$("luogo").value=c[0]+" ("+c[1]+")";$("luogo").blur();punto(c[2],c[3],c[0]);}else statoGeo("Comune non trovato: controlla come è scritto.");};
+const GEO_NO="Dentro l'app di Claude la pagina non riceve la posizione del telefono: scrivi il comune da cui parti.";
+$("geo").onclick=()=>{let ok2=true;try{const fp=document.permissionsPolicy||document.featurePolicy;ok2=!fp||fp.allowsFeature("geolocation");}catch(e){}
+  if(!navigator.geolocation||!ok2){statoGeo(GEO_NO);return;}statoGeo("Leggo la posizione…");
+  navigator.geolocation.getCurrentPosition(p=>{$("luogo").value="";punto(p.coords.latitude,p.coords.longitude,"dove sei");},e=>statoGeo(e.code===1?GEO_NO:"Posizione non disponibile: scrivi il comune."),{timeout:10000,maximumAge:300000});};
+const live=()=>{VK=+$("vkr").value>100?null:+$("vkr").value;VT=+$("vtr").value>90?null:+$("vtr").value;vicEtichetta();};
+["vkr","vtr"].forEach(id=>{$(id).addEventListener("input",live);$(id).addEventListener("change",()=>{live();vicCambiato();});});
+$("vkc").onclick=e=>{const b=e.target.closest("button");if(!b)return;VK=VK===+b.dataset.k?null:+b.dataset.k;vicCambiato();};
+$("vtc").onclick=e=>{const b=e.target.closest("button");if(!b)return;VT=VT===+b.dataset.t?null:+b.dataset.t;vicCambiato();};
+</script>
+</body>
+</html>
