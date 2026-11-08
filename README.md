@@ -1,2 +1,4 @@
-# achdinners.com
-Ach's Dinners Guide – ristoranti ed osterie premiate in Italia
+# Ach's Dinners Guide
+
+Dove mangiare in Italia: locali ordinati solo per citazioni di guide, stampa e registri storici.
+Sito: https://achdinners.com
