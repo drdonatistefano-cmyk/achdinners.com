@@ -30,10 +30,12 @@ nav.tabs a{border:1px solid var(--line);background:var(--paper);border-radius:99
 nav.tabs a.on{background:var(--acc);border-color:var(--acc);color:var(--on)}
 nav.tabs .n{font-size:12px;opacity:.8;font-weight:700}
 nav.tabs a .t{white-space:nowrap}
-@media (max-width:560px){nav.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;overflow:visible}
-  nav.tabs a{flex-direction:column;gap:0;padding:6px 2px 5px;border-radius:14px;font-size:13px;line-height:1.2;justify-content:center;text-align:center}
+nav.tabs a.met{margin-left:22px}
+@media (max-width:560px){nav.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;overflow:visible}
+  nav.tabs a.met{margin-left:0;grid-column:4}
+  nav.tabs a{flex-direction:column;gap:0;padding:6px 1px 5px;border-radius:14px;font-size:11.5px;letter-spacing:-.2px;line-height:1.2;justify-content:center;text-align:center}
   nav.tabs .n{font-size:10.5px;font-weight:600;opacity:.75}}
-@media (max-width:360px){nav.tabs a{font-size:12px}}
+@media (max-width:360px){nav.tabs a{font-size:10.5px}}
 .hero{padding:18px 0 6px}
 @media (max-width:560px){.hero{padding:12px 0 2px}.lede{font-size:14.5px;margin-top:8px}.kick{margin-bottom:6px;font-size:11px}}
 .avviso{font-size:13px;color:var(--mute);display:inline-flex;align-items:center;gap:8px}
@@ -290,10 +292,10 @@ footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);font-si
 <nav class="tabs" role="tablist">
   <a href="#ristoranti" data-v="rico"><span class="t">🍷 Segnalati</span><span class="n" id="n-rico"></span></a>
   <a href="#pizzerie" data-v="piz"><span class="t">🍕 Segnalate</span><span class="n" id="n-piz"></span></a>
-  <a href="#tutti" data-v="tutti"><span class="t">🍽️ Tutti</span><span class="n" id="n-tutti"></span></a>
   <a href="#apprezzati" data-v="altri"><span class="t">👍 Apprezzati</span><span class="n" id="n-altri"></span></a>
   <a href="#apprezzate" data-v="altp"><span class="t">🍕 Apprezzate</span><span class="n" id="n-altp"></span></a>
-  <a href="#metodo" data-v="metodo"><span class="t">📐 Metodo</span><span class="n">regole</span></a>
+  <a href="#tutti" data-v="tutti"><span class="t">🍽️ Tutti</span><span class="n" id="n-tutti"></span></a>
+  <a href="#metodo" data-v="metodo" class="met"><span class="t">📐 Metodo</span><span class="n">regole</span></a>
 </nav>
 <header class="hero">
   <div class="kick">Ach’s Dinners Guide · Italia</div>
@@ -424,7 +426,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_183e9117";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_79366b8b";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
