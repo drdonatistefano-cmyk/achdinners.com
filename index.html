@@ -292,7 +292,7 @@ footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);font-si
 <nav class="tabs" role="tablist">
   <a href="#ristoranti" data-v="rico"><span class="t">🍷 Segnalati</span><span class="n" id="n-rico"></span></a>
   <a href="#pizzerie" data-v="piz"><span class="t">🍕 Segnalate</span><span class="n" id="n-piz"></span></a>
-  <a href="#apprezzati" data-v="altri"><span class="t">👍 Apprezzati</span><span class="n" id="n-altri"></span></a>
+  <a href="#apprezzati" data-v="altri"><span class="t">🍷 Apprezzati</span><span class="n" id="n-altri"></span></a>
   <a href="#apprezzate" data-v="altp"><span class="t">🍕 Apprezzate</span><span class="n" id="n-altp"></span></a>
   <a href="#tutti" data-v="tutti"><span class="t">🍽️ Tutti</span><span class="n" id="n-tutti"></span></a>
   <a href="#metodo" data-v="metodo" class="met"><span class="t">📐 Metodo</span><span class="n">regole</span></a>
@@ -426,7 +426,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_79366b8b";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_d6ca65c3";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
