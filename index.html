@@ -426,7 +426,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_d6ca65c3";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_20230725";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -668,7 +668,7 @@ function apri(x){aperto=x;try{localStorage.setItem("achfood_ultp",x.p);}catch(e)
    <div class="addr" id="sind" hidden></div>
    <div class="actions" id="sazioni"><a class="btn pri" href="${gm}" target="_blank" rel="noopener noreferrer">🗺️ Mappa</a>${azioniExtra(x)}</div>
    ${righe(x,0)}${near}${perche}
-   <div id="sfonti">${nf||x.h?`<div class="box"><h3>Le fonti</h3><p class="attesa">Carico le fonti…</p></div>`:`<div class="box"><h3>Solo in elenco</h3><div class="calc">Nessuna guida, testata o registro storico lo cita per ora. È in elenco perché esiste nelle anagrafi aperte.</div></div>`}</div>
+   <div id="sfonti">${nf||x.h?`<div class="box"><h3>Le fonti</h3><p class="attesa">Carico le fonti…</p></div>`:`<div class="box"><h3>Nessuna informazione trovata</h3><div class="calc">Per ora non abbiamo trovato online nessuna informazione su questo locale: nessuna guida, testata, blog o registro storico lo cita. È in elenco perché esiste nelle anagrafi aperte (Overture Maps, OpenStreetMap).</div></div>`}</div>
    <p class="note" id="snota">Foto, menu e prenotazione aprono una ricerca per nome e comune: voti e recensioni dei clienti restano sulle piattaforme, qui non sono riportati.</p>`;
   $("sx").onclick=()=>$("dlg").close();
   try{if(!$("dlg").open)$("dlg").showModal();}catch(e){$("dlg").setAttribute("open","");}$("sheet").scrollTop=0;
