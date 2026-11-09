@@ -353,6 +353,7 @@ footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);font-si
     <div class="fsec">In più</div>
     <div class="spunte">
       <label class="sp" id="sp-cit"><input type="checkbox" id="c-cit">🏅 Solo segnalati</label>
+      <label class="sp" id="sp-inf" hidden><input type="checkbox" id="c-inf">📎 Con qualche citazione</label>
       <label class="sp"><input type="checkbox" id="c-sto">🏛️ Locali storici</label>
       <label class="sp"><input type="checkbox" id="c-sito">🔗 Con sito</label>
       <label class="ordina">Ordina <select id="ord"></select></label>
@@ -426,7 +427,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_20230725";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_ac8a4a9d";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -556,12 +557,13 @@ const vicOk=x=>!vicAttivo()||(x._d!=null&&(!VK||x._d<=VK)&&(!VT||x._t<=VT));
 const tTxt=(t,l)=>t<60?t+(l?" minuti":" min"):t===60?(l?"1 ora":"1 h"):t===90?(l?"1 ora e mezza":"1 h ½"):Math.floor(t/60)+" h "+t%60;
 const distTxt=x=>x._d==null?"":`${x._d<10?x._d.toLocaleString("it-IT",{maximumFractionDigits:1}):Math.round(x._d)} km · ~${Math.max(5,Math.round(x._t/5)*5)} min`;
 // ---- filtro complessivo ----
-const SP=()=>({cit:$("c-cit").checked&&S.v==="tutti",sto:$("c-sto").checked,sito:$("c-sito").checked});
+const ALT=()=>S.v==="altri"||S.v==="altp";
+const SP=()=>({cit:$("c-cit").checked&&S.v==="tutti",inf:$("c-inf").checked&&ALT(),sto:$("c-sto").checked,sito:$("c-sito").checked});
 function passa(x,salta,Q,sp=SP()){for(const id in FACCE){if(id!==salta&&SEL[id].size&&!ok(id,FACCE[id](x)))return false;}
-  if(sp.cit&&!(x.s>0))return false;if(sp.sto&&!x.h)return false;if(sp.sito&&!x.w)return false;if(!vicOk(x))return false;return cercaOk(x,Q);}
+  if(sp.cit&&!(x.s>0))return false;if(sp.inf&&!(x.nf>0||x.h))return false;if(sp.sto&&!x.h)return false;if(sp.sito&&!x.w)return false;if(!vicOk(x))return false;return cercaOk(x,Q);}
 function filtrati(){const Q=cercaPrep(),sp=SP();let r=ordinati().filter(x=>passa(x,null,Q,sp));
   if(Q.frase){const a=r.filter(x=>nOf(x).includes(Q.frase));if(a.length&&a.length<r.length){const s=new Set(a);r=a.concat(r.filter(x=>!s.has(x)));}}return r;}
-["c-cit","c-sto","c-sito"].forEach(id=>$(id).onchange=()=>{S.shown=40;draw();});
+["c-cit","c-inf","c-sto","c-sito"].forEach(id=>$(id).onchange=()=>{S.shown=40;draw();});
 let tq=null;$("q").addEventListener("input",()=>{$("qx").hidden=!$("q").value;clearTimeout(tq);tq=setTimeout(()=>{S.q=$("q").value;S.shown=40;draw();},150);});
 $("qx").onclick=()=>{$("q").value="";$("qx").hidden=true;S.q="";S.shown=40;draw();$("q").focus();};
 $("q").addEventListener("keydown",e=>{if(e.key==="Enter")$("q").blur();});
@@ -571,9 +573,9 @@ function chiudiF(){document.body.classList.remove("fopen");chiudiMs();}
 $("mfil").onclick=apriF;$("fchiudi").onclick=chiudiF;$("fback").onclick=chiudiF;
 $("fok").onclick=()=>{chiudiF();$("count").scrollIntoView({block:"start",behavior:"smooth"});};
 $("fazz").onclick=()=>azzera();$("fazzd").onclick=()=>azzera();
-function azzera(){for(const id in SEL){SEL[id].clear();}["c-cit","c-sto","c-sito"].forEach(i=>$(i).checked=false);$("q").value="";S.q="";$("qx").hidden=true;
+function azzera(){for(const id in SEL){SEL[id].clear();}["c-cit","c-inf","c-sto","c-sito"].forEach(i=>$(i).checked=false);$("q").value="";S.q="";$("qx").hidden=true;
   cascata();document.querySelectorAll(".ms").forEach(etichetta);S.shown=40;draw();}
-function nAttivi(){let n=0;for(const id in SEL)n+=SEL[id].size;return n+["c-sto","c-sito"].filter(i=>$(i).checked).length+(S.v==="tutti"&&$("c-cit").checked?1:0);}
+function nAttivi(){let n=0;for(const id in SEL)n+=SEL[id].size;return n+["c-sto","c-sito"].filter(i=>$(i).checked).length+(S.v==="tutti"&&$("c-cit").checked?1:0)+(ALT()&&$("c-inf").checked?1:0);}
 // ---- disegno ----
 let ULT=[];
 function draw(){if(!L.length)return;if(!RN&&serveRN()){$("count").innerHTML='<span class="avviso">Carico…</span>';caricaAux().then(draw).catch(()=>{});return;}vicEtichetta();const r=filtrati();ULT=r;const Q=cercaPrep();
@@ -604,6 +606,7 @@ function attivi(){const out=[];
   for(const id in SEL){const et=ETI[id]||(v=>v);SEL[id].forEach(v=>out.push(`<button type="button" class="at" data-f="${id}" data-v="${esc(v)}">${esc(et(v))}<b aria-hidden="true">×</b></button>`));}
   [["c-sto","🏛️ Storici"],["c-sito","🔗 Con sito"]].forEach(([i,t])=>{if($(i).checked)out.push(`<button type="button" class="at" data-c="${i}">${t}<b aria-hidden="true">×</b></button>`);});
   if(S.v==="tutti"&&$("c-cit").checked)out.push(`<button type="button" class="at" data-c="c-cit">🏅 Solo segnalati<b aria-hidden="true">×</b></button>`);
+  if(ALT()&&$("c-inf").checked)out.push(`<button type="button" class="at" data-c="c-inf">📎 Con qualche citazione<b aria-hidden="true">×</b></button>`);
   if(out.length>1)out.push(`<button type="button" class="at az" data-az="1">Azzera tutto</button>`);
   $("attivi").innerHTML=out.join("");$("attivi").hidden=!out.length;}
 $("attivi").onclick=e=>{const b=e.target.closest(".at");if(!b)return;if(b.dataset.az){azzera();return;}
@@ -629,7 +632,7 @@ function icone(x){const v=x.g2.map(c=>{const [em,n,f]=TK(c);return gettone(em,n,
   if(x.h)v.push(gettone("🏛️",0,"st","Locale storico"));if(x.nst)v.push(gettone("📜",0,"nt","Storia e ambiente"));
   return `<div class="rank ico" aria-label="Riconoscimenti e citazioni">${v.join("")}</div>`;}
 function card(x,Q){const meta=`<b class="com">${esc(x.c)} (${esc(x.p)})</b>`+[x.cu,x.st].filter(Boolean).map(t=>" · "+esc(t)).join("");const rk=x.s>0;const posTxt="";
-  return `<button type="button" class="card" data-i="${x.i}">${rk?icone(x):""}<div class="cbody"><div class="cname">${evid(x.n,Q)}</div><div class="cmeta">${meta}</div>${posTxt}${PT&&x._d!=null?`<div class="cmeta dist">📍 ${distTxt(x)}</div>`:""}${righe(x,3,x.s>0)}${rk?`<div class="bar"><i style="width:${x.s}%"></i></div>`:""}</div></button>`;}
+  return `<button type="button" class="card" data-i="${x.i}">${rk||x.nf>0||x.h?icone(x):""}<div class="cbody"><div class="cname">${evid(x.n,Q)}</div><div class="cmeta">${meta}</div>${posTxt}${PT&&x._d!=null?`<div class="cmeta dist">📍 ${distTxt(x)}</div>`:""}${righe(x,3,true)}${rk?`<div class="bar"><i style="width:${x.s}%"></i></div>`:""}</div></button>`;}
 $("grid").onclick=e=>{const c=e.target.closest(".card");if(!c)return;const i=+c.dataset.i;if(i>=0&&!L.length){TOCCO=i;return;}apri(trovaI(i));};
 $("grid").addEventListener("pointerdown",e=>{const c=e.target.closest(".card");if(!c)return;const x=trovaI(+c.dataset.i);if(x&&FILES[x.p])carica(x.p).catch(()=>{});},{passive:true});
 // ---- scheda: si apre subito con i dati dell'indice e si completa con le fonti della provincia ----
@@ -692,7 +695,7 @@ function lede(){const k=S.v==="metodo"?"tutti":S.v;
 function rotta(){const h=(location.hash||"#ristoranti").slice(1);const v={ristoranti:"rico",ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti",apprezzati:"altri",apprezzate:"altp",metodo:"metodo"}[h]||"rico";
   document.querySelectorAll("nav.tabs a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
   $("lista").hidden=v==="metodo";$("metodo").hidden=v!=="metodo";if(v==="metodo"){metodo();return;}
-  S.v=v;$("sp-cit").hidden=v!=="tutti";lede();
+  S.v=v;$("sp-cit").hidden=v!=="tutti";$("sp-inf").hidden=!(v==="altri"||v==="altp");lede();
   cascata();opzioni("f-cuc",vociPerFrequenza("f-cuc"));opzioni("f-sti",vociPerFrequenza("f-sti"));opzioni("f-ric",vociPerFrequenza("f-ric"));opzioni("f-fon",vociPerFrequenza("f-fon"));
   $("f-cuc").hidden=v==="piz"||v==="altp";opzOrd();S.shown=40;draw();}
 // ---- metodo ----
@@ -738,7 +741,7 @@ function metodo(){if($("metodo").dataset.ok||!D)return;$("metodo").dataset.ok=1;
     else $("pv-l").innerHTML=`<div class="pvg">${v.sort((a,b)=>b[o]-a[o]).map(box).join("")}</div>`;};
   ["pv-q","pv-r","pv-o"].forEach(i=>$(i).addEventListener("input",pv));pv();
   $("pv-l").onclick=e=>{const b=e.target.closest(".pv");if(!b)return;azzeraSilenzioso();SEL["f-prov"].add(b.dataset.p);location.hash="#tutti";window.scrollTo(0,0);};}
-function azzeraSilenzioso(){for(const id in SEL)SEL[id].clear();$("q").value="";S.q="";$("qx").hidden=true;["c-cit","c-sto","c-sito"].forEach(i=>$(i).checked=false);}
+function azzeraSilenzioso(){for(const id in SEL)SEL[id].clear();$("q").value="";S.q="";$("qx").hidden=true;["c-cit","c-inf","c-sto","c-sito"].forEach(i=>$(i).checked=false);}
 // ---- finestra "Vicino a…" ----
 const KM=[5,10,20,30,50,100],TM=[10,15,20,30,45,60,90];
 $("vkc").innerHTML=KM.map(k=>`<button type="button" data-k="${k}">${k} km</button>`).join("");
