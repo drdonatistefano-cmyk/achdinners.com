@@ -97,24 +97,32 @@ def frena(url):
     _ultima[h] = time.time()
 
 
-def leggi(url):
-    frena(url)
-    req = urllib.request.Request(url, headers={
-        "User-Agent": AGENTE,
-        "Accept": "application/rss+xml,application/atom+xml,application/xml,"
-                  "text/xml,text/html;q=0.8,*/*;q=0.5",
-        "Accept-Language": "it,en;q=0.8"})
-    try:
-        with urllib.request.urlopen(req, timeout=SCADENZA) as r:
-            return r.read(MAX_BYTE), None
-    except urllib.error.HTTPError as ex:
-        return None, f"HTTP {ex.code}"
-    except urllib.error.URLError as ex:
-        return None, f"rete: {ex.reason}"
-    except socket.timeout:
-        return None, "tempo scaduto"
-    except Exception as ex:
-        return None, f"{type(ex).__name__}: {ex}"
+def leggi(url, tentativi=2):
+    """Un secondo tentativo quando la connessione cade a meta': capita con
+    alcuni siti che chiudono la prima connessione senza rispondere."""
+    ultimo = None
+    for i in range(tentativi):
+        frena(url)
+        req = urllib.request.Request(url, headers={
+            "User-Agent": AGENTE,
+            "Accept": "application/rss+xml,application/atom+xml,application/xml,"
+                      "text/xml,text/html;q=0.8,*/*;q=0.5",
+            "Accept-Language": "it,en;q=0.8",
+            "Connection": "close"})
+        try:
+            with urllib.request.urlopen(req, timeout=SCADENZA) as r:
+                return r.read(MAX_BYTE), None
+        except urllib.error.HTTPError as ex:
+            return None, f"HTTP {ex.code}"      # 403 e 404 non migliorano riprovando
+        except urllib.error.URLError as ex:
+            ultimo = f"rete: {ex.reason}"
+        except socket.timeout:
+            ultimo = "tempo scaduto"
+        except Exception as ex:
+            ultimo = f"{type(ex).__name__}: {ex}"
+        if i + 1 < tentativi:
+            time.sleep(3)
+    return None, ultimo
 
 
 # ------------------------------------------------------------ locali
