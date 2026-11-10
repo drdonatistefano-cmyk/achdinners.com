@@ -75,9 +75,10 @@
  "ilnordest-sapori": {
   "pagina": "https://www.ilnordest.it/vivere-il-nord-est/sapori-e-territorio/",
   "nota": "Il Nordest: elenchi provinciali del Nordest",
-  "impronta": "8d442675910a709b",
-  "esito": "uguale",
-  "visto": "2026-11-10"
+  "impronta": "00d966557dca065b",
+  "esito": "cambiata",
+  "visto": "2026-11-10",
+  "testo": "ilnordest-sapori.txt"
  },
  "quotidiano-gusto": {
   "ultimo_errore": "HTTP 404"
@@ -110,7 +111,7 @@
   "pagina": "https://www.mentelocale.it/milano/",
   "nota": "MenteLocale Milano: elenchi Michelin Lombardia",
   "impronta": "0d545fd622f0b10f",
-  "esito": "cambiata",
+  "esito": "uguale",
   "visto": "2026-11-10"
  },
  "linkiesta-gastronomika": {
