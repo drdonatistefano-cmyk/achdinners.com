@@ -8,15 +8,15 @@
 /* Ach's Dinners Guide v3 — carta calda e rosso vino; soluzioni della Dashboard principale: dati a due livelli, filtri multipli
    con conteggi incrociati, ricerca per inizio di parola, ordinamenti, pannello filtri a scomparsa su telefono */
 :root{
-  --bg:#f6efe4;--paper:#fffdf9;--ink:#231d18;--mute:#7a6f63;--faint:#a99d8f;--line:#e8ddcc;--sunk:#f1e8da;
-  --acc:#8a3b2e;--acc-soft:#f4e3de;--acc-ink:#6e2c22;--on:#fff;
+  --bg:#faf8f5;--paper:#fff;--ink:#1f1d1a;--mute:#6b665f;--faint:#9c968d;--line:#e6e1d9;--sunk:#f3efe8;
+  --acc:#2f6b2f;--acc-soft:#e8f0e2;--acc-ink:#245224;--on:#fff;
   --ok:#3f7a4c;--ok-soft:#e3efe5;--gold:#9a6400;--gold-soft:#fbefd6;--blue:#3d5f7d;--blue-soft:#e4ecf3;
-  --shadow:0 1px 2px rgba(60,40,20,.06),0 4px 14px rgba(60,40,20,.06);--pop:0 10px 30px rgba(60,40,20,.18);--r:16px;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.05);--pop:0 10px 30px rgba(0,0,0,.16);--r:16px;
   --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
   --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;color-scheme:light}
 @media (prefers-color-scheme:dark){:root{
-  --bg:#161311;--paper:#201c19;--ink:#f1e9df;--mute:#ab9f92;--faint:#7d7268;--line:#332d28;--sunk:#1b1815;
-  --acc:#e09482;--acc-soft:#3a221d;--acc-ink:#f0b9ab;--on:#2a120d;
+  --bg:#171513;--paper:#211e1b;--ink:#ede9e3;--mute:#a39d94;--faint:#7a746c;--line:#36312c;--sunk:#2b2723;
+  --acc:#9fd38a;--acc-soft:#2a2c1c;--acc-ink:#c4e6b6;--on:#0f1f0b;
   --ok:#6fb07d;--ok-soft:#1c2c20;--gold:#e3b35a;--gold-soft:#352a16;--blue:#8fb3d3;--blue-soft:#1f2a35;--shadow:none;--pop:0 12px 34px rgba(0,0,0,.6);color-scheme:dark}}
 *{box-sizing:border-box}[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -67,7 +67,7 @@ h1 em{color:var(--acc);font-style:italic}
 #mfil{display:none}
 #su{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:calc(18px + env(safe-area-inset-bottom));z-index:30;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--paper);color:var(--acc);font-size:20px;font-weight:700;box-shadow:var(--pop)}
 .card:active{transform:scale(.985)}
-@media (hover:hover){.card{transition:border-color .15s,box-shadow .15s,transform .15s}.card:hover{box-shadow:0 2px 4px rgba(60,40,20,.06),0 10px 24px rgba(60,40,20,.10);transform:translateY(-1px)}}
+@media (hover:hover){.card{transition:border-color .15s,box-shadow .15s,transform .15s}.card:hover{box-shadow:0 2px 4px rgba(0,0,0,.05),0 10px 24px rgba(0,0,0,.09);transform:translateY(-1px)}}
 @media (max-width:480px){.tbtn{padding:0 11px}#mvic:not(.on) span{display:none}#mvic:not(.on){width:44px;justify-content:center;padding:0}.search input{padding-right:58px}}
 /* pannello filtri: in riga sul computer, foglio dal basso sul telefono */
 #fpan{padding:10px 0 2px}
@@ -431,7 +431,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_b5e43c92";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_fc466fd7";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
