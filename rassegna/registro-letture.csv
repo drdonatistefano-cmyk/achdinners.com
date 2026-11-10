@@ -1,0 +1,20 @@
+fonte,indirizzo,tipo,esito,data
+gamberorosso,https://www.gamberorosso.it/feed/,feed,ok,2026-11-10
+dissapore,https://www.dissapore.com/feed/,feed,ok,2026-11-10
+scattidigusto,https://www.scattidigusto.it/feed/,feed,ok,2026-11-10
+agrodolce,https://www.agrodolce.it/feed/,feed,ok,2026-11-10
+puntarellarossa,https://www.puntarellarossa.it/feed/,feed,ok,2026-11-10
+lucianopignataro,https://www.lucianopignataro.it/feed/,feed,ok,2026-11-10
+reportergourmet,https://www.reportergourmet.com/feed,feed,HTTP 404,2026-11-10
+identitagolose,https://www.identitagolose.it/rss.xml,feed,HTTP 404,2026-11-10
+ilgusto,https://www.ilgusto.it/rss,feed,ok,2026-11-10
+cookcorriere,https://www.corriere.it/cook/rss.xml,feed,HTTP 404,2026-11-10
+ristorazioneitaliana,https://www.ristorazioneitalianamagazine.it/feed/,feed,ok,2026-11-10
+pizzaontheroad,https://www.pizzaontheroad.eu/feed/,feed,ok,2026-11-10
+garagepizza,https://www.garagepizza.it/feed/,feed,HTTP 404,2026-11-10
+vinoecibo,https://www.winenews.it/it/rss,feed,HTTP 404,2026-11-10
+slowfood,https://www.slowfood.it/feed/,feed,ok,2026-11-10
+guida-michelin-it,https://guide.michelin.com/it/it/selection/italy/restaurants,sentinella,ok,2026-11-10
+slowfood-osterie,https://www.slowfoodeditore.it/osterie-ditalia,sentinella,ok,2026-11-10
+50toppizza,https://www.50toppizza.it/,sentinella,ok,2026-11-10
+gamberorosso-guide,https://www.gamberorosso.it/guide/,sentinella,HTTP 403,2026-11-10

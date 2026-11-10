@@ -1,0 +1,26 @@
+{
+ "guida-michelin-it": {
+  "pagina": "https://guide.michelin.com/it/it/selection/italy/restaurants",
+  "nota": "selezione Michelin Italia",
+  "impronta": "9711627e61313734",
+  "esito": "nuova",
+  "visto": "2026-11-10"
+ },
+ "slowfood-osterie": {
+  "pagina": "https://www.slowfoodeditore.it/osterie-ditalia",
+  "nota": "Osterie d'Italia, pagina della guida",
+  "impronta": "e3b0c44298fc1c14",
+  "esito": "nuova",
+  "visto": "2026-11-10"
+ },
+ "50toppizza": {
+  "pagina": "https://www.50toppizza.it/",
+  "nota": "50 Top Pizza, classifiche",
+  "impronta": "2cd68dfb4ae1b3ce",
+  "esito": "nuova",
+  "visto": "2026-11-10"
+ },
+ "gamberorosso-guide": {
+  "ultimo_errore": "HTTP 403"
+ }
+}
