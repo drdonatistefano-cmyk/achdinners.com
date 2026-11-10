@@ -368,6 +368,18 @@ def main():
                     stato[s["id"]]["testo"] = s["id"] + ".txt"
             log(f"  sentinella {s['id']}: {stato[s['id']]['esito']}")
 
+    # con il giudizio mensile un candidato puo' restare in attesa a lungo: oltre
+    # 120 giorni scade da solo, perche' a 5 anni varrebbe comunque 0 e intanto
+    # il suo testo occupa posto
+    scaduto = (datetime.now(timezone.utc) - timedelta(days=120)).date().isoformat()
+    n_scaduti = 0
+    for r in vecchi.values():
+        if r[10] == "da valutare" and r[0] < scaduto:
+            r[10] = "scaduto"
+            n_scaduti += 1
+    if n_scaduti:
+        log(f"  {n_scaduti} candidati scaduti (piu' di 120 giorni)")
+
     # il testo degli articoli ancora da valutare, salvato su file
     da_leggere = [r for r in vecchi.values()
                   if r[10] == "da valutare" and not r[11]]
