@@ -181,6 +181,7 @@ h1 em{color:var(--acc);font-style:italic}
 .rank small{display:block;font-size:10.5px;color:var(--mute);margin-top:3px;letter-spacing:.04em}
 .rank small.no{font-size:9px;font-weight:700;margin:0 0 1px;letter-spacing:.06em}
 .cbody{flex:1;min-width:0}
+.segni{display:inline-flex;gap:3px;margin-left:6px;font-size:.82em;vertical-align:1px;white-space:nowrap}
 .card{align-items:center}
 .card .rank.ico{align-self:center}
 .rank .vuoto{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:15px;background:color-mix(in srgb,var(--line) 55%,transparent);filter:grayscale(.35);opacity:.75}
@@ -432,7 +433,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_1cfa7a95";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_fbaf7989";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -634,13 +635,13 @@ function TK(c){let m;
   if(c==="ESP_5")return["🎩",5,"es"];if(c.startsWith("ESP"))return["🎩",0,"es"];
   if(c.startsWith("TOP50"))return["🏅",50,"t5"];if(c==="IDG")return["✳️",0,"ig"];if(c==="W50")return["🌍",0,"w5"];if(c==="ERT")return["📘",0,"rg"];
   return[LEG[c]?.[2]||"•",0,"nt"];};
+function segniNome(x){return x.h||x.nst?`<span class="segni">${x.h?`<span title="Locale storico" aria-label="Locale storico">🏛️</span>`:""}${x.nst?`<span title="Con charme" aria-label="Con charme">✨</span>`:""}</span>`:"";}
 function gettone(em,n,fam,tit){return `<span class="tk f-${fam}" title="${esc(tit)}">${em}${n>1?`<i>${n}</i>`:""}</span>`;}
 function icone(x){const v=x.g2.map(c=>{const [em,n,f]=TK(c);return gettone(em,n,f,LEG[c]?.[0]||c);});
   if(x.ns)v.push(gettone("📰",x.ns,"nt","Stampa"));if(x.nb)v.push(gettone("📝",x.nb,"nt","Blog"));
-  if(x.h)v.push(gettone("🏛️",0,"st","Locale storico"));if(x.nst)v.push(gettone("✨",0,"nt","Charme e storia"));
   return `<div class="rank ico" aria-label="Riconoscimenti e citazioni">${v.join("")}</div>`;}
 function card(x,Q){const meta=`<b class="com">${esc(x.c)} (${esc(x.p)})</b>`+[x.cu,x.st].filter(Boolean).map(t=>" · "+esc(t)).join("");const rk=x.s>0;const posTxt="";
-  const conI=rk||x.nf>0||x.h;return `<button type="button" class="card${conI?"":" semplice"}" data-i="${x.i}">${conI?icone(x):`<div class="rank ico" aria-hidden="true"><span class="vuoto">${x.pz?"🍕":x.cu==="Pesce"?"🐟":"🍽️"}</span></div>`}<div class="cbody"><div class="cname">${evid(x.n,Q)}</div><div class="cmeta">${meta}</div>${posTxt}${PT&&x._d!=null?`<div class="cmeta dist">📍 ${distTxt(x)}</div>`:""}${righe(x,3,true)}${rk?`<div class="bar"><i style="width:${x.s}%"></i></div>`:""}</div></button>`;}
+  const conI=rk||x.g2.length||x.ns||x.nb;return `<button type="button" class="card${conI?"":" semplice"}" data-i="${x.i}">${conI?icone(x):`<div class="rank ico" aria-hidden="true"><span class="vuoto">${x.pz?"🍕":x.cu==="Pesce"?"🐟":"🍽️"}</span></div>`}<div class="cbody"><div class="cname">${evid(x.n,Q)}${segniNome(x)}</div><div class="cmeta">${meta}</div>${posTxt}${PT&&x._d!=null?`<div class="cmeta dist">📍 ${distTxt(x)}</div>`:""}${righe(x,3,true)}${rk?`<div class="bar"><i style="width:${x.s}%"></i></div>`:""}</div></button>`;}
 $("grid").onclick=e=>{const c=e.target.closest(".card");if(!c)return;const i=+c.dataset.i;if(i>=0&&!L.length){TOCCO=i;return;}apri(trovaI(i));};
 $("grid").addEventListener("pointerdown",e=>{const c=e.target.closest(".card");if(!c)return;const x=trovaI(+c.dataset.i);if(x&&FILES[x.p])carica(x.p).catch(()=>{});},{passive:true});
 // ---- scheda: si apre subito con i dati dell'indice e si completa con le fonti della provincia ----
@@ -675,7 +676,7 @@ function apri(x){aperto=x;try{localStorage.setItem("achfood_ultp",x.p);}catch(e)
   const perche=x.s>0?`<div class="box"><h3>Perché è in quest’ordine</h3>${calcolo(x)}${pari(x)}</div>`:x.h?`<div class="box"><h3>Locale storico</h3><div class="calc">Iscritto a un registro di locali storici o con storia documentata. Non ha riconoscimenti di guide, quindi non è tra i citati di Ristoranti o Pizzerie.</div></div>`:nf?`<div class="box"><h3>Solo in elenco</h3><div class="calc">Le fonti qui sotto lo citano, ma valgono solo come conferma (articoli, selezioni di anni passati, descrizioni): da sole non lo portano tra i citati.</div></div>`:"";
   const gm="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(x.n+", "+x.c+" "+x.p);
   $("sheet").innerHTML=`<div class="grab"></div><button class="sx" type="button" aria-label="Chiudi" id="sx">×</button>
-   <h2>${esc(x.n)}</h2><div class="where">📍 <b class="com">${esc(x.c)} (${esc(x.p)})</b>${x.cu?" · "+esc(x.cu):""}${x.st?" · "+esc(x.st):""}${PT&&x._d!=null?" · "+distTxt(x):""}</div>
+   <h2>${esc(x.n)}${segniNome(x)}</h2><div class="where">📍 <b class="com">${esc(x.c)} (${esc(x.p)})</b>${x.cu?" · "+esc(x.cu):""}${x.st?" · "+esc(x.st):""}${PT&&x._d!=null?" · "+distTxt(x):""}</div>
    <div class="addr" id="sind" hidden></div>
    <div class="actions" id="sazioni"><a class="btn pri" href="${gm}" target="_blank" rel="noopener noreferrer">🗺️ Mappa</a>${azioniExtra(x)}</div>
    ${righe(x,0)}${near}${perche}
@@ -718,7 +719,7 @@ function metodo(){if($("metodo").dataset.ok||!D)return;$("metodo").dataset.ok=1;
   <li>Poi il <b>numero di articoli</b> di stampa e blog.</li>
   <li>Poi i <b>locali storici</b> o con storia documentata.</li>
   <li>Infine, solo se tutto è uguale, il <b>nome</b> in ordine alfabetico.</li></ol>
-  <p>I numeri di posizione non si mostrano: l'elenco segue sempre quest'ordine, anche quando filtri, e accanto a ogni locale trovi <b>tutte le icone delle sue citazioni</b>, dal riconoscimento più importante: il numerino dice quanti (per esempio ⭐ con 2 = due stelle Michelin, 🍴 con 3 = Tre Forchette). Il significato di ogni icona è nella tabella qui sotto; in più ${gettone("📰",0,"nt","Stampa")} articoli di stampa, ${gettone("📝",0,"nt","Blog")} blog, ${gettone("🏛️",0,"st","Locale storico")} locale storico, ${gettone("✨",0,"nt","Charme e storia")} charme e storia.</p>
+  <p>I numeri di posizione non si mostrano: l'elenco segue sempre quest'ordine, anche quando filtri, e accanto a ogni locale trovi <b>tutte le icone delle sue citazioni</b>, dal riconoscimento più importante: il numerino dice quanti (per esempio ⭐ con 2 = due stelle Michelin, 🍴 con 3 = Tre Forchette). Il significato di ogni icona è nella tabella qui sotto; in più ${gettone("📰",0,"nt","Stampa")} articoli di stampa, ${gettone("📝",0,"nt","Blog")} blog. Accanto al nome, 🏛️ indica un locale storico e ✨ un locale con charme (edificio storico, vista, giardino, sale d'epoca, camino, borgo).</p>
   <h2 id="m-cl">Come si calcola il punteggio</h2>
   <p>Conta solo ciò che è pubblico e verificabile: guide, articoli firmati con data, registri dei locali storici. <b>Nessun voto o recensione</b> di Google, TripAdvisor o altre piattaforme.</p>
   <ol><li><b>Riconoscimento principale:</b> il più alto tra quelli del locale, con i punti della tabella.</li>
