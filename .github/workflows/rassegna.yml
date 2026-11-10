@@ -1,0 +1,57 @@
+name: Rassegna stampa (candidati)
+
+on:
+  schedule:
+    # mercoledi e sabato alle 4:19 UTC
+    - cron: '19 4 * * 3,6'
+  workflow_dispatch:
+    inputs:
+      giorni:
+        description: "Quanti giorni indietro guardare (predefinito 45)"
+        required: false
+        default: ''
+      solo:
+        description: "Solo una parte: feed oppure sentinella (vuoto = tutto)"
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rassegna-dinners
+  cancel-in-progress: false
+
+jobs:
+  prepara:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Leggi feed e pagine delle guide
+        run: |
+          ARG=""
+          if [ -n "${{ github.event.inputs.giorni }}" ]; then ARG="--giorni ${{ github.event.inputs.giorni }}"; fi
+          if [ -n "${{ github.event.inputs.solo }}" ]; then ARG="$ARG --solo ${{ github.event.inputs.solo }}"; fi
+          python3 scripts/rassegna.py $ARG
+
+      - name: Salva i candidati
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rassegna
+          if git diff --cached --quiet; then
+            echo "nessun candidato nuovo"
+            exit 0
+          fi
+          git commit -m "Rassegna stampa: candidati del $(date +%d/%m/%Y)"
+          for i in 1 2 3 4 5; do
+            git push && break
+            git pull --rebase --autostash || true
+            sleep 5
+          done

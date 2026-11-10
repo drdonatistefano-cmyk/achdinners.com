@@ -1,0 +1,26 @@
+{
+  "nota": "Feed delle testate e pagine-elenco delle guide, lette da GitHub. Gli indirizzi segnati «da confermare» sono tentativi: il registro rassegna/registro-letture.csv dice quali rispondono e quali no, e quelli che sbagliano vanno corretti o spenti con \"attiva\": false. I codici sono quelli di coordinamento/food/GUIDE_DA_CERCARE.md: CRIT articoli firmati di testate, BLOG blog con autore e data.",
+  "feed": [
+    {"id": "gamberorosso", "testata": "Gambero Rosso", "url": "https://www.gamberorosso.it/feed/", "codice": "CRIT", "attiva": true},
+    {"id": "dissapore", "testata": "Dissapore", "url": "https://www.dissapore.com/feed/", "codice": "CRIT", "attiva": true},
+    {"id": "scattidigusto", "testata": "Scatti di Gusto", "url": "https://www.scattidigusto.it/feed/", "codice": "CRIT", "attiva": true},
+    {"id": "agrodolce", "testata": "Agrodolce", "url": "https://www.agrodolce.it/feed/", "codice": "CRIT", "attiva": true},
+    {"id": "puntarellarossa", "testata": "Puntarella Rossa", "url": "https://www.puntarellarossa.it/feed/", "codice": "CRIT", "attiva": true},
+    {"id": "lucianopignataro", "testata": "Luciano Pignataro Wine Blog", "url": "https://www.lucianopignataro.it/feed/", "codice": "BLOG", "attiva": true},
+    {"id": "reportergourmet", "testata": "Reporter Gourmet", "url": "https://www.reportergourmet.com/feed", "codice": "CRIT", "attiva": true},
+    {"id": "identitagolose", "testata": "Identita Golose", "url": "https://www.identitagolose.it/rss.xml", "codice": "CRIT", "attiva": true},
+    {"id": "ilgusto", "testata": "Il Gusto (Repubblica)", "url": "https://www.ilgusto.it/rss", "codice": "CRIT", "attiva": true},
+    {"id": "cookcorriere", "testata": "Cook (Corriere della Sera)", "url": "https://www.corriere.it/cook/rss.xml", "codice": "CRIT", "attiva": true},
+    {"id": "ristorazioneitaliana", "testata": "Ristorazione Italiana Magazine", "url": "https://www.ristorazioneitalianamagazine.it/feed/", "codice": "CRIT", "attiva": true},
+    {"id": "pizzaontheroad", "testata": "Pizza on the Road", "url": "https://www.pizzaontheroad.eu/feed/", "codice": "BLOG", "attiva": true},
+    {"id": "garagepizza", "testata": "Garage Pizza", "url": "https://www.garagepizza.it/feed/", "codice": "BLOG", "attiva": true},
+    {"id": "vinoecibo", "testata": "Vino e Cibo", "url": "https://www.winenews.it/it/rss", "codice": "CRIT", "attiva": true},
+    {"id": "slowfood", "testata": "Slow Food Italia", "url": "https://www.slowfood.it/feed/", "codice": "CRIT", "attiva": true}
+  ],
+  "sentinella": [
+    {"id": "guida-michelin-it", "pagina": "https://guide.michelin.com/it/it/selection/italy/restaurants", "nota": "selezione Michelin Italia", "attiva": true},
+    {"id": "slowfood-osterie", "pagina": "https://www.slowfoodeditore.it/osterie-ditalia", "nota": "Osterie d'Italia, pagina della guida", "attiva": true},
+    {"id": "50toppizza", "pagina": "https://www.50toppizza.it/", "nota": "50 Top Pizza, classifiche", "attiva": true},
+    {"id": "gamberorosso-guide", "pagina": "https://www.gamberorosso.it/guide/", "nota": "pagina delle guide del Gambero Rosso", "attiva": true}
+  ]
+}
