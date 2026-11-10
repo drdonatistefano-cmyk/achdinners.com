@@ -46,6 +46,8 @@ VISTE = os.path.join(USCITA, "viste.csv")
 SENTINELLA = os.path.join(USCITA, "sentinella.json")
 RIEPILOGO = os.path.join(USCITA, "RIEPILOGO.md")
 REGISTRO = os.path.join(USCITA, "registro-letture.csv")
+TESTI = os.path.join(USCITA, "testi")        # il testo degli articoli candidati
+ELENCHI = os.path.join(USCITA, "elenchi")    # il testo delle pagine-elenco cambiate
 
 AGENTE = ("Mozilla/5.0 (compatible; AchDinnersBot/1.0; "
           "+https://achdinners.com/ rassegna stampa)")
@@ -54,7 +56,7 @@ ATTESA = 1.0
 MAX_BYTE = 6_000_000
 
 COLONNE = ["data", "testata", "codice", "titolo", "url", "id_locale",
-           "nome", "prov", "comune", "indizi", "stato"]
+           "nome", "prov", "comune", "indizi", "stato", "testo"]
 
 # Da non proporre mai: lo dicono le regole della guida
 ESCLUSI = re.compile(
@@ -221,6 +223,41 @@ def voci_feed(dati):
     return fuori
 
 
+def solo_testo(dati):
+    t = re.sub(rb"<(script|style|nav|footer|aside)[^>]*>.*?</\1>", b" ", dati,
+               flags=re.I | re.S)
+    t = re.sub(rb"<[^>]+>", b" ", t)
+    try:
+        t = t.decode("utf-8", "replace")
+    except Exception:
+        t = str(t)
+    t = html.unescape(t)
+    return re.sub(r"[ \t\xa0]+", " ", re.sub(r"\n{3,}", "\n\n", t)).strip()
+
+
+def salva_testo(cartella, chiave, url, titolo, registro, fonte, tipo):
+    """Scarica la pagina e ne salva il testo: cosi' Claude lo legge da file e
+    non deve aprire nessun sito (niente finestre di permesso, niente crediti).
+    Restituisce il nome del file, o '' se la pagina non si e' aperta."""
+    os.makedirs(cartella, exist_ok=True)
+    nome = chiave + ".txt"
+    dove = os.path.join(cartella, nome)
+    if os.path.exists(dove) and os.path.getsize(dove) > 200:
+        return nome
+    dati, errore = leggi(url)
+    registro.append([fonte, url, tipo, errore or "ok",
+                     datetime.now().date().isoformat()])
+    if errore or not dati:
+        return ""
+    testo = solo_testo(dati)
+    if len(testo) < 200:
+        return ""
+    with open(dove, "w", encoding="utf-8") as f:
+        f.write(f"# {titolo}\n# {url}\n# letto il {datetime.now().date().isoformat()}\n\n")
+        f.write(testo[:40000])
+    return nome
+
+
 # ------------------------------------------------------------ giro
 
 def main():
@@ -282,7 +319,7 @@ def main():
                     vecchi[chiave] = [v["data"], fo["testata"],
                                       fo.get("codice", "CRIT"),
                                       v["titolo"][:160], v["url"], idl, nome,
-                                      prov, comune, indizi, "da valutare"]
+                                      prov, comune, indizi, "da valutare", ""]
                     presi += 1
                     nuovi += 1
                 viste.add(v["url"])
@@ -319,7 +356,43 @@ def main():
                          ("cambiata" if imp != vecchia else "uguale"),
                 "visto": datetime.now().date().isoformat(),
             }
+            if stato[s["id"]]["esito"] in ("nuova", "cambiata"):
+                os.makedirs(ELENCHI, exist_ok=True)
+                testo = solo_testo(dati)
+                if len(testo) > 200:
+                    with open(os.path.join(ELENCHI, s["id"] + ".txt"), "w",
+                              encoding="utf-8") as fh:
+                        fh.write(f"# {s.get('nota','')}\n# {s['pagina']}\n"
+                                 f"# letto il {datetime.now().date().isoformat()}\n\n")
+                        fh.write(testo[:60000])
+                    stato[s["id"]]["testo"] = s["id"] + ".txt"
             log(f"  sentinella {s['id']}: {stato[s['id']]['esito']}")
+
+    # il testo degli articoli ancora da valutare, salvato su file
+    da_leggere = [r for r in vecchi.values()
+                  if r[10] == "da valutare" and not r[11]]
+    visti_url = {}
+    for r in da_leggere[:120]:
+        u = r[4]
+        if u in visti_url:
+            r[11] = visti_url[u]
+            continue
+        chiave = hashlib.sha1(u.encode()).hexdigest()[:16]
+        nome = salva_testo(TESTI, chiave, u, r[3], registro, "articolo", "testo")
+        visti_url[u] = nome
+        r[11] = nome
+    log(f"  testi salvati: {sum(1 for v in visti_url.values() if v)} "
+        f"su {len(visti_url)} articoli")
+
+    # pulizia: via i testi degli articoli non piu' in attesa di giudizio
+    vivi = {r[11] for r in vecchi.values() if r[10] == "da valutare" and r[11]}
+    if os.path.isdir(TESTI):
+        for f_ in os.listdir(TESTI):
+            if f_ not in vivi:
+                try:
+                    os.remove(os.path.join(TESTI, f_))
+                except Exception:
+                    pass
 
     # scrittura
     righe = sorted(vecchi.values(), key=lambda r: (r[0], r[1]), reverse=True)
@@ -366,6 +439,11 @@ def main():
                     + ", ".join(f"{k} ({v})" for k, v in
                                 sorted(per_prov.items(), key=lambda x: -x[1])[:20])
                     + "\n\n")
+        f.write("Il testo di ogni articolo e' gia' salvato in "
+                "`rassegna/testi/<file>.txt` (colonna `testo` del CSV) e quello "
+                "delle pagine-elenco nuove o cambiate in "
+                "`rassegna/elenchi/<id>.txt`: **non serve aprire nessun sito**, "
+                "si leggono da file.\n\n")
         f.write("GitHub prepara i candidati, non decide. La sessione settimanale "
                 "legge questo elenco, controlla l'abbinamento e scrive le "
                 "citazioni valide nel formato di `GUIDE_DA_CERCARE.md`. Gli "
