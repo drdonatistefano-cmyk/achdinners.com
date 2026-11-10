@@ -181,6 +181,8 @@ h1 em{color:var(--acc);font-style:italic}
 .rank small{display:block;font-size:10.5px;color:var(--mute);margin-top:3px;letter-spacing:.04em}
 .rank small.no{font-size:9px;font-weight:700;margin:0 0 1px;letter-spacing:.06em}
 .cbody{flex:1;min-width:0}
+.card{border-color:color-mix(in srgb,var(--acc) 40%,var(--line))}
+.citda{margin-top:8px;font-size:12.5px;font-weight:600;color:var(--mute)}
 .segni{display:inline-flex;gap:3px;margin-left:6px;font-size:.82em;vertical-align:1px;white-space:nowrap}
 .card{align-items:center}
 .card .rank.ico{align-self:center}
@@ -433,7 +435,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_fbaf7989";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_d5881ab3";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -635,13 +637,14 @@ function TK(c){let m;
   if(c==="ESP_5")return["🎩",5,"es"];if(c.startsWith("ESP"))return["🎩",0,"es"];
   if(c.startsWith("TOP50"))return["🏅",50,"t5"];if(c==="IDG")return["✳️",0,"ig"];if(c==="W50")return["🌍",0,"w5"];if(c==="ERT")return["📘",0,"rg"];
   return[LEG[c]?.[2]||"•",0,"nt"];};
+function citatoDa(x){const n=x.g2.length,p=[];if(n)p.push(n+(n>1?" guide":" guida"));if(x.ns)p.push(x.ns+(x.ns>1?" articoli":" articolo"));if(x.nb)p.push(x.nb+" blog");return p.length?`<div class="citda">Citato da ${p.join(" · ")}</div>`:"";}
 function segniNome(x){return x.h||x.nst?`<span class="segni">${x.h?`<span title="Locale storico" aria-label="Locale storico">🏛️</span>`:""}${x.nst?`<span title="Con charme" aria-label="Con charme">✨</span>`:""}</span>`:"";}
 function gettone(em,n,fam,tit){return `<span class="tk f-${fam}" title="${esc(tit)}">${em}${n>1?`<i>${n}</i>`:""}</span>`;}
 function icone(x){const v=x.g2.map(c=>{const [em,n,f]=TK(c);return gettone(em,n,f,LEG[c]?.[0]||c);});
   if(x.ns)v.push(gettone("📰",x.ns,"nt","Stampa"));if(x.nb)v.push(gettone("📝",x.nb,"nt","Blog"));
   return `<div class="rank ico" aria-label="Riconoscimenti e citazioni">${v.join("")}</div>`;}
 function card(x,Q){const meta=`<b class="com">${esc(x.c)} (${esc(x.p)})</b>`+[x.cu,x.st].filter(Boolean).map(t=>" · "+esc(t)).join("");const rk=x.s>0;const posTxt="";
-  const conI=rk||x.g2.length||x.ns||x.nb;return `<button type="button" class="card${conI?"":" semplice"}" data-i="${x.i}">${conI?icone(x):`<div class="rank ico" aria-hidden="true"><span class="vuoto">${x.pz?"🍕":x.cu==="Pesce"?"🐟":"🍽️"}</span></div>`}<div class="cbody"><div class="cname">${evid(x.n,Q)}${segniNome(x)}</div><div class="cmeta">${meta}</div>${posTxt}${PT&&x._d!=null?`<div class="cmeta dist">📍 ${distTxt(x)}</div>`:""}${righe(x,3,true)}${rk?`<div class="bar"><i style="width:${x.s}%"></i></div>`:""}</div></button>`;}
+  const conI=rk||x.g2.length||x.ns||x.nb;return `<button type="button" class="card${conI?"":" semplice"}" data-i="${x.i}">${conI?icone(x):`<div class="rank ico" aria-hidden="true"><span class="vuoto">${x.pz?"🍕":x.cu==="Pesce"?"🐟":"🍽️"}</span></div>`}<div class="cbody"><div class="cname">${evid(x.n,Q)}${segniNome(x)}</div><div class="cmeta">${meta}</div>${posTxt}${PT&&x._d!=null?`<div class="cmeta dist">📍 ${distTxt(x)}</div>`:""}${righe(x,3,true)}${citatoDa(x)}</div></button>`;}
 $("grid").onclick=e=>{const c=e.target.closest(".card");if(!c)return;const i=+c.dataset.i;if(i>=0&&!L.length){TOCCO=i;return;}apri(trovaI(i));};
 $("grid").addEventListener("pointerdown",e=>{const c=e.target.closest(".card");if(!c)return;const x=trovaI(+c.dataset.i);if(x&&FILES[x.p])carica(x.p).catch(()=>{});},{passive:true});
 // ---- scheda: si apre subito con i dati dell'indice e si completa con le fonti della provincia ----
