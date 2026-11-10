@@ -10,9 +10,8 @@
   "pagina": "https://www.slowfoodeditore.it/osterie-ditalia",
   "nota": "Osterie d'Italia, pagina della guida",
   "impronta": "e3b0c44298fc1c14",
-  "esito": "nuova",
-  "visto": "2026-11-10",
-  "ultimo_errore": "RemoteDisconnected: Remote end closed connection without response"
+  "esito": "uguale",
+  "visto": "2026-11-10"
  },
  "50toppizza": {
   "pagina": "https://www.50toppizza.it/",
@@ -32,7 +31,11 @@
   "visto": "2026-11-10"
  },
  "slowfood-chiocciole": {
-  "ultimo_errore": "RemoteDisconnected: Remote end closed connection without response"
+  "pagina": "https://www.slowfood.it/tutte-le-chiocciole-di-osterie-ditalia-2027-regione-per-regione/",
+  "nota": "Chiocciole Osterie d'Italia 2027, regione per regione: pagina gia' usata nella guida",
+  "impronta": "e3b0c44298fc1c14",
+  "esito": "nuova",
+  "visto": "2026-11-10"
  },
  "gamberorosso-ristoranti": {
   "ultimo_errore": "HTTP 403"
@@ -68,14 +71,15 @@
  "carlino-cosafare": {
   "pagina": "https://www.ilrestodelcarlino.it/emilia-romagna/cosa-fare",
   "nota": "Il Resto del Carlino: pubblica gli elenchi provinciali (308 citazioni)",
-  "impronta": "98280b52ddbeefc5",
-  "esito": "uguale",
-  "visto": "2026-11-10"
+  "impronta": "0d4eea150b1112fe",
+  "esito": "cambiata",
+  "visto": "2026-11-10",
+  "testo": "carlino-cosafare.txt"
  },
  "ilnordest-sapori": {
   "pagina": "https://www.ilnordest.it/vivere-il-nord-est/sapori-e-territorio/",
   "nota": "Il Nordest: elenchi provinciali del Nordest",
-  "impronta": "00d966557dca065b",
+  "impronta": "b6f54226dde7cb77",
   "esito": "cambiata",
   "visto": "2026-11-10",
   "testo": "ilnordest-sapori.txt"
@@ -120,8 +124,9 @@
  "ladige-cronaca": {
   "pagina": "https://www.ladige.it/cronaca",
   "nota": "l'Adige: elenchi di Trentino e Alto Adige",
-  "impronta": "4b67f01d6b847cc2",
-  "esito": "uguale",
-  "visto": "2026-11-10"
+  "impronta": "a607c972a311009f",
+  "esito": "cambiata",
+  "visto": "2026-11-10",
+  "testo": "ladige-cronaca.txt"
  }
 }
