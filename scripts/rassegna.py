@@ -324,6 +324,11 @@ def main():
             voci = voci_feed(dati)
             presi = 0
             for v in voci:
+                # il riassunto si tiene da parte per TUTTE le voci del feed, anche
+                # quelle gia' viste: serve da ripiego ai candidati la cui pagina
+                # non si apre (il Gambero Rosso nega sempre /notizie/rubriche/)
+                if len(v["testo"]) > 150:
+                    riassunti[v["url"]] = v["titolo"] + "\n\n" + v["testo"]
                 if not v["data"] or v["data"] < limite:
                     continue
                 if v["url"] in viste:
@@ -341,7 +346,6 @@ def main():
                                       prov, comune, indizi, "da valutare", ""]
                     presi += 1
                     nuovi += 1
-                riassunti[v["url"]] = v["titolo"] + "\n\n" + v["testo"]
                 viste.add(v["url"])
             log(f"  {fo['id']}: {len(voci)} voci, {presi} candidati")
 
