@@ -145,7 +145,14 @@ h1 em{color:var(--acc);font-style:italic}
 .at b{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:15px;line-height:1}
 .at:hover b{background:color-mix(in srgb,var(--acc) 18%,transparent)}
 .at.az{background:none;color:var(--mute);padding:3px 6px;text-decoration:underline;text-underline-offset:2px}
-.count{font-size:13.5px;color:var(--mute);margin:12px 0 10px}
+.count{font-size:13.5px;color:var(--mute);margin:0}
+.conta{position:sticky;top:var(--th,62px);z-index:12;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:8px 0;margin:4px 0 10px;min-height:44px}
+.azzera{margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--acc);background:var(--paper);color:var(--acc);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer}
+.azzera .n,.giu .n{background:var(--acc);color:var(--on);border-radius:999px;min-width:19px;height:19px;padding:0 5px;display:inline-grid;place-items:center;font-size:12px;line-height:1}
+.giu .n{background:var(--on);color:var(--acc)}
+.giu{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom));z-index:31;border:0;background:var(--acc);color:var(--on);border-radius:999px;padding:12px 20px;font-size:15px;font-weight:700;box-shadow:0 6px 24px rgba(0,0,0,.28);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:transform .18s ease,opacity .18s ease;cursor:pointer}
+.giu.via{transform:translateX(-50%) translateY(90px);opacity:0;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.giu{transition:none}}
 .selk{display:inline-block;padding:0 6px;border-radius:999px;background:var(--acc);color:var(--on);font:800 10.5px/1.5 var(--sans);vertical-align:1px}.count b{color:var(--ok);font-size:15px}
 /* schede dell'elenco */
 .grid{display:grid;gap:12px}@media (min-width:700px){.grid{grid-template-columns:1fr 1fr}}@media (min-width:1100px){.grid{grid-template-columns:1fr 1fr 1fr}}
@@ -371,7 +378,7 @@ footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);font-si
   </aside>
   <div class="ris">
   <div class="attivi" id="attivi"></div>
-  <p class="count" id="count"></p>
+  <div class="conta"><p class="count" id="count"></p><button class="azzera" id="azsu" type="button" hidden data-goatcounter-click="filtri/azzera-dinners">✕ Azzera i filtri <span class="n">0</span></button></div>
   <div class="grid" id="grid"><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
   <button class="more" id="more" type="button" hidden>Mostra altri</button>
   </div>
@@ -389,6 +396,7 @@ footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);font-si
   <div class="vpiede"><button type="button" id="vtogli">Togli</button><button type="button" id="vok">Scegli da dove parti</button></div>
 </div></dialog>
 <button type="button" id="su" aria-label="Torna su" hidden>↑</button>
+<button class="giu via" id="azgiu" type="button" hidden data-goatcounter-click="filtri/azzera-dinners">✕ Azzera i filtri <span class="n">0</span></button>
 <dialog id="dlg"><div class="sheet" id="sheet" role="document"></div></dialog>
 <script>
 "use strict";
@@ -435,7 +443,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_d5881ab3";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_b5cd8da1";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -583,9 +591,16 @@ function apriF(){document.body.classList.add("fopen");document.querySelector("#f
 function chiudiF(){document.body.classList.remove("fopen");chiudiMs();}
 $("mfil").onclick=apriF;$("fchiudi").onclick=chiudiF;$("fback").onclick=chiudiF;
 $("fok").onclick=()=>{chiudiF();$("count").scrollIntoView({block:"start",behavior:"smooth"});};
-$("fazz").onclick=()=>azzera();$("fazzd").onclick=()=>azzera();
-function azzera(){for(const id in SEL){SEL[id].clear();}["c-cit","c-inf","c-cha","c-sto","c-sito"].forEach(i=>$(i).checked=false);$("q").value="";S.q="";$("qx").hidden=true;
-  cascata();document.querySelectorAll(".ms").forEach(etichetta);S.shown=40;draw();}
+$("fazz").onclick=()=>azzera();$("azsu").onclick=$("azgiu").onclick=()=>azzera();altezzaBarra();$("fazzd").onclick=()=>azzera();
+function azzera(){if(vicAttivo()){PT=null;VK=VT=null;$("luogo").value="";calcDist();statoGeo();if(typeof vicCambiato==="function")vicCambiato();}for(const id in SEL){SEL[id].clear();}["c-cit","c-inf","c-cha","c-sto","c-sito"].forEach(i=>$(i).checked=false);$("q").value="";S.q="";$("qx").hidden=true;
+  cascata();document.querySelectorAll(".ms").forEach(etichetta);S.shown=40;draw();window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});}
+// azzeramento: ogni scelta vale 1, la ricerca scritta 1, il filtro distanza 1
+function nAzzera(){return nAttivi()+(S.q?1:0)+(vicAttivo()?1:0);}
+function mostraAzzera(){const n=nAzzera();document.querySelectorAll(".azzera .n,.giu .n").forEach(e=>e.textContent=n);$("azsu").hidden=n===0;$("azgiu").hidden=n===0||!$("metodo").hidden;pillola();}
+function pillola(){const g=$("azgiu");if(!g.hidden)g.classList.toggle("via",scrollY<260);}
+addEventListener("scroll",pillola,{passive:true});
+function altezzaBarra(){const t=document.querySelector(".tools");if(t)document.documentElement.style.setProperty("--th",t.offsetHeight+"px");}
+addEventListener("resize",altezzaBarra);
 function nAttivi(){let n=0;for(const id in SEL)n+=SEL[id].size;return n+["c-sto","c-cha","c-sito"].filter(i=>$(i).checked).length+(S.v==="tutti"&&$("c-cit").checked?1:0)+(ALT()&&$("c-inf").checked?1:0);}
 // ---- disegno ----
 let ULT=[];
@@ -598,7 +613,7 @@ function draw(){if(!L.length)return;if(!RN&&serveRN()){$("count").innerHTML='<sp
   $("count").innerHTML=`<b>${fmt(r.length)}</b> ${lab}${r.length<base().length?" su "+fmt(base().length):""} · ${S.v==="piz"||S.v==="altp"?"ordinate":"ordinati"} per ${ORDS[S.ord][0].toLowerCase()}`;
   $("grid").innerHTML=r.length?r.slice(0,S.shown).map(x=>card(x,Q)).join(""):`<div class="empty">Nessun locale con questi filtri.${nAttivi()||Q.qs||vicAttivo()?`<br><button type="button" onclick="azzera()">Azzera i filtri</button>`:""}${Q.qs&&S.v!=="tutti"?` <button type="button" onclick="location.hash='#tutti'">Cerca tra tutti i locali</button>`:""}</div>`;
   $("more").hidden=r.length<=S.shown;$("more").textContent=`Mostra altri (${fmt(r.length-S.shown)})`;
-  attivi();const n=nAttivi();$("fazzd").hidden=!n&&!S.q;$("nfil").hidden=!n;$("nfil").textContent=n;$("mfil").classList.toggle("on",n>0);aggiornaPiede();
+  attivi();mostraAzzera();const n=nAttivi();$("fazzd").hidden=!n&&!S.q;$("nfil").hidden=!n;$("nfil").textContent=n;$("mfil").classList.toggle("on",n>0);aggiornaPiede();
   document.querySelectorAll(".ms.aperto").forEach(m=>conta(m.id));precarica(r);salvaIst();}
 function aggiornaPiede(){$("fok").textContent=`Mostra ${fmt(ULT.length)} ${ULT.length===1?"locale":"locali"}`;}
 // altri locali: si aggiungono in fondo senza ridisegnare tutto; arrivando in fondo si caricano da soli
@@ -706,7 +721,7 @@ function lede(){const k=S.v==="metodo"?"tutti":S.v;
     :`<b>${fmt(c)}</b> ${cosa} da guide e stampa, su ${fmt(t)} in ${fmt(co)} comuni.`;}
 function rotta(){const h=(location.hash||"#ristoranti").slice(1);const v={ristoranti:"rico",ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti",apprezzati:"altri",apprezzate:"altp",metodo:"metodo"}[h]||"rico";
   document.querySelectorAll("nav.tabs a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
-  $("lista").hidden=v==="metodo";$("metodo").hidden=v!=="metodo";if(v==="metodo"){metodo();return;}
+  $("lista").hidden=v==="metodo";$("metodo").hidden=v!=="metodo";if(v==="metodo"){$("azgiu").hidden=true;metodo();return;}
   S.v=v;$("sp-cit").hidden=v!=="tutti";$("sp-inf").hidden=!(v==="altri"||v==="altp");lede();
   cascata();opzioni("f-cuc",vociPerFrequenza("f-cuc"));opzioni("f-sti",vociPerFrequenza("f-sti"));opzioni("f-ric",vociPerFrequenza("f-ric"));opzioni("f-fon",vociPerFrequenza("f-fon"));
   $("f-cuc").hidden=v==="piz"||v==="altp";opzOrd();S.shown=40;draw();}
