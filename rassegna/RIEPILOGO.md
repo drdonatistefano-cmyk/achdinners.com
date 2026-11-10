@@ -1,8 +1,8 @@
 # Rassegna stampa: candidati da valutare
 
 Ultimo giro: 2026-11-10  
-Candidati in attesa di giudizio: **79** (nuovi in questo giro: 2)  
-Pagine-elenco delle guide nuove o cambiate: **13** (slowfood-osterie, michelin-cerimonia, identitagolose-guide, identitagolose-italia, lespresso-attualita, 50topitaly, carlino-cosafare, ilnordest-sapori, giornaledibrescia-cucina, arezzo24-winefood, siviaggia-notizie, mentelocale-milano, ladige-cronaca)
+Candidati in attesa di giudizio: **79** (nuovi in questo giro: 0)  
+Pagine-elenco delle guide nuove o cambiate: **2** (slowfood-osterie, mentelocale-milano)
 
 | Testata | Candidati |
 |---|---:|

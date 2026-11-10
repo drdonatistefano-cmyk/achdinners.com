@@ -28,7 +28,7 @@
   "pagina": "https://guide.michelin.com/it/it/notizia/michelin-guide-ceremony",
   "nota": "cerimonia e novita' Michelin: la guida 2027 esce il 12/11/2026",
   "impronta": "9711627e61313734",
-  "esito": "nuova",
+  "esito": "uguale",
   "visto": "2026-11-10"
  },
  "slowfood-chiocciole": {
@@ -41,42 +41,42 @@
   "pagina": "https://www.identitagolose.it/sito/it/207/guida-alla-guida.html",
   "nota": "Guida alla Guida: annuncio di ogni edizione",
   "impronta": "e072d670550886d0",
-  "esito": "nuova",
+  "esito": "uguale",
   "visto": "2026-11-10"
  },
  "identitagolose-italia": {
   "pagina": "https://www.identitagolose.it/sito/it/44/dallitalia.html",
   "nota": "sezione dove escono gli articoli sui locali",
   "impronta": "463ae40f8a826436",
-  "esito": "nuova",
+  "esito": "uguale",
   "visto": "2026-11-10"
  },
  "lespresso-attualita": {
   "pagina": "https://lespresso.it/c/attualita/",
   "nota": "Guide de L'Espresso: edizione 2027 non ancora uscita",
   "impronta": "6b36431838d16caa",
-  "esito": "nuova",
+  "esito": "uguale",
   "visto": "2026-11-10"
  },
  "50topitaly": {
   "pagina": "https://www.50topitaly.it/",
   "nota": "50 Top Italy: trattorie e gourmet",
   "impronta": "79f5f2c1f43f41ad",
-  "esito": "nuova",
+  "esito": "uguale",
   "visto": "2026-11-10"
  },
  "carlino-cosafare": {
   "pagina": "https://www.ilrestodelcarlino.it/emilia-romagna/cosa-fare",
   "nota": "Il Resto del Carlino: pubblica gli elenchi provinciali (308 citazioni)",
   "impronta": "98280b52ddbeefc5",
-  "esito": "nuova",
+  "esito": "uguale",
   "visto": "2026-11-10"
  },
  "ilnordest-sapori": {
   "pagina": "https://www.ilnordest.it/vivere-il-nord-est/sapori-e-territorio/",
   "nota": "Il Nordest: elenchi provinciali del Nordest",
   "impronta": "8d442675910a709b",
-  "esito": "nuova",
+  "esito": "uguale",
   "visto": "2026-11-10"
  },
  "quotidiano-gusto": {
@@ -89,28 +89,28 @@
   "pagina": "https://www.giornaledibrescia.it/cucina/",
   "nota": "Giornale di Brescia, sezione cucina",
   "impronta": "6b495838d1fd2962",
-  "esito": "nuova",
+  "esito": "uguale",
   "visto": "2026-11-10"
  },
  "arezzo24-winefood": {
   "pagina": "https://www.arezzo24.net/notizie/wine-food/",
   "nota": "Arezzo24, sezione wine e food",
   "impronta": "320bffdf52406df9",
-  "esito": "nuova",
+  "esito": "uguale",
   "visto": "2026-11-10"
  },
  "siviaggia-notizie": {
   "pagina": "https://siviaggia.it/notizie/",
   "nota": "SiViaggia, notizie",
   "impronta": "61b201b1b9d0dc20",
-  "esito": "nuova",
+  "esito": "uguale",
   "visto": "2026-11-10"
  },
  "mentelocale-milano": {
   "pagina": "https://www.mentelocale.it/milano/",
   "nota": "MenteLocale Milano: elenchi Michelin Lombardia",
-  "impronta": "aaa1d5532c00ace6",
-  "esito": "nuova",
+  "impronta": "0d545fd622f0b10f",
+  "esito": "cambiata",
   "visto": "2026-11-10"
  },
  "linkiesta-gastronomika": {
@@ -120,7 +120,7 @@
   "pagina": "https://www.ladige.it/cronaca",
   "nota": "l'Adige: elenchi di Trentino e Alto Adige",
   "impronta": "4b67f01d6b847cc2",
-  "esito": "nuova",
+  "esito": "uguale",
   "visto": "2026-11-10"
  }
 }
