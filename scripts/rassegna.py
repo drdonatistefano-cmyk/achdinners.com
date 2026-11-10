@@ -235,6 +235,12 @@ def solo_testo(dati):
     return re.sub(r"[ \t\xa0]+", " ", re.sub(r"\n{3,}", "\n\n", t)).strip()
 
 
+_rifiuti = {}        # sito -> rifiuti di fila in questo giro
+_fermi = set()       # siti lasciati stare fino al prossimo giro
+PASSO_ARTICOLI = 4   # secondi fra due articoli dello stesso sito: il 10/11 il
+                     # Gambero Rosso ha risposto 403 dopo 19 richieste a un secondo
+
+
 def salva_testo(cartella, chiave, url, titolo, registro, fonte, tipo):
     """Scarica la pagina e ne salva il testo: cosi' Claude lo legge da file e
     non deve aprire nessun sito (niente finestre di permesso, niente crediti).
@@ -244,9 +250,21 @@ def salva_testo(cartella, chiave, url, titolo, registro, fonte, tipo):
     dove = os.path.join(cartella, nome)
     if os.path.exists(dove) and os.path.getsize(dove) > 200:
         return nome
+    import urllib.parse as _up
+    sito = _up.urlparse(url).netloc
+    if sito in _fermi:
+        return ""                      # ha gia' detto di no due volte: al prossimo giro
+    time.sleep(PASSO_ARTICOLI)
     dati, errore = leggi(url)
     registro.append([fonte, url, tipo, errore or "ok",
                      datetime.now().date().isoformat()])
+    if errore in ("HTTP 403", "HTTP 429"):
+        _rifiuti[sito] = _rifiuti.get(sito, 0) + 1
+        if _rifiuti[sito] >= 2:
+            _fermi.add(sito)
+            log(f"  {sito}: due rifiuti di fila, lo lascio stare fino al prossimo giro")
+    elif not errore:
+        _rifiuti[sito] = 0
     if errore or not dati:
         return ""
     testo = solo_testo(dati)
@@ -289,6 +307,7 @@ def main():
     log(f"{len(idx)} locali con nome utilizzabile")
 
     registro = []
+    riassunti = {}     # url -> testo del feed, come ripiego se la pagina non si apre
     nuovi = 0
     limite = (datetime.now(timezone.utc) - timedelta(days=giorni)).date().isoformat()
 
@@ -322,6 +341,7 @@ def main():
                                       prov, comune, indizi, "da valutare", ""]
                     presi += 1
                     nuovi += 1
+                riassunti[v["url"]] = v["titolo"] + "\n\n" + v["testo"]
                 viste.add(v["url"])
             log(f"  {fo['id']}: {len(voci)} voci, {presi} candidati")
 
@@ -381,8 +401,10 @@ def main():
         log(f"  {n_scaduti} candidati scaduti (piu' di 120 giorni)")
 
     # il testo degli articoli ancora da valutare, salvato su file
+    # si riprova anche dove finora c'e' solo il riassunto del feed
     da_leggere = [r for r in vecchi.values()
-                  if r[10] == "da valutare" and not r[11]]
+                  if r[10] == "da valutare"
+                  and (not r[11] or r[11].endswith(".feed.txt"))]
     visti_url = {}
     for r in da_leggere[:120]:
         u = r[4]
@@ -391,6 +413,16 @@ def main():
             continue
         chiave = hashlib.sha1(u.encode()).hexdigest()[:16]
         nome = salva_testo(TESTI, chiave, u, r[3], registro, "articolo", "testo")
+        if not nome and r[11].endswith(".feed.txt"):
+            nome = r[11]               # resta il riassunto che c'era
+        elif not nome and len(riassunti.get(u, "")) > 150:
+            # la pagina non si e' aperta: meglio il riassunto del feed che niente
+            nome = chiave + ".feed.txt"
+            os.makedirs(TESTI, exist_ok=True)
+            with open(os.path.join(TESTI, nome), "w", encoding="utf-8") as fh:
+                fh.write(f"# {r[3]}\n# {u}\n# SOLO IL RIASSUNTO DEL FEED: la pagina "
+                         f"non si e' aperta, si riprova al prossimo giro\n\n")
+                fh.write(riassunti[u][:6000])
         visti_url[u] = nome
         r[11] = nome
     log(f"  testi salvati: {sum(1 for v in visti_url.values() if v)} "
@@ -456,6 +488,11 @@ def main():
                 "delle pagine-elenco nuove o cambiate in "
                 "`rassegna/elenchi/<id>.txt`: **non serve aprire nessun sito**, "
                 "si leggono da file.\n\n")
+        f.write("Un file che finisce in `.feed.txt` contiene solo il riassunto "
+                "del feed, perche' la pagina non si e' aperta: basta per capire di "
+                "che cosa parla l'articolo, non per estrarne un elenco. Un "
+                "candidato con la colonna `testo` vuota si giudica dal titolo, "
+                "oppure si lascia «da valutare» per il giro dopo.\n\n")
         f.write("GitHub prepara i candidati, non decide. La sessione settimanale "
                 "legge questo elenco, controlla l'abbinamento e scrive le "
                 "citazioni valide nel formato di `GUIDE_DA_CERCARE.md`. Gli "
