@@ -11,7 +11,8 @@
   "nota": "Osterie d'Italia, pagina della guida",
   "impronta": "e3b0c44298fc1c14",
   "esito": "uguale",
-  "visto": "2026-11-10"
+  "visto": "2026-11-10",
+  "ultimo_errore": "RemoteDisconnected: Remote end closed connection without response"
  },
  "50toppizza": {
   "pagina": "https://www.50toppizza.it/",
@@ -35,7 +36,8 @@
   "nota": "Chiocciole Osterie d'Italia 2027, regione per regione: pagina gia' usata nella guida",
   "impronta": "e3b0c44298fc1c14",
   "esito": "nuova",
-  "visto": "2026-11-10"
+  "visto": "2026-11-10",
+  "ultimo_errore": "RemoteDisconnected: Remote end closed connection without response"
  },
  "gamberorosso-ristoranti": {
   "ultimo_errore": "HTTP 403"
@@ -72,14 +74,13 @@
   "pagina": "https://www.ilrestodelcarlino.it/emilia-romagna/cosa-fare",
   "nota": "Il Resto del Carlino: pubblica gli elenchi provinciali (308 citazioni)",
   "impronta": "0d4eea150b1112fe",
-  "esito": "cambiata",
-  "visto": "2026-11-10",
-  "testo": "carlino-cosafare.txt"
+  "esito": "uguale",
+  "visto": "2026-11-10"
  },
  "ilnordest-sapori": {
   "pagina": "https://www.ilnordest.it/vivere-il-nord-est/sapori-e-territorio/",
   "nota": "Il Nordest: elenchi provinciali del Nordest",
-  "impronta": "b6f54226dde7cb77",
+  "impronta": "fdd94a0ebf6a619a",
   "esito": "cambiata",
   "visto": "2026-11-10",
   "testo": "ilnordest-sapori.txt"
@@ -107,9 +108,10 @@
  "siviaggia-notizie": {
   "pagina": "https://siviaggia.it/notizie/",
   "nota": "SiViaggia, notizie",
-  "impronta": "61b201b1b9d0dc20",
-  "esito": "uguale",
-  "visto": "2026-11-10"
+  "impronta": "65784a1fca607911",
+  "esito": "cambiata",
+  "visto": "2026-11-10",
+  "testo": "siviaggia-notizie.txt"
  },
  "mentelocale-milano": {
   "pagina": "https://www.mentelocale.it/milano/",
@@ -125,8 +127,7 @@
   "pagina": "https://www.ladige.it/cronaca",
   "nota": "l'Adige: elenchi di Trentino e Alto Adige",
   "impronta": "a607c972a311009f",
-  "esito": "cambiata",
-  "visto": "2026-11-10",
-  "testo": "ladige-cronaca.txt"
+  "esito": "uguale",
+  "visto": "2026-11-10"
  }
 }

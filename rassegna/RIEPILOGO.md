@@ -1,8 +1,8 @@
 # Rassegna stampa: candidati da valutare
 
 Ultimo giro: 2026-11-10  
-Candidati in attesa di giudizio: **80** (nuovi in questo giro: 1)  
-Pagine-elenco delle guide nuove o cambiate: **4** (slowfood-chiocciole, carlino-cosafare, ilnordest-sapori, ladige-cronaca)
+Candidati in attesa di giudizio: **80** (nuovi in questo giro: 0)  
+Pagine-elenco delle guide nuove o cambiate: **3** (slowfood-chiocciole, ilnordest-sapori, siviaggia-notizie)
 
 | Testata | Candidati |
 |---|---:|
