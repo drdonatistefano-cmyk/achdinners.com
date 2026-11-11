@@ -112,7 +112,7 @@ footer{color:var(--faint);font-size:13px;margin-top:30px;text-align:center}
  <p class="sub">Visite, clic e stato del sito pubblico. I numeri vengono da GoatCounter, che non usa cookie.</p>
  <div class="tools">
   <button class="btn primary" id="reload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg><span>Ricontrolla</span></button>
-  <a class="btn" id="force" href="https://github.com/drdonatistefano-cmyk/eventi-bologna/actions/workflows/cruscotto.yml" target="_blank" rel="noopener">Rileggi da GoatCounter</a>
+  <a class="btn" id="force" href="https://github.com/drdonatistefano-cmyk/eventi-bologna/actions/workflows/statistiche.yml" target="_blank" rel="noopener">Rileggi da GoatCounter</a>
   <a class="btn" href="https://achdinners.goatcounter.com" target="_blank" rel="noopener">Cruscotto completo</a>
   <a class="btn" href="./" target="_blank" rel="noopener">Apri il sito</a>
  </div>
@@ -183,7 +183,7 @@ function renderChecks(L){
  if(S&&!S.missing&&!S.unreachable&&S.totali){const t=S.totali;out.push(t["7g"].visite>0?check("ok","Conteggio visite","Attivo",`${nf.format(t.oggi.visite)} visite oggi, ${nf.format(t["7g"].visite)} negli ultimi 7 giorni.`):check("warn","Conteggio visite","Nessuna visita",`Nessuna visita registrata negli ultimi 7 giorni. Apri il sito da un altro dispositivo per provare.`))}
  else if(L.site.gc===false)out.push(check("bad","Conteggio visite","Spento","Nel sito manca il codice di GoatCounter."));
  else out.push(check("wait","Conteggio visite","In arrivo","Il sito conta già le visite su GoatCounter: i numeri compaiono qui alla prima lettura (vedi sotto)."));
- if(S&&S.generato&&!S.errore){const m=(Date.now()-new Date(S.generato))/6e4;out.push(check(m>150?"warn":"ok","Statistiche di questa pagina",m>150?"In ritardo":"Aggiornate",`Lette da GoatCounter ${rel(S.generato)}; si aggiornano da sole ogni ora.`))}
+ if(S&&S.generato&&!S.errore){const m=(Date.now()-new Date(S.generato))/6e4;out.push(check(m>150?"warn":"ok","Statistiche di questa pagina",m>150?"In ritardo":"Aggiornate",`Lette da GoatCounter ${rel(S.generato)}; si aggiornano da sole ogni mezz’ora.`))}
  $("#checks").innerHTML=out.join("");
 }
 
@@ -270,7 +270,7 @@ async function load(){
  const b=$("#reload");b.disabled=true;b.classList.add("spin");b.querySelector("span").textContent="Controllo…";
  const [st,site,ev,mo,pages]=await Promise.all([getStats(),liveSite(),liveMan(),Promise.resolve(null),livePages()]);
  S=st;renderChecks({site,ev,mo,pages});renderSetup();renderAll();
- $("#when").textContent=`Controllato alle ${new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"})}`+(S&&S.generato&&!S.errore?` · statistiche lette ${rel(S.generato)} (si aggiornano ogni ora)`:"");
+ $("#when").textContent=`Controllato alle ${new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"})}`+(S&&S.generato&&!S.errore?` · statistiche lette ${rel(S.generato)} (si aggiornano ogni mezz’ora)`:"");
  b.disabled=false;b.classList.remove("spin");b.querySelector("span").textContent="Ricontrolla";
 }
 $("#reload").addEventListener("click",load);
