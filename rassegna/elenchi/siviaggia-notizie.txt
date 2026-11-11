@@ -1,6 +1,6 @@
 # SiViaggia, notizie
 # https://siviaggia.it/notizie/
-# letto il 2026-11-10
+# letto il 2026-11-11
 
 Notizie dal mondo per viaggiare informati 
  
@@ -1125,28 +1125,6 @@ Notizie dal mondo per viaggiare informati
  
  
  
- Luoghi da film 
- 
- Le esotiche location della serie Tv Delitti in paradiso 
- 
- 
- 
- 
- 
- 
- 
- 
- Posti incredibili 
- 
- Nazaré, dove le onde diventano leggenda 
- 
- 
- 
- 
- 
- 
- 
- 
  Idee di Viaggio 
  
  I cinque centri termali più belli in Abruzzo 
@@ -1158,20 +1136,9 @@ Notizie dal mondo per viaggiare informati
  
  
  
- Vacanze per famiglie 
+ Luoghi da film 
  
- Tutto quello che c’è da sapere per portare un passeggino in aereo 
- 
- 
- 
- 
- 
- 
- 
- 
- Idee di Viaggio 
- 
- Come in una favola di Natale, così è Lubiana 
+ Le esotiche location della serie Tv Delitti in paradiso 
  
  
  
@@ -1180,20 +1147,9 @@ Notizie dal mondo per viaggiare informati
  
  
  
- Idee di Viaggio 
+ Consigli 
  
- La Fortezza di Poenari, il vero castello del Conte Dracula 
- 
- 
- 
- 
- 
- 
- 
- 
- Wanderlust 
- 
- Le 50 frasi più belle per chi ama viaggiare 
+ Come arrivare all'Isola di San Giulio 
  
  
  
@@ -1202,20 +1158,31 @@ Notizie dal mondo per viaggiare informati
  
  
  
- Idee di Viaggio 
+ Notizie 
  
- I 10 piatti tipici del Marocco da non perdere 
- 
- 
+ Il bellissimo treno storico che è l'alternativa alla Transiberiana d'Italia 
  
  
  
  
  
  
- Posti incredibili 
  
- Cosa si nasconde sotto la Laguna di Venezia 
+ 
+ Consigli 
+ 
+ Cosa conviene comprare in Ungheria: i souvenir più originali 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Borghi 
+ 
+ Cingoli, il balcone delle Marche affacciato su panorami sconfinati tra natura e mare 
  
  
  
@@ -1226,7 +1193,7 @@ Notizie dal mondo per viaggiare informati
  
  Idee di Viaggio 
  
- Castel Sant'Elmo: lo sguardo poetico e inedito sul mare di Napoli 
+ Villajoyosa, la colorata città spagnola che si affaccia sul mare 
  
  
  
@@ -1237,7 +1204,40 @@ Notizie dal mondo per viaggiare informati
  
  Idee di Viaggio 
  
- Cosa vedere a Lourdes, dove si trova il santuario mariano 
+ Le 10 peggiori città da visitare negli Stati Uniti 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Consigli 
+ 
+ Cosa conviene comprare a Fuerteventura 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Notizie 
+ 
+ Dolomiti low cost, le mete più economiche per l'estate 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Borghi 
+ 
+ Cosa vedere a Fontanellato, gioiello del Parmense 
  
  
  
@@ -1248,7 +1248,7 @@ Notizie dal mondo per viaggiare informati
  
  Idee di Viaggio 
  
- Tetbury, il villaggio ricco di storia e bellezze naturali 
+ Al mare senza veli: le migliori spiagge naturiste secondo TripAdvisor 
  
  
  
@@ -1259,7 +1259,18 @@ Notizie dal mondo per viaggiare informati
  
  Idee di Viaggio 
  
- 5 cose da vedere nei dintorni di Trento, poco fuori città 
+ 5 canzoni che ti faranno sentire subito a Barcellona 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Borghi 
+ 
+ Grazzano Visconti: il gioiello medievale è il "falso storico" più bello d'Italia 
  
  
  
@@ -1281,7 +1292,18 @@ Notizie dal mondo per viaggiare informati
  
  Idee di Viaggio 
  
- 10 luoghi da vedere in Danimarca (Copenhagen a parte) 
+ Come in una favola di Natale, così è Lubiana 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Wanderlust 
+ 
+ Inchini, baci, salti e altri modi curiosi di salutarsi nel mondo 
  
  
  
@@ -1292,7 +1314,7 @@ Notizie dal mondo per viaggiare informati
  
  Idee di Viaggio 
  
- Cosa vedere a Domodossola in un giorno: tra bellezze medievali e riserve naturali 
+ I 10 piatti tipici del Marocco da non perdere 
  
  
  
@@ -1303,7 +1325,7 @@ Notizie dal mondo per viaggiare informati
  
  Idee di Viaggio 
  
- A Budapest c'è una chiesa spettacolare scavata nella roccia 
+ Ortigia, l’isola incantata: meraviglie e segreti nel cuore di Siracusa 
  
  
  
@@ -1312,28 +1334,6 @@ Notizie dal mondo per viaggiare informati
  
  
  
- Idee di Viaggio 
+ Posti incredibili 
  
- 10 borghi italiani che stanno vendendo le loro case a 1 euro 
- 
- 
- 
- 
- 
- 
- 
- 
- Notizie 
- 
- Il bellissimo treno storico che è l'alternativa alla Transiberiana d'Italia 
- 
- 
- 
- 
- 
- 
- 
- 
- Curiosità 
- 
- Sapete qual è la lingua più antica d'Europa?
+ Dormire nel paese più freddo del mondo a - 68°C

@@ -256,3 +256,41 @@ mentelocale-milano,https://www.mentelocale.it/milano/,sentinella,ok,2026-11-10
 ladige-cronaca,https://www.ladige.it/cronaca,sentinella,ok,2026-11-10
 articolo,https://www.gamberorosso.it/notizie/rubriche/nuove-aperture/tommaso-mazzanti-casa-av-osteria-palazzo-strozzi-firenze/,testo,HTTP 403,2026-11-10
 articolo,https://www.gamberorosso.it/notizie/rubriche/storie/jessica-rosval-migliore-chef-donna-mondo-storia-bottura/,testo,HTTP 403,2026-11-10
+gamberorosso,https://www.gamberorosso.it/feed/,feed,ok,2026-11-11
+gamberorosso-int,https://www.gamberorossointernational.com/feed/,feed,ok,2026-11-11
+dissapore,https://www.dissapore.com/feed/,feed,ok,2026-11-11
+scattidigusto,https://www.scattidigusto.it/feed/,feed,ok,2026-11-11
+agrodolce,https://www.agrodolce.it/feed/,feed,ok,2026-11-11
+puntarellarossa,https://www.puntarellarossa.it/feed/,feed,ok,2026-11-11
+slowfood,https://www.slowfood.it/feed/,feed,RemoteDisconnected: Remote end closed connection without response,2026-11-11
+ilforchettiere,https://www.ilforchettiere.it/feed/,feed,ok,2026-11-11
+lucianopignataro,https://www.lucianopignataro.it/feed/,feed,ok,2026-11-11
+carlozucchetti,https://www.carlozucchetti.it/feed/,feed,ok,2026-11-11
+siciliafan,https://www.siciliafan.it/feed/,feed,ok,2026-11-11
+greenme,https://www.greenme.it/feed/,feed,ok,2026-11-11
+quibrescia,https://www.quibrescia.it/feed/,feed,ok,2026-11-11
+avolanews,https://www.avolanews.it/feed/,feed,ok,2026-11-11
+emiliaromagnaatavola,https://www.emiliaromagnaatavola.it/feed/,feed,ok,2026-11-11
+ristorazioneitaliana,https://www.ristorazioneitalianamagazine.it/feed/,feed,ok,2026-11-11
+pizzaontheroad,https://www.pizzaontheroad.eu/feed/,feed,"rete: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.pizzaontheroad.eu'. (_ssl.c:1011)",2026-11-11
+girlinflorence,https://girlinflorence.com/feed/,feed,ok,2026-11-11
+emikodavies,https://emikodavies.com/feed/,feed,ok,2026-11-11
+michelin-cerimonia,https://guide.michelin.com/it/it/notizia/michelin-guide-ceremony,sentinella,ok,2026-11-11
+guida-michelin-it,https://guide.michelin.com/it/it/selection/italy/restaurants,sentinella,ok,2026-11-11
+slowfood-chiocciole,https://www.slowfood.it/tutte-le-chiocciole-di-osterie-ditalia-2027-regione-per-regione/,sentinella,RemoteDisconnected: Remote end closed connection without response,2026-11-11
+slowfood-osterie,https://www.slowfoodeditore.it/osterie-ditalia,sentinella,RemoteDisconnected: Remote end closed connection without response,2026-11-11
+identitagolose-guide,https://www.identitagolose.it/sito/it/207/guida-alla-guida.html,sentinella,ok,2026-11-11
+identitagolose-italia,https://www.identitagolose.it/sito/it/44/dallitalia.html,sentinella,ok,2026-11-11
+lespresso-attualita,https://lespresso.it/c/attualita/,sentinella,ok,2026-11-11
+50toppizza,https://www.50toppizza.it/,sentinella,ok,2026-11-11
+50topitaly,https://www.50topitaly.it/,sentinella,ok,2026-11-11
+carlino-cosafare,https://www.ilrestodelcarlino.it/emilia-romagna/cosa-fare,sentinella,ok,2026-11-11
+ilnordest-sapori,https://www.ilnordest.it/vivere-il-nord-est/sapori-e-territorio/,sentinella,ok,2026-11-11
+giornaledibrescia-cucina,https://www.giornaledibrescia.it/cucina/,sentinella,ok,2026-11-11
+arezzo24-winefood,https://www.arezzo24.net/notizie/wine-food/,sentinella,ok,2026-11-11
+siviaggia-notizie,https://siviaggia.it/notizie/,sentinella,ok,2026-11-11
+mentelocale-milano,https://www.mentelocale.it/milano/,sentinella,ok,2026-11-11
+ladige-cronaca,https://www.ladige.it/cronaca,sentinella,ok,2026-11-11
+articolo,https://www.gamberorosso.it/notizie/rubriche/nuove-aperture/tommaso-mazzanti-casa-av-osteria-palazzo-strozzi-firenze/,testo,HTTP 403,2026-11-11
+articolo,https://www.gamberorosso.it/notizie/rubriche/storie/jessica-rosval-migliore-chef-donna-mondo-storia-bottura/,testo,HTTP 403,2026-11-11
+articolo,https://www.lucianopignataro.it/a/bellavista-e-nomos-ante-il-franciacorta-incontra-la-cucina-dautore-a-roma/304680/,testo,ok,2026-11-11
