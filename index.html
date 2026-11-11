@@ -443,7 +443,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_0de29fca";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_1a7c23e2";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -727,13 +727,13 @@ function rotta(){const h=(location.hash||"#ristoranti").slice(1);const v={ristor
   $("f-cuc").hidden=v==="piz"||v==="altp";opzOrd();S.shown=40;draw();}
 // ---- metodo ----
 function metodo(){if($("metodo").dataset.ok||!D)return;$("metodo").dataset.ok=1;
-  const righeT=Object.entries(LEG).filter(([c])=>!["GR_GUIDA","STORIA"].includes(c)).sort((a,b)=>b[1][1]-a[1][1]).map(([c,[l,v,ic]])=>`<tr><td>${(()=>{const [em,n,f]=TK(c);return gettone(em,n,f,l);})()}</td><td>${esc(l)}${AGG.has(c)?" <small>(solo conferma)</small>":SOLO.has(c)?" <small>(conferma: guida non letta in tutte le province)</small>":""}</td><td class="v">${AGG.has(c)||SOLO.has(c)?"+3":v}</td></tr>`).join("");
-  $("metodo").innerHTML=`<div class="indice"><a href="#m-rg">Come funziona l'ordine</a><a href="#m-pt">Punti per riconoscimento</a><a href="#m-dati">Da dove vengono i dati</a><a href="#m-pv">Province</a><a href="#m-no">Cosa non c'è</a></div>
+  const righeT=Object.entries(LEG).filter(([c])=>!["GR_GUIDA","STORIA"].includes(c)).sort((a,b)=>b[1][1]-a[1][1]).map(([c,[l,v,ic]])=>`<tr><td>${(()=>{const [em,n,f]=TK(c);return gettone(em,n,f,l);})()}</td><td>${esc(l)}${AGG.has(c)?" <small>(solo conferma)</small>":SOLO.has(c)?" <small>(conferma: guida non letta in tutte le province)</small>":""}</td></tr>`).join("");
+  $("metodo").innerHTML=`<div class="indice"><a href="#m-rg">Come funziona l'ordine</a><a href="#m-pt">Icone</a><a href="#m-dati">Da dove vengono i dati</a><a href="#m-pv">Province</a><a href="#m-no">Cosa non c'è</a></div>
   <h2 id="m-rg">Come funziona l'ordine</h2>
   <p>C'è <b>un solo ordine</b> per tutta Italia, con dentro tutti i locali citati da guide, stampa e blog. Le schede <b>Segnalati</b> e <b>Segnalate</b> mostrano i ristoranti e le pizzerie citati; <b>Apprezzati</b> e <b>Apprezzate</b> i ristoranti e le pizzerie delle anagrafi aperte che nessuna guida o testata cita ancora (per questi non c'è un punteggio: la guida non usa voti o recensioni delle piattaforme); <b>Tutti</b> mette insieme tutto, con i citati davanti. Tutte le schede seguono lo stesso ordine.</p>
-  <p>Accanto a ogni locale trovi <b>tutte le icone delle sue citazioni</b>, dal riconoscimento più importante: il numerino dice quanti (per esempio ⭐ con 2 = due stelle Michelin, 🍴 con 3 = Tre Forchette). Il significato di ogni icona è nella tabella qui sotto; in più ${gettone("📰",0,"nt","Stampa")} articoli di stampa, ${gettone("📝",0,"nt","Blog")} blog. Accanto al nome, 🏛️ indica un locale storico e ✨ un locale con charme (edificio storico, vista, giardino, sale d'epoca, camino, borgo).</p>
-  <h2 id="m-pt">Punti per riconoscimento</h2>
-  <table><thead><tr><th></th><th>Riconoscimento</th><th>Punti</th></tr></thead><tbody>${righeT}</tbody></table>
+  <p>Accanto a ogni locale trovi <b>tutte le icone delle sue citazioni</b>, dal riconoscimento più importante: il numerino dice quanti (per esempio ⭐ con 2 = due stelle Michelin, 🍴 con 3 = Tre Forchette). Il significato di ogni icona è nella tabella «Icone» qui sotto; in più ${gettone("📰",0,"nt","Stampa")} articoli di stampa, ${gettone("📝",0,"nt","Blog")} blog. Accanto al nome, 🏛️ indica un locale storico e ✨ un locale con charme (edificio storico, vista, giardino, sale d'epoca, camino, borgo).</p>
+  <h2 id="m-pt">Icone</h2>
+  <table><thead><tr><th></th><th>Riconoscimento</th></tr></thead><tbody>${righeT}</tbody></table>
   <h2 id="m-dati">Da dove vengono gli altri dati</h2>
   <p><b>Questa guida è fatta solo con informazioni pubbliche, disponibili sul web</b>: guide pubblicate, articoli firmati di giornali e riviste, blog di critici, siti dei locali, registri dei locali storici e anagrafi aperte. Ogni citazione ha la sua fonte con link nella scheda del locale. Non usa voti, recensioni o foto di Google, TripAdvisor o altre piattaforme.</p>
   <ul><li><b>Esistenza, posizione, sito:</b> Overture Maps e OpenStreetMap, con licenza aperta. Se il record aperto più vicino ha un altro nome, se ne usa solo la posizione.</li>
