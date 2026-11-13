@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" data-stile="C">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Ach’s Dinners Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap">
 <style>
 /* Ach's Dinners Guide v3 — carta calda e rosso vino; soluzioni della Dashboard principale: dati a due livelli, filtri multipli
    con conteggi incrociati, ricerca per inizio di parola, ordinamenti, pannello filtri a scomparsa su telefono */
@@ -299,6 +301,98 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mute)}
 .nlink{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 35%,transparent);text-underline-offset:2px}.nlink:hover{text-decoration-color:currentColor}
 .addr{color:var(--mute);font-size:14px;margin:4px 0 0}
+/* ===== PROTOTIPO «moderno» (13/11/2026): stessi dati e funzioni, solo aspetto ===== */
+:root{--bg:#f5f6f2;--paper:#ffffff;--ink:#14211a;--mute:#5d6a62;--faint:#94a09a;--line:#e2e7e1;--sunk:#eef2ec;
+  --acc:#1f7a4d;--acc2:#2fa36b;--acc-soft:#e4f3ea;--acc-ink:#155c39;--on:#fff;
+  --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--disp:"Space Grotesk",Inter,system-ui,sans-serif;--serif:var(--disp);
+  --r:20px;--shadow:0 1px 1px rgba(20,40,30,.04),0 6px 18px -6px rgba(20,40,30,.10);--pop:0 18px 50px -12px rgba(10,30,20,.28)}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1311;--paper:#151d19;--ink:#e8f0eb;--mute:#9aaba2;--faint:#6d7d75;--line:#24302a;--sunk:#1b2520;
+  --acc:#4fd18b;--acc2:#7de3ad;--acc-soft:#173326;--acc-ink:#9eeac2;--on:#06130c;--shadow:0 1px 0 rgba(255,255,255,.03) inset,0 10px 30px -14px rgba(0,0,0,.8)}}
+body{font-family:var(--sans);letter-spacing:-.005em;background:
+  radial-gradient(1200px 500px at 15% -10%,color-mix(in srgb,var(--acc) 12%,transparent),transparent 60%),
+  radial-gradient(900px 420px at 100% 0%,color-mix(in srgb,#f0b35a 10%,transparent),transparent 60%),var(--bg);background-attachment:fixed}
+.hero{padding:26px 0 8px}
+.kick{display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 10px;border-radius:999px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);font:600 11.5px/1 var(--sans);letter-spacing:.08em;color:var(--acc-ink)}
+.kick::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--acc2);box-shadow:0 0 0 4px color-mix(in srgb,var(--acc2) 22%,transparent)}
+h1{font:700 clamp(2.2rem,6vw,3.6rem)/1.0 var(--disp);letter-spacing:-.035em;margin-top:14px}
+h1 em{font-style:normal;background:linear-gradient(100deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{font-size:16px;color:var(--mute)}.lede b{color:var(--ink)}
+nav.tabs{background:color-mix(in srgb,var(--paper) 75%,transparent);border:1px solid var(--line);border-radius:18px;padding:5px;gap:4px;margin-top:max(12px,env(safe-area-inset-top));box-shadow:var(--shadow);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+nav.tabs a{border:0;background:transparent;border-radius:13px;padding:8px 13px;font-weight:600;color:var(--mute);transition:background .2s,color .2s}
+nav.tabs a:hover{color:var(--ink);background:var(--sunk)}
+nav.tabs a.on{background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--on);box-shadow:0 6px 16px -6px color-mix(in srgb,var(--acc) 70%,transparent)}
+nav.tabs a.mapl{color:var(--acc-ink);background:var(--acc-soft)}
+@media (max-width:560px){nav.tabs{border-radius:16px;padding:4px;gap:3px}nav.tabs a{border-radius:12px;padding:7px 1px 6px}}
+.tools{background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px)}
+.search input,.tbtn{height:48px;border-radius:15px;border:1px solid var(--line);background:var(--paper);box-shadow:var(--shadow)}
+.search input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 16%,transparent)}
+.search svg{top:15px}
+.tbtn.on{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent}
+@media (min-width:700px){#fpan{border-radius:22px;box-shadow:var(--shadow)}}
+.ms>button{border-radius:13px}
+.conta{background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:0}
+.count{font-weight:600}
+.azzera{border:0;background:var(--acc-soft);color:var(--acc-ink)}
+.giu{background:linear-gradient(135deg,var(--acc),var(--acc2))}
+.grid{gap:14px}
+.card{border-radius:var(--r);border:1px solid color-mix(in srgb,var(--acc) 22%,var(--line));padding:16px;gap:14px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));opacity:0;transition:opacity .2s}
+@media (hover:hover){.card:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(20,40,30,.05),0 22px 40px -18px color-mix(in srgb,var(--acc) 45%,rgba(0,0,0,.25));border-color:color-mix(in srgb,var(--acc) 45%,var(--line))}.card:hover::before{opacity:1}}
+.rank.ico{width:70px;padding:9px 6px;border-radius:16px;background:linear-gradient(160deg,var(--acc-soft),color-mix(in srgb,var(--acc-soft) 30%,var(--paper)));align-self:stretch;align-content:center}
+.card.semplice .rank.ico{background:transparent;padding:0}
+.rank .vuoto{background:var(--sunk)}
+.cname{font:600 17.5px/1.22 var(--disp);letter-spacing:-.015em}
+.citda{display:inline-block;margin-top:10px;padding:4px 10px;border-radius:999px;background:var(--sunk);color:var(--mute);font-size:12px;font-weight:600}
+dialog .sheet{border-radius:26px}
+.box{border-radius:18px}
+.stat b{font-family:var(--disp)}
+
+/* ===== quattro stili da provare (selettore in basso a sinistra) ===== */
+.mono{display:none}
+#stili{position:fixed;left:max(14px,env(safe-area-inset-left));bottom:calc(18px + env(safe-area-inset-bottom));z-index:32;display:flex;align-items:center;gap:3px;padding:4px;border-radius:999px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--pop);font-size:12px}
+#stili span{padding:0 6px 0 8px;color:var(--mute);font-weight:600}
+#stili button{border:0;background:none;width:30px;height:30px;border-radius:50%;font-weight:800;color:var(--ink)}
+#stili button.on{background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--on)}
+/* A · Etichette: niente icone, una riga di colore a sinistra e i riconoscimenti scritti */
+html[data-stile=A] .card .rank{display:none}
+html[data-stile=A] .card{padding:16px 16px 16px 20px}
+html[data-stile=A] .card::before{opacity:1;inset:0 auto 0 0;width:5px;height:auto;background:var(--line)}
+html[data-stile=A] .card.cit::before{background:linear-gradient(180deg,var(--acc),var(--acc2))}
+html[data-stile=A] .card.cit.pz::before{background:linear-gradient(180deg,#e08a2c,#f2b45a)}
+html[data-stile=A] .brow .b{font-size:12.5px;padding:4px 10px}
+/* B · Medaglia: solo il riconoscimento principale, grande, gli altri scritti */
+html[data-stile=B] .rank.ico{width:58px;background:none;padding:0;align-self:flex-start}
+html[data-stile=B] .rank.ico .tk:not(:first-child){display:none}
+html[data-stile=B] .rank.ico .tk:first-child{width:54px;height:54px;font-size:26px;box-shadow:0 8px 18px -8px rgba(0,0,0,.35)}
+html[data-stile=B] .rank.ico .tk:first-child i{min-width:20px;height:20px;font-size:11px;line-height:20px;right:-4px;bottom:-3px}
+html[data-stile=B] .card.semplice .rank .vuoto{width:54px;height:54px;font-size:22px}
+/* C · Rivista: elenco a righe, senza riquadri, riconoscimenti in maiuscoletto */
+html[data-stile=C] .grid{grid-template-columns:1fr!important;column-gap:44px;row-gap:0;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:4px 18px;box-shadow:var(--shadow)}
+html[data-stile=C] .card{border:0;border-bottom:1px solid var(--line);border-radius:0;box-shadow:none;padding:16px 2px;background:none}
+html[data-stile=C] .card:last-child{border-bottom:0}
+@media (min-width:760px){html[data-stile=C] .grid{grid-template-columns:1fr 1fr!important;padding:4px 26px}}
+@media (min-width:1200px){html[data-stile=C] .grid{grid-template-columns:1fr 1fr 1fr!important;column-gap:40px}}
+html[data-stile=C] .card:hover{transform:none;box-shadow:none}
+html[data-stile=C] .card::before{display:none}
+html[data-stile=C] .card .rank{display:none}
+html[data-stile=C] .cname{font-size:20.5px;font-weight:700;letter-spacing:-.02em}
+html[data-stile=C] .cmeta{font-size:14.5px;font-weight:600;color:color-mix(in srgb,var(--ink) 72%,var(--mute))}
+html[data-stile=C] .cmeta b{font-weight:800;color:var(--ink)}
+html[data-stile=C] .brow .b{background:none!important;border:0!important;padding:0!important;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--acc-ink)!important}
+html[data-stile=C] .brow .b:not(:last-child)::after{content:"·";margin:0 7px;color:var(--faint);font-weight:400}
+html[data-stile=C] .brow{gap:0}
+html[data-stile=C] .citda{background:none;padding:0;margin-top:7px;font-weight:700;font-size:13.5px;color:color-mix(in srgb,var(--ink) 65%,var(--mute))}
+/* D · Iniziale: un tondo con l'iniziale del locale, colori per tipo */
+html[data-stile=D] .card .rank{display:none}
+html[data-stile=D] .mono{display:grid;place-items:center;flex:none;width:52px;height:52px;border-radius:16px;font:700 22px/1 var(--disp);color:#fff;background:linear-gradient(135deg,#8fa39a,#b9c6bf);align-self:flex-start}
+html[data-stile=D] .card.cit .mono{background:linear-gradient(135deg,var(--acc),var(--acc2))}
+html[data-stile=D] .card.cit.pz .mono{background:linear-gradient(135deg,#d9772a,#f2b45a)}
+html[data-stile=D] .card.pz:not(.cit) .mono{background:linear-gradient(135deg,#c9a27a,#e3c8a8)}
+.mapbtn{text-decoration:none;border:0!important;color:var(--on)!important;background:linear-gradient(135deg,var(--acc),var(--acc2))!important;box-shadow:0 8px 20px -8px color-mix(in srgb,var(--acc) 75%,transparent)!important;font-weight:700}
+.mapbtn:hover{filter:brightness(1.06)}
+@media (min-width:700px){.tools .row .search{flex:0 1 560px}.tools .row{justify-content:flex-start}}
+@media (max-width:480px){.mapbtn{padding:0 12px}.tools .row{gap:6px}}
+@media (max-width:420px){#mfil>span:not(.k){display:none}#mfil{padding:0 12px;gap:4px}}
 </style>
 </head>
 <body>
@@ -342,6 +436,7 @@ footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);font-si
   <div class="tools">
     <div class="row">
       <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="text" inputmode="search" enterkeyhint="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Cerca locale o comune"><span id="qconta"></span><button type="button" id="qx" aria-label="Cancella" hidden>×</button></label>
+      <a class="tbtn mapbtn" href="mappa.html" aria-label="Mappa d'Italia dei locali"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mappa</span></a>
       <button type="button" class="tbtn" id="mfil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filtri</span><span class="k" id="nfil" hidden></span></button>
       <button type="button" class="tbtn" id="mvic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Vicino a…</span></button>
     </div>
@@ -443,7 +538,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_1a7c23e2";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_716da37c";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -659,7 +754,7 @@ function icone(x){const v=x.g2.map(c=>{const [em,n,f]=TK(c);return gettone(em,n,
   if(x.ns)v.push(gettone("📰",x.ns,"nt","Stampa"));if(x.nb)v.push(gettone("📝",x.nb,"nt","Blog"));
   return `<div class="rank ico" aria-label="Riconoscimenti e citazioni">${v.join("")}</div>`;}
 function card(x,Q){const meta=`<b class="com">${esc(x.c)} (${esc(x.p)})</b>`+[x.cu,x.st].filter(Boolean).map(t=>" · "+esc(t)).join("");const rk=x.s>0;const posTxt="";
-  const conI=rk||x.g2.length||x.ns||x.nb;return `<button type="button" class="card${conI?"":" semplice"}" data-i="${x.i}">${conI?icone(x):`<div class="rank ico" aria-hidden="true"><span class="vuoto">${x.pz?"🍕":x.cu==="Pesce"?"🐟":"🍽️"}</span></div>`}<div class="cbody"><div class="cname">${evid(x.n,Q)}${segniNome(x)}</div><div class="cmeta">${meta}</div>${posTxt}${PT&&x._d!=null?`<div class="cmeta dist">📍 ${distTxt(x)}</div>`:""}${righe(x,3,true)}${citatoDa(x)}</div></button>`;}
+  const conI=rk||x.g2.length||x.ns||x.nb;return `<button type="button" class="card${conI?"":" semplice"}${x.s>0?" cit":""}${x.pz?" pz":""}" data-i="${x.i}">${conI?icone(x):`<div class="rank ico" aria-hidden="true"><span class="vuoto">${x.pz?"🍕":x.cu==="Pesce"?"🐟":"🍽️"}</span></div>`}<div class="mono" aria-hidden="true">${esc((x.n.replace(/^[^A-Za-zÀ-ÿ]+/,"")||x.n).charAt(0).toUpperCase())}</div><div class="cbody"><div class="cname">${evid(x.n,Q)}${segniNome(x)}</div><div class="cmeta">${meta}</div>${posTxt}${PT&&x._d!=null?`<div class="cmeta dist">📍 ${distTxt(x)}</div>`:""}${righe(x,3,true)}${citatoDa(x)}</div></button>`;}
 $("grid").onclick=e=>{const c=e.target.closest(".card");if(!c)return;const i=+c.dataset.i;if(i>=0&&!L.length){TOCCO=i;return;}apri(trovaI(i));};
 $("grid").addEventListener("pointerdown",e=>{const c=e.target.closest(".card");if(!c)return;const x=trovaI(+c.dataset.i);if(x&&FILES[x.p])carica(x.p).catch(()=>{});},{passive:true});
 // ---- scheda: si apre subito con i dati dell'indice e si completa con le fonti della provincia ----
@@ -719,7 +814,7 @@ function lede(){const k=S.v==="metodo"?"tutti":S.v;
   $("lede").innerHTML=k==="tutti"?`<b>${fmt(t)}</b> locali in ${fmt(co)} comuni, di cui <b>${fmt(c)}</b> segnalati da guide e stampa.`
     :k==="altri"||k==="altp"?`<b>${fmt(t)}</b> ${cosa} in ${fmt(co)} comuni presenti nelle anagrafi aperte, che nessuna guida o testata cita ancora.`
     :`<b>${fmt(c)}</b> ${cosa} da guide e stampa, su ${fmt(t)} in ${fmt(co)} comuni.`;}
-function rotta(){const h=(location.hash||"#ristoranti").slice(1);const v={ristoranti:"rico",ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti",apprezzati:"altri",apprezzate:"altp",metodo:"metodo"}[h]||"rico";
+function rotta(){if(location.hash.startsWith("#cerca=")){const q=decodeURIComponent(location.hash.slice(7));history.replaceState(null,"","#tutti");$("q").value=q;$("qx").hidden=!q;S.q=q;S.shown=40;}const h=(location.hash||"#ristoranti").slice(1);const v={ristoranti:"rico",ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti",apprezzati:"altri",apprezzate:"altp",metodo:"metodo"}[h]||"rico";
   document.querySelectorAll("nav.tabs a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
   $("lista").hidden=v==="metodo";$("metodo").hidden=v!=="metodo";if(v==="metodo"){$("azgiu").hidden=true;metodo();return;}
   S.v=v;$("sp-cit").hidden=v!=="tutti";$("sp-inf").hidden=!(v==="altri"||v==="altp");lede();
