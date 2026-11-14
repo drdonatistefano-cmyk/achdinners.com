@@ -538,7 +538,9 @@ const memo={db:null,
   async leggi(k){const db=await this.apri();if(!db)return null;return new Promise(ok=>{try{const q=db.transaction("f").objectStore("f").get(k);q.onsuccess=()=>ok(q.result||null);q.onerror=()=>ok(null);}catch(e){ok(null);}});},
   async scrivi(k,v){const db=await this.apri();if(!db)return;try{db.transaction("f","readwrite").objectStore("f").put(v,k);}catch(e){}},
   async pulisci(tieni){const db=await this.apri();if(!db)return;try{const s=db.transaction("f","readwrite").objectStore("f");const q=s.getAllKeys();q.onsuccess=()=>q.result.forEach(k=>{if(!tieni.has(k))s.delete(k);});}catch(e){}}};
-async function scarica(nome){const m=await memo.leggi(nome);if(m)return m;const r=await fetch(nome);if(!r.ok)throw new Error("HTTP "+r.status);const j=await r.json();memo.scrivi(nome,j);return j;}
+async function scarica(nome){const m=await memo.leggi(nome);if(m)return m instanceof Blob?new Response(m).json():m;const r=await fetch(nome);if(!r.ok)throw new Error("HTTP "+r.status);
+  /* nel telefono si salva il file così com'è (Blob), non l'oggetto: copiarlo costava 100-150 ms di blocco */
+  const b=await r.blob();memo.scrivi(nome,b);return new Response(b).json();}
 // ---- riconoscimenti ----
 let LEG=INL.legenda,SOLO=new Set(INL.solo);let FILES=INL.files;EXF=INL.extra;let EX=null,EXP=null;
 function caricaExtra(){return EXP||(EXP=scarica(EXF).then(e=>{EX=e;return e;}).catch(e=>{EXP=null;throw e;}));}
@@ -590,8 +592,8 @@ function caricaAux(){return AUXP||(AUXP=scarica(AUXF).then(a=>{let la=0,lo=0;for
 const serveRN=()=>S.ord==="nome"||S.ord==="fonti"||S.v==="tutti"||S.v==="altri"||S.v==="altp";
 // indice delle parole: per ogni parola (inizio di parola nel nome, comune, provincia) i locali che la contengono; preparato in sottofondo
 let IW=null;
-function preparaParole(){const mp=new Map();let i=0;const passo=dl=>{const fine=Math.min(L.length,i+2500);
-  for(;i<fine;i++){for(const t of qOf(L[i]).split(" ")){if(!t)continue;let a=mp.get(t);if(!a)mp.set(t,a=[]);if(a[a.length-1]!==i)a.push(i);}}
+function preparaParole(){const mp=new Map();let i=0;const passo=dl=>{const t0=performance.now();/* a pezzi di 8 ms: il telefono resta libero ai tocchi */
+  for(;i<L.length&&(i&63||performance.now()-t0<8);i++){for(const t of qOf(L[i]).split(" ")){if(!t)continue;let a=mp.get(t);if(!a)mp.set(t,a=[]);if(a[a.length-1]!==i)a.push(i);}}
   if(i<L.length){(window.requestIdleCallback||setTimeout)(passo,{timeout:1000});return;}
   const ks=[...mp.keys()].sort();IW={ks,ls:ks.map(k=>mp.get(k))};Qc={k:null};};(window.requestIdleCallback||setTimeout)(passo,{timeout:1000});}
 const WS={};
@@ -602,11 +604,14 @@ avvioVeloce().then(avvia).catch(e=>{$("lede").textContent="Non riesco a caricare
 const REGOLA=(a,b)=>b.s-a.s||b.top-a.top||b.g2.length-a.g2.length||(b.ns+b.nb)-(a.ns+a.nb)||((b.h||b.nst?1:0)-(a.h||a.nst?1:0))||COL.compare(a.n,b.n);
 const PIZ=/^GR_\dS$|^GR_PIZZA_ANNO$|^TOP50PIZZA$/,RIST=/^MICH_[123]$|^GR_\d[FG]$|^SF_|^TOP50(TR|GR)$|^ESP/;
 let RN=null;
-function avvia(d){D=d;const z=d.dz;const C=d.col;
-  L=C.n.map((n0,i)=>{const g2=C.g[i].map(j=>z.g[j]),cu=C.cu[i],st=C.st[i];const x={i,n:n0,c:z.c[C.c[i]],p:z.p[C.p[i]],la:null,lo:null,k:C.k[i],cu:cu<0?"":z.cu[cu],st:st<0?"":z.st[st],w:C.w[i],s:C.s[i]/10,g2,ns:C.ns[i],nb:C.nb[i],nst:C.nst[i],h:C.h[i],pos:C.pos[i]};
+/* l'elenco dei 48.000 locali si costruisce a pezzi di 10 ms, lasciando respirare il telefono fra un pezzo e l'altro */
+const cede=()=>window.scheduler&&scheduler.yield?scheduler.yield():new Promise(r=>{const m=new MessageChannel();m.port1.onmessage=()=>r();m.port2.postMessage(0);});
+async function avvia(d){D=d;const z=d.dz;const C=d.col;const LL=new Array(C.n.length);let t0=performance.now();
+  for(let i=0;i<LL.length;i++){if(!(i&127)&&performance.now()-t0>10){await cede();t0=performance.now();}const n0=C.n[i];LL[i]=((n0,i)=>{const g2=C.g[i].map(j=>z.g[j]),cu=C.cu[i],st=C.st[i];const x={i,n:n0,c:z.c[C.c[i]],p:z.p[C.p[i]],la:null,lo:null,k:C.k[i],cu:cu<0?"":z.cu[cu],st:st<0?"":z.st[st],w:C.w[i],s:C.s[i]/10,g2,ns:C.ns[i],nb:C.nb[i],nst:C.nst[i],h:C.h[i],pos:C.pos[i]};
     x.r=d.regp[x.p]||"";x.pz=g2.some(c=>PIZ.test(c))||(x.cu==="Pizzeria"&&!g2.some(c=>RIST.test(c)));
     x.fam=[...new Set(g2.map(FAMIGLIA))];x.fo=[x.ns?"📰 Stampa":"",x.nb?"📝 Blog":"",x.nst?"✨ Charme e storia":""].filter(Boolean);x.nf=g2.length+x.ns+x.nb+x.nst;
-    (RX[x.p]||(RX[x.p]=[]))[x.k]=x;return x;});
+    (RX[x.p]||(RX[x.p]=[]))[x.k]=x;return x;})(n0,i);}
+  L=LL;await cede();
   // CLASSIFICA GENERALE: una sola per tutti i locali citati (ristoranti e pizzerie), un numero diverso per ciascuno.
   // Regola: 1) punteggio delle guide; a pari punteggio 2) riconoscimento principale più alto; 3) più guide diverse;
   // 4) più articoli di stampa e blog; 5) locale storico o con storia documentata; 6) nome in ordine alfabetico.
