@@ -294,3 +294,48 @@ ladige-cronaca,https://www.ladige.it/cronaca,sentinella,ok,2026-11-11
 articolo,https://www.gamberorosso.it/notizie/rubriche/nuove-aperture/tommaso-mazzanti-casa-av-osteria-palazzo-strozzi-firenze/,testo,HTTP 403,2026-11-11
 articolo,https://www.gamberorosso.it/notizie/rubriche/storie/jessica-rosval-migliore-chef-donna-mondo-storia-bottura/,testo,HTTP 403,2026-11-11
 articolo,https://www.lucianopignataro.it/a/bellavista-e-nomos-ante-il-franciacorta-incontra-la-cucina-dautore-a-roma/304680/,testo,ok,2026-11-11
+gamberorosso,https://www.gamberorosso.it/feed/,feed,ok,2026-11-14
+gamberorosso-int,https://www.gamberorossointernational.com/feed/,feed,ok,2026-11-14
+dissapore,https://www.dissapore.com/feed/,feed,ok,2026-11-14
+scattidigusto,https://www.scattidigusto.it/feed/,feed,ok,2026-11-14
+agrodolce,https://www.agrodolce.it/feed/,feed,ok,2026-11-14
+puntarellarossa,https://www.puntarellarossa.it/feed/,feed,ok,2026-11-14
+slowfood,https://www.slowfood.it/feed/,feed,RemoteDisconnected: Remote end closed connection without response,2026-11-14
+ilforchettiere,https://www.ilforchettiere.it/feed/,feed,ok,2026-11-14
+lucianopignataro,https://www.lucianopignataro.it/feed/,feed,ok,2026-11-14
+carlozucchetti,https://www.carlozucchetti.it/feed/,feed,ok,2026-11-14
+siciliafan,https://www.siciliafan.it/feed/,feed,ok,2026-11-14
+greenme,https://www.greenme.it/feed/,feed,ok,2026-11-14
+quibrescia,https://www.quibrescia.it/feed/,feed,ok,2026-11-14
+avolanews,https://www.avolanews.it/feed/,feed,ok,2026-11-14
+emiliaromagnaatavola,https://www.emiliaromagnaatavola.it/feed/,feed,ok,2026-11-14
+ristorazioneitaliana,https://www.ristorazioneitalianamagazine.it/feed/,feed,ok,2026-11-14
+pizzaontheroad,https://www.pizzaontheroad.eu/feed/,feed,ok,2026-11-14
+girlinflorence,https://girlinflorence.com/feed/,feed,ok,2026-11-14
+emikodavies,https://emikodavies.com/feed/,feed,ok,2026-11-14
+michelin-cerimonia,https://guide.michelin.com/it/it/notizia/michelin-guide-ceremony,sentinella,ok,2026-11-14
+guida-michelin-it,https://guide.michelin.com/it/it/selection/italy/restaurants,sentinella,ok,2026-11-14
+slowfood-chiocciole,https://www.slowfood.it/tutte-le-chiocciole-di-osterie-ditalia-2027-regione-per-regione/,sentinella,RemoteDisconnected: Remote end closed connection without response,2026-11-14
+slowfood-osterie,https://www.slowfoodeditore.it/osterie-ditalia,sentinella,RemoteDisconnected: Remote end closed connection without response,2026-11-14
+identitagolose-guide,https://www.identitagolose.it/sito/it/207/guida-alla-guida.html,sentinella,ok,2026-11-14
+identitagolose-italia,https://www.identitagolose.it/sito/it/44/dallitalia.html,sentinella,ok,2026-11-14
+lespresso-attualita,https://lespresso.it/c/attualita/,sentinella,ok,2026-11-14
+50toppizza,https://www.50toppizza.it/,sentinella,ok,2026-11-14
+50topitaly,https://www.50topitaly.it/,sentinella,ok,2026-11-14
+carlino-cosafare,https://www.ilrestodelcarlino.it/emilia-romagna/cosa-fare,sentinella,ok,2026-11-14
+ilnordest-sapori,https://www.ilnordest.it/vivere-il-nord-est/sapori-e-territorio/,sentinella,ok,2026-11-14
+giornaledibrescia-cucina,https://www.giornaledibrescia.it/cucina/,sentinella,ok,2026-11-14
+arezzo24-winefood,https://www.arezzo24.net/notizie/wine-food/,sentinella,ok,2026-11-14
+siviaggia-notizie,https://siviaggia.it/notizie/,sentinella,ok,2026-11-14
+mentelocale-milano,https://www.mentelocale.it/milano/,sentinella,ok,2026-11-14
+ladige-cronaca,https://www.ladige.it/cronaca,sentinella,ok,2026-11-14
+articolo,https://www.gamberorosso.it/notizie/rubriche/nuove-aperture/tommaso-mazzanti-casa-av-osteria-palazzo-strozzi-firenze/,testo,HTTP 403,2026-11-14
+articolo,https://www.gamberorosso.it/notizie/rubriche/storie/jessica-rosval-migliore-chef-donna-mondo-storia-bottura/,testo,HTTP 403,2026-11-14
+articolo,https://www.scattidigusto.it/10-piatti-di-akoya-valgono-la-stella-michelin-2027,testo,ok,2026-11-14
+articolo,https://www.scattidigusto.it/chi-perde-le-stelle-michelin-nella-guida-2027,testo,ok,2026-11-14
+articolo,https://www.lucianopignataro.it/a/guida-michelin-i-ristoranti-con-due-stelle-regione-per-regione/304956/,testo,ok,2026-11-14
+articolo,https://www.lucianopignataro.it/a/i-ristoranti-italiani-che-hanno-perso-le-tre-stelle-michelin-nella-storia/304889/,testo,ok,2026-11-14
+articolo,https://www.lucianopignataro.it/a/quid-unique-italian-dining-la-cucina-di-juan-quintero-e-la-nuova-stella-della-capitale/304746/,testo,ok,2026-11-14
+articolo,https://www.lucianopignataro.it/a/federica-di-mauro-25-anni-e-un-premio-che-premia-il-talento-della-penisola-sorrentina/304856/,testo,ok,2026-11-14
+articolo,https://www.lucianopignataro.it/a/chefi-scarello-nella-laguna-di-venezia-agli-amici-dopolavoro-venezia/255561/,testo,ok,2026-11-14
+articolo,https://www.greenme.it/lifestyle/due-stelle-michelin-alla-chef-che-aiuta-le-donne-migranti-a-ricominciare-dalla-cucina-la-storia-di-jessica-rosval/,testo,ok,2026-11-14
