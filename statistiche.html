@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Statistiche – Ach's Dinners Guide</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233d5f7d'/%3E%3Crect x='7' y='17' width='4' height='8' rx='1' fill='white'/%3E%3Crect x='14' y='11' width='4' height='14' rx='1' fill='white'/%3E%3Crect x='21' y='7' width='4' height='18' rx='1' fill='white'/%3E%3C/svg%3E">
+<style>
+:root{
+ --bg:#f6efe4;--paper:#fffdf9;--ink:#231d18;--mute:#6f645a;--faint:#a99d8f;--line:#e8ddcc;
+ --terra:#8a6d1f;--terra-soft:color-mix(in srgb,#8a6d1f 14%,#fff);--on:#fff;
+ --good:#2f7a47;--good-soft:#e3f1e7;--warn:#9a6a12;--warn-soft:#f8eed8;--bad:#a8442f;--bad-soft:#f7e4df;
+ --shadow:0 1px 2px rgba(60,40,20,.06),0 4px 14px rgba(60,40,20,.06);
+ --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+ --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --bg:#161311;--paper:#201c19;--ink:#f1e9df;--mute:#ab9f92;--faint:#7d7268;--line:#332d28;
+ --terra:#d7b45c;--terra-soft:color-mix(in srgb,#d7b45c 18%,#161311);--on:#102131;
+ --good:#6fbf86;--good-soft:#1c2a20;--warn:#e0b25a;--warn-soft:#2d2516;--bad:#e8876f;--bad-soft:#321d18;--shadow:none}}
+:root[data-theme="dark"]{
+ --bg:#161311;--paper:#201c19;--ink:#f1e9df;--mute:#ab9f92;--faint:#7d7268;--line:#332d28;
+ --terra:#d7b45c;--terra-soft:color-mix(in srgb,#d7b45c 18%,#161311);--on:#102131;
+ --good:#6fbf86;--good-soft:#1c2a20;--warn:#e0b25a;--warn-soft:#2d2516;--bad:#e8876f;--bad-soft:#321d18;--shadow:none}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+html,body{overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);-webkit-font-smoothing:antialiased}
+button,a{-webkit-tap-highlight-color:transparent}
+a{color:var(--terra)}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left)) 40px}
+header{padding:26px 0 8px}
+.kick{display:flex;align-items:center;gap:10px;color:var(--terra);font-weight:700;font-size:14px;text-decoration:none}
+.kick svg{width:22px;height:22px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.08;margin:10px 0 6px;letter-spacing:-.01em}
+.sub{color:var(--mute);margin:0;font-size:15px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 6px}
+.btn{display:inline-flex;align-items:center;gap:7px;height:42px;padding:0 15px;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:600 15px var(--sans);text-decoration:none;cursor:pointer}
+.btn.primary{background:var(--terra);border-color:var(--terra);color:var(--on)}
+.btn:disabled{opacity:.6;cursor:default}
+.btn svg{width:17px;height:17px;flex:none}
+.spin svg{animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin svg{animation:none}}
+.when{font-size:14px;color:var(--mute);margin:6px 0 0}
+section{margin-top:26px}
+h2{font-family:var(--serif);font-weight:600;font-size:1.45rem;margin:0 0 10px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+/* controllo */
+.checks{list-style:none;margin:0;padding:4px 0}
+.checks li{display:grid;grid-template-columns:30px 1fr auto;gap:2px 10px;align-items:start;padding:11px 16px;border-top:1px solid var(--line)}
+.checks li:first-child{border-top:0}
+.ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;margin-top:1px}
+.ok .ic{background:var(--good-soft);color:var(--good)}.warn .ic{background:var(--warn-soft);color:var(--warn)}.bad .ic{background:var(--bad-soft);color:var(--bad)}.wait .ic{background:var(--terra-soft);color:var(--terra)}
+.checks b{font-weight:650}
+.checks .d{grid-column:2/4;color:var(--mute);font-size:14px}
+.checks .tag{font-size:13px;font-weight:700;padding:2px 9px;border-radius:99px;white-space:nowrap}
+.ok .tag{background:var(--good-soft);color:var(--good)}.warn .tag{background:var(--warn-soft);color:var(--warn)}.bad .tag{background:var(--bad-soft);color:var(--bad)}.wait .tag{background:var(--terra-soft);color:var(--terra)}
+@media(min-width:900px){.checks{display:grid;grid-template-columns:1fr 1fr}.checks li{border-top:1px solid var(--line)}.checks li:nth-child(-n+2){border-top:0}.checks li:nth-child(odd){border-right:1px solid var(--line)}}
+/* periodo */
+.seg{display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:3px;gap:2px;margin:0 0 12px}
+.seg button{border:0;background:none;color:var(--mute);font:600 14.5px var(--sans);height:36px;padding:0 14px;border-radius:9px;cursor:pointer}
+.seg button.on{background:var(--ink);color:var(--paper)}
+.headrow{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px}
+/* numeri */
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(min-width:760px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tile{padding:14px 16px}
+.tile b{display:block;font-family:var(--serif);font-size:2.1rem;line-height:1.05;font-variant-numeric:tabular-nums}
+.tile span{display:block;font-size:14px;color:var(--mute);margin-top:4px}
+/* grafico */
+.chart{padding:14px 16px 10px;margin-top:10px;position:relative}
+.chart h3,.list h3{font-size:15.5px;margin:0 0 2px;font-weight:700}
+.chart .note,.list .note{font-size:13.5px;color:var(--mute);margin:0 0 10px}
+.bars{display:flex;align-items:flex-end;gap:2px;height:150px;border-bottom:1px solid var(--line);position:relative}
+.bars .b{flex:1;display:flex;align-items:flex-end;height:100%;cursor:default;position:relative}
+.bars .b i{display:block;width:100%;background:var(--terra);border-radius:4px 4px 0 0;min-height:0}
+.bars .b.z i{background:var(--line);height:2px!important;border-radius:2px}
+.bars .b:hover i,.bars .b.act i{background:color-mix(in srgb,var(--terra) 75%,var(--ink))}
+.axis{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mute);margin-top:5px;font-variant-numeric:tabular-nums}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;padding:5px 9px;border-radius:8px;white-space:nowrap;transform:translate(-50%,-100%);top:0;z-index:2}
+.peak{position:absolute;right:0;top:-2px;font-size:12.5px;color:var(--mute)}
+/* elenchi */
+.grid{display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+.grid>*,.tiles>*{min-width:0}
+@media(min-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1100px){.grid.g3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.list{padding:14px 16px 12px}
+.rows{list-style:none;margin:0;padding:0}
+.rows li{padding:6px 0}
+.rows .t{display:flex;justify-content:space-between;gap:10px;font-size:14.5px}
+.rows .t span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.rows .t small{color:var(--mute);font-size:12.5px;margin-left:4px}
+.rows .t b{font-variant-numeric:tabular-nums;font-weight:700}
+.rows .bar{height:6px;border-radius:99px;background:var(--terra-soft);margin-top:4px;overflow:hidden}
+.rows .bar i{display:block;height:100%;background:var(--terra);border-radius:99px}
+.empty{color:var(--mute);font-size:14px;padding:6px 0 4px;margin:0}
+.more{border:0;background:none;color:var(--terra);font:600 14px var(--sans);padding:6px 0 0;cursor:pointer}
+/* avvisi */
+.setup{padding:16px 18px;border-left:4px solid var(--warn)}
+.setup h3{margin:0 0 6px;font-size:17px}
+.setup ol{margin:8px 0 0;padding-left:20px}.setup li{margin:6px 0}
+.setup code{background:var(--terra-soft);padding:1px 6px;border-radius:6px;font-size:14px}
+footer{color:var(--faint);font-size:13px;margin-top:30px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+ <a class="kick" href="./"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21V11a4 4 0 0 1 8 0v10M13 21V11a4 4 0 0 1 8 0v10"/></svg>Ach's Dinners Guide</a>
+ <h1>Statistiche del sito</h1>
+ <p class="sub">Visite, clic e stato del sito pubblico. I numeri vengono da GoatCounter, che non usa cookie.</p>
+ <div class="tools">
+  <button class="btn primary" id="reload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg><span>Ricontrolla</span></button>
+  <a class="btn" id="force" href="https://github.com/drdonatistefano-cmyk/eventi-bologna/actions/workflows/statistiche.yml" target="_blank" rel="noopener">Rileggi da GoatCounter</a>
+  <a class="btn" href="https://achdinners.goatcounter.com" target="_blank" rel="noopener">Cruscotto completo</a>
+  <a class="btn" href="./" target="_blank" rel="noopener">Apri il sito</a>
+ </div>
+ <p class="when" id="when">Caricamento…</p>
+</header>
+
+<section aria-labelledby="h-ctrl">
+ <h2 id="h-ctrl">Controllo del sito</h2>
+ <ul class="checks panel" id="checks"></ul>
+</section>
+
+<div id="setup"></div>
+
+<section aria-labelledby="h-vis" id="sVis">
+ <div class="headrow"><h2 id="h-vis">Visite</h2>
+ <div class="seg" role="group" aria-label="Periodo"><button data-r="oggi">Oggi</button><button data-r="7g" class="on">7 giorni</button><button data-r="30g">30 giorni</button></div></div>
+ <div class="tiles" id="tiles"></div>
+ <div class="chart panel"><h3>Visite al giorno</h3><p class="note">Ultimi 30 giorni. Tocca una barra per vedere il giorno. <span id="peak"></span></p><div style="position:relative"><div class="bars" id="bars"></div><div class="tip" id="tip" hidden></div></div><div class="axis" id="axis"></div></div>
+</section>
+
+<section aria-labelledby="h-int" id="sInt">
+ <h2 id="h-int">Cosa interessa</h2>
+ <p class="when" id="intNote" style="margin:-4px 0 10px"></p>
+ <div class="grid" id="interest"></div>
+</section>
+
+<section aria-labelledby="h-prov" id="sProv">
+ <h2 id="h-prov">Da dove arrivano</h2>
+ <div class="grid g3" id="origin"></div>
+</section>
+
+<footer>Le visite di chi apre la pagina su claude.ai non vengono contate: solo quelle al sito pubblico GitHub.</footer>
+</div>
+<script>
+const REPO="drdonatistefano-cmyk/eventi-bologna",STATS="stats_dinners.json",PAGES="drdonatistefano-cmyk/achdinners.com",PAGESNAME="pages build and deployment",GCN="achdinners";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const nf=new Intl.NumberFormat("it-IT");
+const rel=d=>{if(!d)return"";const m=Math.round((Date.now()-new Date(d))/6e4);if(m<1)return"adesso";if(m<60)return`${m} min fa`;const h=Math.round(m/60);if(h<24)return h===1?"1 ora fa":`${h} ore fa`;const g=Math.round(h/24);return g===1?"ieri":`${g} giorni fa`};
+const dfmt=(d,o)=>new Date(d.length===10?d+"T12:00:00":d).toLocaleDateString("it-IT",o||{day:"numeric",month:"short"});
+const tfmt=d=>new Date(d).toLocaleString("it-IT",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+let S=null,R="7g";
+
+async function getStats(){
+ const urls=[[`https://api.github.com/repos/${REPO}/contents/${STATS}?ref=statistiche&t=${Date.now()}`,{headers:{Accept:"application/vnd.github.raw+json"}}],
+  [`https://raw.githubusercontent.com/${REPO}/statistiche/${STATS}?t=${Date.now()}`,{}]];
+ for(const [u,o] of urls){try{const r=await fetch(u,{cache:"no-store",...o});if(r.status===404)return{missing:true};if(r.ok)return await r.json()}catch(_){}}
+ return{unreachable:true};
+}
+async function liveData(f,v){try{const r=await fetch(`${f}?t=${Date.now()}`,{cache:"no-store"});if(!r.ok)return{ok:false,http:r.status};const t=await r.text();const m=t.match(/=\s*(\{[\s\S]*\})\s*;?\s*$/);const d=JSON.parse(m[1]);return{ok:true,n:(d[v]||[]).length,agg:d.aggiornato}}catch(_){return{ok:false}}}
+async function livePages(){try{const r=await fetch(`https://api.github.com/repos/${PAGES}/actions/runs?per_page=15`,{cache:"no-store"});if(!r.ok)return null;const j=await r.json();const p=j.workflow_runs.filter(x=>x.name===PAGESNAME);return p.length?{esito:p[0].conclusion||p[0].status,quando:p[0].updated_at,url:p[0].html_url,fail7:p.filter(x=>x.conclusion==="failure"&&Date.now()-new Date(x.created_at)<7*864e5).length}:null}catch(_){return null}}
+async function liveMan(){try{const r=await fetch(`manifest.json?t=${Date.now()}`,{cache:"no-store"});if(!r.ok)return{ok:false};await r.json();return{ok:true}}catch(_){return{ok:false}}}
+async function liveSite(){try{const r=await fetch(`./?t=${Date.now()}`,{cache:"no-store"});const t=await r.text();return{ok:r.ok&&t.includes("manifest.json"),gc:t.includes(`const GC="${GCN}"`)}}catch(_){return{ok:false}}}
+
+function nextMonday(){const d=new Date();const day=d.getDay();let add=(8-day)%7;const t=new Date(d);t.setDate(d.getDate()+add);t.setHours(7,32,0,0);if(t<=d)t.setDate(t.getDate()+7);return t}
+function check(cls,title,tag,desc){const ic={ok:"✓",warn:"!",bad:"✕",wait:"…"}[cls];return`<li class="${cls}"><span class="ic" aria-hidden="true">${ic}</span><b>${title}</b><span class="tag">${tag}</span><span class="d">${desc}</span></li>`}
+
+function renderChecks(L){
+ const out=[];const site=L.site;
+ out.push(site.ok?check("ok","Sito online","Funziona","La pagina pubblica si apre correttamente."):check("bad","Sito online","Non risponde","Il sito non si apre: controlla GitHub Pages nelle impostazioni del repository."));
+ const p=L.pages;
+ if(!p)out.push(check("wait","Ultima pubblicazione","Non verificabile","GitHub non ha risposto: riprova tra poco."));
+ else if(p.esito==="success")out.push(check(p.fail7?"warn":"ok","Ultima pubblicazione",`Riuscita`,`${tfmt(p.quando)} (${rel(p.quando)}).${p.fail7?` Negli ultimi 7 giorni ${p.fail7===1?"una pubblicazione è scaduta":p.fail7+" pubblicazioni sono scadute"}, poi recuperate.`:""}`));
+ else if(p.esito==="failure")out.push(check("bad","Ultima pubblicazione","Non riuscita",`${tfmt(p.quando)}. Il sito mostra la versione precedente. <a href="${esc(p.url)}" target="_blank" rel="noopener">Dettagli su GitHub</a>`));
+ else out.push(check("wait","Ultima pubblicazione","In corso",`Iniziata ${rel(p.quando)}: di solito finisce in un minuto.`));
+ const age=a=>a?Math.round((Date.now()-new Date(a+"T12:00:00"))/864e5):99;
+ {const d=L.ev;out.push(d.ok?check("ok","Dati della guida","Caricati","Il sito carica i suoi dati (manifest.json e file collegati)."):check("bad","Dati della guida","Mancanti","manifest.json non si carica: la guida resta vuota."))}
+ if(S&&!S.missing&&!S.unreachable&&S.totali){const t=S.totali;out.push(t["7g"].visite>0?check("ok","Conteggio visite","Attivo",`${nf.format(t.oggi.visite)} visite oggi, ${nf.format(t["7g"].visite)} negli ultimi 7 giorni.`):check("warn","Conteggio visite","Nessuna visita",`Nessuna visita registrata negli ultimi 7 giorni. Apri il sito da un altro dispositivo per provare.`))}
+ else if(L.site.gc===false)out.push(check("bad","Conteggio visite","Spento","Nel sito manca il codice di GoatCounter."));
+ else out.push(check("wait","Conteggio visite","In arrivo","Il sito conta già le visite su GoatCounter: i numeri compaiono qui alla prima lettura (vedi sotto)."));
+ if(S&&S.generato&&!S.errore){const m=(Date.now()-new Date(S.generato))/6e4;out.push(check(m>150?"warn":"ok","Statistiche di questa pagina",m>150?"In ritardo":"Aggiornate",`Lette da GoatCounter ${rel(S.generato)}; si aggiornano da sole ogni mezz’ora.`))}
+ $("#checks").innerHTML=out.join("");
+}
+
+function renderSetup(){
+ const box=$("#setup");let msg="";
+ const err=S&&(S.missing?"missing":S.unreachable?"unreach":S.errore);
+ if(!err){box.innerHTML="";["#sVis","#sInt","#sProv"].forEach(s=>$(s).hidden=false);return}
+ const steps=`<ol>
+  <li>Su <a href="https://achdinners.goatcounter.com/user/api" target="_blank" rel="noopener">achdinners.goatcounter.com → Settings → API</a> premi <b>New API key</b>, dai un nome (per esempio <code>statistiche</code>), spunta <b>Read statistics</b> e salva. Copia la chiave che compare.</li>
+  <li>Su <a href="https://github.com/${REPO}/settings/secrets/actions/new" target="_blank" rel="noopener">GitHub → eventi-bologna → Settings → Secrets → Actions → New repository secret</a> scrivi come nome <code>GOATCOUNTER_TOKEN_ACHDINNERS</code>, incolla la chiave e premi <b>Add secret</b>.</li>
+  <li>Premi <b>Rileggi da GoatCounter</b> qui sopra, poi <b>Run workflow</b>. Dopo un minuto torna qui e premi <b>Ricontrolla</b>.</li></ol>`;
+ if(err==="missing")msg=`<h3>Prima lettura in arrivo</h3><p>Il sito conta già visite e clic. Questa pagina li rilegge da GoatCounter ogni ora, al minuto 17: la prima lettura arriva entro un'ora. Per non aspettare premi <b>Rileggi da GoatCounter</b>, poi <b>Run workflow</b>; dopo un minuto torna qui e premi <b>Ricontrolla</b>.</p>`;
+ else if(err==="manca_token")msg=`<h3>Manca un ultimo passaggio</h3><p>Il sito conta già visite e clic. Per vederli qui serve una chiave di sola lettura di GoatCounter, da salvare in modo protetto su GitHub (2 minuti):</p>${steps}`;
+ else if(err==="token_non_valido"||err==="token_senza_permessi")msg=`<h3>La chiave di GoatCounter non funziona</h3><p>${err==="token_non_valido"?"GoatCounter non riconosce la chiave salvata su GitHub.":"La chiave non ha il permesso di leggere le statistiche."} Creane una nuova con <b>Read statistics</b> e sostituiscila:</p>${steps}`;
+ else if(err==="unreach")msg=`<h3>Statistiche non raggiungibili</h3><p>GitHub non ha risposto. Controlla la connessione e premi <b>Ricontrolla</b>.</p>`;
+ else msg=`<h3>GoatCounter non ha risposto</h3><p>L'ultima lettura non è riuscita (${esc(err)}). Di solito si risolve da sola alla lettura successiva, entro un'ora.</p>`;
+ box.innerHTML=`<section><div class="panel setup">${msg}</div></section>`;
+ const has=S&&S.totali;["#sVis","#sInt","#sProv"].forEach(s=>$(s).hidden=!has);
+}
+
+function sumBy(list,re){return list.filter(x=>x.evento&&re.test(x.path)).reduce((a,x)=>a+x.n,0)}
+function renderTiles(){
+ const t=S.totali[R];const L=S[R==="oggi"?"7g":R].percorsi;
+ const clic=L.filter(x=>x.evento&&/^\/?(biglietti|visite)\//.test(x.path)).reduce((a,x)=>a+x.n,0),cerca=L.filter(x=>!x.evento).length;
+ const sfx=R==="oggi"?" (7 giorni)":"";
+ $("#tiles").innerHTML=[[t.visite,"visite"],[t.eventi,"azioni sulla pagina"],[clic,"clic su biglietti e visite"+sfx],[cerca,"pagine diverse viste"+sfx]].map(([n,l])=>`<div class="tile panel"><b>${nf.format(n)}</b><span>${l}</span></div>`).join("");
+}
+function renderChart(){
+ const G=S.giorni||[];const max=Math.max(1,...G.map(g=>g.visite));
+ $("#bars").innerHTML=G.map((g,i)=>`<div class="b${g.visite?"":" z"}" data-i="${i}" role="img" aria-label="${dfmt(g.giorno,{weekday:"long",day:"numeric",month:"long"})}: ${g.visite} visite"><i style="height:${(100*g.visite/max).toFixed(1)}%"></i></div>`).join(""); $("#peak").textContent=G.length?`Giorno migliore: ${nf.format(max)} visite.`:"";
+ $("#axis").innerHTML=G.length?`<span>${dfmt(G[0].giorno)}</span><span>${dfmt(G[Math.floor(G.length/2)].giorno)}</span><span>oggi</span>`:"";
+}
+const tip=$("#tip");
+function showTip(b){const G=S.giorni;const g=G[+b.dataset.i];$$(".bars .b.act").forEach(x=>x.classList.remove("act"));b.classList.add("act");tip.textContent=`${dfmt(g.giorno,{weekday:"short",day:"numeric",month:"short"})}: ${nf.format(g.visite)} ${g.visite===1?"visita":"visite"}`;tip.hidden=false;const pr=b.parentElement.getBoundingClientRect(),r=b.getBoundingClientRect();let x=r.left-pr.left+r.width/2;x=Math.max(70,Math.min(pr.width-70,x));tip.style.left=x+"px";tip.style.top=(r.top-pr.top+r.height*(1-0)-Math.max(8,b.firstChild.getBoundingClientRect().height)-6)+"px"}
+const $$=s=>[...document.querySelectorAll(s)];
+$("#bars").addEventListener("pointerover",e=>{const b=e.target.closest(".b");if(b)showTip(b)});
+$("#bars").addEventListener("click",e=>{const b=e.target.closest(".b");if(b)showTip(b)});
+$("#bars").addEventListener("pointerleave",e=>{if(e.pointerType==="mouse"){tip.hidden=true;$$(".bars .b.act").forEach(x=>x.classList.remove("act"))}});
+
+function listBox(title,note,rows,limit=6){
+ const max=Math.max(1,...rows.map(r=>r.n));const id="l"+Math.random().toString(36).slice(2,7);
+ const li=rows.map((r,i)=>`<li${i>=limit?` class="x" hidden`:""}><div class="t"><span title="${esc(r.l)}">${esc(r.l)}${r.s?`<small>${esc(r.s)}</small>`:""}</span><b>${nf.format(r.n)}</b></div><div class="bar"><i style="width:${(100*r.n/max).toFixed(1)}%"></i></div></li>`).join("");
+ return`<div class="list panel"><h3>${title}</h3>${note?`<p class="note">${note}</p>`:""}${rows.length?`<ul class="rows" id="${id}">${li}</ul>${rows.length>limit?`<button class="more" data-more="${id}">Mostra tutti (${rows.length})</button>`:""}`:`<p class="empty">Ancora nessun dato.</p>`}</div>`;
+}
+const dec=s=>{try{return decodeURIComponent(s)}catch(_){return s}};
+function parts(p){p=dec(p).replace(/^\/+/,"");return p.split("/")}
+function group(L,fn){const m=new Map();for(const x of L){const k=fn(x);if(!k)continue;const key=k.l+"|"+(k.s||"");const o=m.get(key)||{l:k.l,s:k.s,n:0};o.n+=x.n;m.set(key,o)}return[...m.values()].sort((a,b)=>b.n-a.n)}
+function renderInterest(){
+ const k=R==="oggi"?"7g":R;const L=S[k].percorsi;
+ $("#intNote").textContent=R==="oggi"?"Per «Oggi» gli elenchi mostrano gli ultimi 7 giorni.":"";
+ const ev=L.filter(x=>x.evento);
+ const NOMI={biglietti:"biglietti",visite:"visite guidate",filtri:"filtri",guide:"altre guide","wikipedia-places":"Wikipedia"};
+ const clic=group(ev,x=>{const p=parts(x.path);const c=p[0];if(!/^(biglietti|visite)$/.test(c))return null;return{l:p.slice(1).join("/")||c,s:NOMI[c]||c}});
+ const filt=group(ev,x=>{const p=parts(x.path);return p[0]==="filtri"?{l:p.slice(1).join("/")||"filtri"}:null});
+ const guide=group(ev,x=>{const p=parts(x.path);return p[0]==="guide"?{l:({"vai-events":"Ach's Events Guide","vai-places":"Ach's Places Guide","vai-dinners":"Ach's Dinners Guide"})[p[1]]||p.slice(1).join("/")}:null});
+ const altri=group(ev,x=>{const p=parts(x.path);return /^(biglietti|visite|filtri|guide)$/.test(p[0])?null:{l:dec(x.titolo||x.path),s:p[0]}});
+ const pag=group(L.filter(x=>!x.evento),x=>({l:x.titolo||dec(x.path),s:dec(x.path)}));
+ $("#interest").innerHTML=[
+  listBox("Pagine più viste","Pagina principale e pagine dei luoghi, dei comuni e delle regioni.",pag,8),
+  listBox("Clic su biglietti e visite","Pulsanti verso le biglietterie e le visite guidate.",clic,8),
+  listBox("Filtri più usati","",filt),
+  listBox("Passaggi alle altre guide","Clic sul menu delle tre guide.",guide),
+  listBox("Altre azioni","",altri),
+ ].join("");
+}
+const REF={"(diretto)":"Accesso diretto o app di messaggi","Phones":"Telefoni","phone":"Telefoni","largephone":"Telefoni grandi","tablet":"Tablet","desktop":"Computer","desktophd":"Schermi grandi","unknown":"Non noto","Japan":"Giappone","Norway":"Norvegia","Tablets":"Tablet","Computer monitors":"Computer","Computer monitors larger than HD":"Schermi grandi","Italy":"Italia","Germany":"Germania","France":"Francia","Spain":"Spagna","Switzerland":"Svizzera","United States":"Stati Uniti","United Kingdom":"Regno Unito","Unknown":"Non noto","(unknown)":"Non noto"};
+function renderOrigin(){
+ const k=R==="oggi"?"7g":R;const s=S[k];
+ const m=a=>(a||[]).map(x=>({l:REF[x.nome]||x.nome,n:x.n}));
+ $("#origin").innerHTML=[
+  listBox("Provenienza","Siti o app da cui arrivano i visitatori.",m(s.toprefs)),
+  listBox("Paese o città","",m(s.locations)),
+  listBox("Dispositivi","In base alla larghezza dello schermo.",m(s.sizes)),
+  listBox("Sistema operativo","",m(s.systems)),
+  listBox("Browser","",m(s.browsers)),
+ ].join("");
+}
+function renderAll(){if(!(S&&S.totali))return;renderTiles();renderChart();renderInterest();renderOrigin()}
+document.addEventListener("click",e=>{
+ const r=e.target.closest("[data-r]");if(r){R=r.dataset.r;$$("[data-r]").forEach(b=>b.classList.toggle("on",b===r));renderAll();return}
+ const m=e.target.closest("[data-more]");if(m){const ul=document.getElementById(m.dataset.more);const open=m.dataset.open!=="1";ul.querySelectorAll("li.x").forEach(li=>li.hidden=!open);m.dataset.open=open?"1":"0";m.textContent=open?"Mostra meno":`Mostra tutti (${ul.children.length})`}
+});
+async function load(){
+ const b=$("#reload");b.disabled=true;b.classList.add("spin");b.querySelector("span").textContent="Controllo…";
+ const [st,site,ev,mo,pages]=await Promise.all([getStats(),liveSite(),liveMan(),Promise.resolve(null),livePages()]);
+ S=st;renderChecks({site,ev,mo,pages});renderSetup();renderAll();
+ $("#when").textContent=`Controllato alle ${new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"})}`+(S&&S.generato&&!S.errore?` · statistiche lette ${rel(S.generato)} (si aggiornano ogni mezz’ora)`:"");
+ b.disabled=false;b.classList.remove("spin");b.querySelector("span").textContent="Ricontrolla";
+}
+$("#reload").addEventListener("click",load);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&S)load()});
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+name: Guardiano delle statistiche
+# 14/11/2026: statistiche.html e' stato cancellato da una pubblicazione della guida (come era successo
+# due volte su achplaces). Se dopo un push manca, lo rimette dall'ultima versione buona e lo salva.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: guardiano-statistiche
+  cancel-in-progress: false
+jobs:
+  controlla:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: statistiche.html c'e'?
+        run: |
+          if [ -f statistiche.html ]; then echo "presente"; exit 0; fi
+          ultimo=$(git log --format=%H -n 1 --diff-filter=D -- statistiche.html)
+          if [ -z "$ultimo" ]; then echo "mai esistito qui"; exit 0; fi
+          git checkout "$ultimo^" -- statistiche.html
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add statistiche.html
+          git commit -q -m "Guardiano: rimesso statistiche.html, cancellato da $(git log -1 --format=%h $ultimo)"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
+          echo "rimesso"
