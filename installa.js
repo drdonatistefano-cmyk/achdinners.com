@@ -30,7 +30,8 @@
   }
   addEventListener("appinstalled", function () { basta(3650); chiudi(); avviso("✓ Fatto: la trovi nella schermata Home"); conta("installata", "Installata"); });
   var visite = +(ls("app_visite") || 0) + 1; ls("app_visite", visite);
-  var auto = (ios || android) && visite >= 2 && Date.now() >= +(ls("app_no") || 0);   // il riquadro da solo: telefoni, dalla 2ª visita
+  var forza = /[?&]installa=1/.test(location.search);   // per provarlo subito: indirizzo con ?installa=1 (anche dalla 1ª visita, anche dopo la ×)
+  var auto = forza || ((ios || android) && visite >= 2 && Date.now() >= +(ls("app_no") || 0));   // il riquadro da solo: telefoni, dalla 2ª visita
   addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); richiesta = e; });
 
   var css = ":host{all:initial}*{box-sizing:border-box;margin:0;padding:0;font-family:inherit}"
@@ -109,9 +110,9 @@
   window.achInstalla = function () { mostra(true); aggiungi(); };     // per il bottone della pagina /app
   quando(function () {
     if (!auto) return;
-    var parti = function () { setTimeout(function () { if (Date.now() >= +(ls("app_no") || 0)) mostra(); }, 6000); };
+    var parti = function () { setTimeout(function () { if (forza || Date.now() >= +(ls("app_no") || 0)) mostra(); }, forza ? 1000 : 6000); };
     // Android: se la guida è già installata il telefono lo dice (anche se è stata installata in un altro momento)
-    if (navigator.getInstalledRelatedApps) navigator.getInstalledRelatedApps().then(function (a) { if (a && a.length) basta(3650); else parti(); }).catch(parti);
+    if (navigator.getInstalledRelatedApps && !forza) navigator.getInstalledRelatedApps().then(function (a) { if (a && a.length) basta(3650); else parti(); }).catch(parti);
     else parti();
   });
 })();
