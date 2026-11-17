@@ -1,0 +1,31 @@
+name: Pagine per Google (ristoranti, città, province)
+# 17/11/2026 (approvato da Stefano): a ogni pubblicazione della guida si rigenerano le pagine statiche
+# con lo stesso aspetto della guida (scripts/pagine.py). Si salva solo ciò che cambia.
+on:
+  push:
+    branches: [main]
+    paths: ['index.html', 'idx.*.json', 'd/**', 'extra.*.json', 'aux.*.json', 'scripts/pagine.py']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: pagine
+  cancel-in-progress: false
+jobs:
+  pagine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install --quiet playwright
+      - name: Genera le pagine dalla guida
+        run: python3 scripts/pagine.py
+      - name: Salva solo ciò che è cambiato
+        run: |
+          git config user.name "pagine-dinners"; git config user.email "pagine@achdinners.com"
+          git add -A locale citta provincia stile.css sitemap.xml sitemap-pagine.xml robots.txt pagine.json
+          if git diff --cached --quiet; then echo "nessun cambiamento"; exit 0; fi
+          git commit -qm "Pagine per Google: aggiornate dalla guida"
+          for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin main && exit 0; sleep 10; done; exit 1
