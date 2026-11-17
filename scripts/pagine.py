@@ -93,6 +93,7 @@ a.card{color:inherit;text-decoration:none}
 a.sx{display:flex;align-items:center;justify-content:center;text-decoration:none;color:inherit}
 a.tbtn{text-decoration:none}
 h2.sez{font:600 1.25rem/1.2 var(--serif);margin:26px 2px 12px}
+.sheet.pagina h1{font:600 1.55rem/1.15 var(--serif);margin:4px 46px 4px 0;letter-spacing:normal;text-wrap:wrap}
 .altri{display:flex;flex-wrap:wrap;gap:8px 14px;margin:6px 2px 24px}.altri a{color:var(--acc-ink,inherit)}
 """
     a = s.find('<nav class="tabs"'); b = s.find("</nav>", a) + 6
@@ -182,6 +183,11 @@ def elenco(P, tabs, kick, h1, lede, url, places, q, locali, conta, altri_html, t
     return pagina(P, tabs, titolo, descr, url, corpo, ld)
 
 
+def corto(t, n=160):
+    """Descrizione entro i ~160 caratteri che Google mostra, tagliata a fine parola."""
+    return t if len(t) <= n else t[:n].rsplit(" ", 1)[0].rstrip(",;:–-") + "…"
+
+
 def n_it(n):
     return f"{n:,}".replace(",", ".")
 
@@ -238,6 +244,7 @@ def costruisci(dati, P):
         sch = x["scheda"].replace('<div class="grab"></div>', "")
         sch = re.sub(r'<button class="sx" type="button" aria-label="Chiudi" id="sx">×</button>',
                      f'<a class="sx" href="{su}" aria-label="Torna ai ristoranti: {e(dove)}">×</a>', sch)
+        sch = re.sub(r"<h2>(.*?)</h2>", r"<h1>\1</h1>", sch, count=1, flags=re.S)
         sch = sch.replace(' id="sind"', "").replace(' id="sazioni"', "").replace(' id="snear"', "")
         vicini = [y for y in (citta.get(k) or per_prov[x["p"]]) if y is not x][:6]
         altri = "".join(acard(y["card"], f"/locale/{y['id']}/") for y in vicini)
@@ -247,16 +254,19 @@ def costruisci(dati, P):
                  + f'<p class="altri"><a href="{su}">Tutti i ristoranti segnalati: {e(dove)}</a>'
                  + (f' · <a href="{url_prov[x["p"]]}">Provincia di {e(provn.get(x["p"], x["p"]))}</a>' if k in citta else "") + "</p>")
         tipo = "Pizzeria" if x["pz"] else "Ristorante"
-        titolo = f"{x['n']}, {x['c']}: " + (", ".join(ric[:3]) if ric else "segnalato da guide e stampa") + " | Ach’s Dinners"
-        descr = (f"{x['n']} a {x['c']} ({x['p']}). " + (("Riconoscimenti: " + ", ".join(ric) + ". ") if ric else "")
-                 + f"{x['pos']}° su {n_it(len(L))} nella classifica di Ach’s Dinners, fatta solo con le voci online: guide, stampa e altre fonti, tutte citate.")
+        titolo = x['n'] if slug(x['c']) in slug(x['n']) else f"{x['n']} a {x['c']}"
+        if ric and len(titolo) + len(ric[0]) < 52:
+            titolo += f": {ric[0]}"
+        titolo += " | Ach’s Dinners"
+        descr = (f"{x['n']} ({x['c']}, {x['p']}): " + (", ".join(ric[:3]) + ". " if ric else "")
+                 + f"{x['pos']}° su {n_it(len(L))} secondo guide e stampa, con tutte le fonti.")
         ld = {"@context": "https://schema.org", "@type": "Restaurant", "name": x["n"], "url": f"{SITO}/locale/{x['id']}/",
               "address": {"@type": "PostalAddress", "streetAddress": x["ind"], "addressLocality": x["c"], "addressRegion": x["p"], "addressCountry": "IT"}}
         if x["sito"]:
             ld["sameAs"] = x["sito"]
         if ric:
             ld["award"] = ric
-        pagine[f"locale/{x['id']}/index.html"] = pagina(P, tabs, titolo, descr[:300], f"/locale/{x['id']}/", corpo, ld)
+        pagine[f"locale/{x['id']}/index.html"] = pagina(P, tabs, titolo, corto(descr), f"/locale/{x['id']}/", corpo, ld)
     # --- città
     for k, v in citta.items():
         c, p = k
@@ -269,8 +279,8 @@ def costruisci(dati, P):
             P, tabs, c, f"Ristoranti a {c}", f"<b>{n}</b> ristoranti segnalati da guide e stampa a {e(c)}.", url_citta[k],
             places_comune(c, p), c, v,
             f"<b>{n}</b> ristoranti segnalati a {e(c)} · ordinati per citazioni", altri_html,
-            f"I migliori ristoranti di {c}: {n} segnalati da guide e stampa | Ach’s Dinners",
-            f"I {n} ristoranti di {c} segnalati da guide, stampa e altre fonti online, in ordine di citazioni. Gratuita e senza pubblicità.")
+            f"Ristoranti a {c}: i {n} migliori | Ach’s Dinners",
+            f"I {n} ristoranti di {c} segnalati da guide, stampa e altre fonti online. Gratuita e senza pubblicità.")
     # --- province
     for p, v in per_prov.items():
         nome = provn.get(p, p)
@@ -282,7 +292,7 @@ def costruisci(dati, P):
             P, tabs, f"Provincia di {nome}", f"Ristoranti in provincia di {nome}",
             f"<b>{n}</b> ristoranti segnalati da guide e stampa in provincia di {e(nome)}.", url_prov[p],
             "https://achplaces.com/", nome, v, f"<b>{n}</b> ristoranti segnalati in provincia di {e(nome)} · ordinati per citazioni",
-            altri_html, f"I migliori ristoranti in provincia di {nome}: {n} segnalati | Ach’s Dinners",
+            altri_html, f"Ristoranti in provincia di {nome}: i {n} migliori | Ach’s Dinners",
             f"I {n} ristoranti della provincia di {nome} segnalati da guide, stampa e altre fonti online. Gratuita e senza pubblicità.")
     return pagine
 

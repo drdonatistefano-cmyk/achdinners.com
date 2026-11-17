@@ -410,4 +410,5 @@ a.card{color:inherit;text-decoration:none}
 a.sx{display:flex;align-items:center;justify-content:center;text-decoration:none;color:inherit}
 a.tbtn{text-decoration:none}
 h2.sez{font:600 1.25rem/1.2 var(--serif);margin:26px 2px 12px}
+.sheet.pagina h1{font:600 1.55rem/1.15 var(--serif);margin:4px 46px 4px 0;letter-spacing:normal;text-wrap:wrap}
 .altri{display:flex;flex-wrap:wrap;gap:8px 14px;margin:6px 2px 24px}.altri a{color:var(--acc-ink,inherit)}
