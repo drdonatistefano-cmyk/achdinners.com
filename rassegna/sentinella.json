@@ -4,7 +4,7 @@
   "nota": "selezione Michelin Italia",
   "impronta": "9711627e61313734",
   "esito": "uguale",
-  "visto": "2026-11-14"
+  "visto": "2026-11-18"
  },
  "slowfood-osterie": {
   "pagina": "https://www.slowfoodeditore.it/osterie-ditalia",
@@ -17,10 +17,9 @@
  "50toppizza": {
   "pagina": "https://www.50toppizza.it/",
   "nota": "50 Top Pizza, classifiche",
-  "impronta": "b12985ead0ffc781",
+  "impronta": "6cd4388c8377dcaa",
   "esito": "cambiata",
-  "visto": "2026-11-14",
-  "testo": "50toppizza.txt"
+  "visto": "2026-11-18"
  },
  "gamberorosso-guide": {
   "ultimo_errore": "HTTP 403"
@@ -30,7 +29,7 @@
   "nota": "cerimonia e novita' Michelin: la guida 2027 esce il 12/11/2026",
   "impronta": "9711627e61313734",
   "esito": "uguale",
-  "visto": "2026-11-14"
+  "visto": "2026-11-18"
  },
  "slowfood-chiocciole": {
   "pagina": "https://www.slowfood.it/tutte-le-chiocciole-di-osterie-ditalia-2027-regione-per-regione/",
@@ -46,47 +45,47 @@
  "identitagolose-guide": {
   "pagina": "https://www.identitagolose.it/sito/it/207/guida-alla-guida.html",
   "nota": "Guida alla Guida: annuncio di ogni edizione",
-  "impronta": "3a1535ef4d702a9a",
+  "impronta": "f27f66415b9464ca",
   "esito": "cambiata",
-  "visto": "2026-11-14",
+  "visto": "2026-11-18",
   "testo": "identitagolose-guide.txt"
  },
  "identitagolose-italia": {
   "pagina": "https://www.identitagolose.it/sito/it/44/dallitalia.html",
   "nota": "sezione dove escono gli articoli sui locali",
-  "impronta": "fb86255446407ecf",
+  "impronta": "d1886be1490c3487",
   "esito": "cambiata",
-  "visto": "2026-11-14",
+  "visto": "2026-11-18",
   "testo": "identitagolose-italia.txt"
  },
  "lespresso-attualita": {
   "pagina": "https://lespresso.it/c/attualita/",
   "nota": "Guide de L'Espresso: edizione 2027 non ancora uscita",
-  "impronta": "b3ad62245a6c2f10",
+  "impronta": "bdd6c10df7da7534",
   "esito": "cambiata",
-  "visto": "2026-11-14"
+  "visto": "2026-11-18"
  },
  "50topitaly": {
   "pagina": "https://www.50topitaly.it/",
   "nota": "50 Top Italy: trattorie e gourmet",
   "impronta": "79f5f2c1f43f41ad",
   "esito": "uguale",
-  "visto": "2026-11-14"
+  "visto": "2026-11-18"
  },
  "carlino-cosafare": {
   "pagina": "https://www.ilrestodelcarlino.it/emilia-romagna/cosa-fare",
   "nota": "Il Resto del Carlino: pubblica gli elenchi provinciali (308 citazioni)",
-  "impronta": "783c0581e76205b7",
+  "impronta": "4fb8e0d7b1e7d61a",
   "esito": "cambiata",
-  "visto": "2026-11-14",
+  "visto": "2026-11-18",
   "testo": "carlino-cosafare.txt"
  },
  "ilnordest-sapori": {
   "pagina": "https://www.ilnordest.it/vivere-il-nord-est/sapori-e-territorio/",
   "nota": "Il Nordest: elenchi provinciali del Nordest",
-  "impronta": "0f2677795a6023a1",
+  "impronta": "c297ac10ed093ffc",
   "esito": "cambiata",
-  "visto": "2026-11-14",
+  "visto": "2026-11-18",
   "testo": "ilnordest-sapori.txt"
  },
  "quotidiano-gusto": {
@@ -98,33 +97,33 @@
  "giornaledibrescia-cucina": {
   "pagina": "https://www.giornaledibrescia.it/cucina/",
   "nota": "Giornale di Brescia, sezione cucina",
-  "impronta": "6c12161fa70292be",
+  "impronta": "0bba01353127f09d",
   "esito": "cambiata",
-  "visto": "2026-11-14",
+  "visto": "2026-11-18",
   "testo": "giornaledibrescia-cucina.txt"
  },
  "arezzo24-winefood": {
   "pagina": "https://www.arezzo24.net/notizie/wine-food/",
   "nota": "Arezzo24, sezione wine e food",
-  "impronta": "cdcc9517a60722df",
+  "impronta": "35741b784c7835bd",
   "esito": "cambiata",
-  "visto": "2026-11-14",
+  "visto": "2026-11-18",
   "testo": "arezzo24-winefood.txt"
  },
  "siviaggia-notizie": {
   "pagina": "https://siviaggia.it/notizie/",
   "nota": "SiViaggia, notizie",
-  "impronta": "9d5e5ba107551954",
+  "impronta": "6e08ddf3f2697bb2",
   "esito": "cambiata",
-  "visto": "2026-11-14",
+  "visto": "2026-11-18",
   "testo": "siviaggia-notizie.txt"
  },
  "mentelocale-milano": {
   "pagina": "https://www.mentelocale.it/milano/",
   "nota": "MenteLocale Milano: elenchi Michelin Lombardia",
-  "impronta": "295b22366f456e21",
+  "impronta": "bd34e25e266f8846",
   "esito": "cambiata",
-  "visto": "2026-11-14",
+  "visto": "2026-11-18",
   "testo": "mentelocale-milano.txt"
  },
  "linkiesta-gastronomika": {
@@ -133,9 +132,9 @@
  "ladige-cronaca": {
   "pagina": "https://www.ladige.it/cronaca",
   "nota": "l'Adige: elenchi di Trentino e Alto Adige",
-  "impronta": "c067f3f8fd05d538",
+  "impronta": "c1c7a78dc3bb5352",
   "esito": "cambiata",
-  "visto": "2026-11-14",
+  "visto": "2026-11-18",
   "testo": "ladige-cronaca.txt"
  }
 }
