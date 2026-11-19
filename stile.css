@@ -220,7 +220,7 @@ dialog::backdrop{background:rgba(20,15,10,.45)}
 .grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 8px}
 .sx{position:sticky;top:0;float:right;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--paper);font-size:20px;line-height:1}
 .sheet h2{font:600 1.55rem/1.15 var(--serif);margin:4px 46px 4px 0}
-.where{color:var(--mute);font-size:14.5px}
+.where{color:var(--mute);font-size:14.5px}.where .fascia{font-weight:700;color:var(--ink,inherit);cursor:help}
 .box{margin:14px 0;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--acc) 6%,var(--paper));border:1px solid var(--line)}
 .box h3{margin:0 0 6px;font-size:15px}
 .calc{font-size:14px;line-height:1.5}.calc b{color:var(--acc)}
