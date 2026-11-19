@@ -32,6 +32,10 @@ def prova(indirizzi):
         # nel registro solo stato, robots.txt e indirizzi dei link (niente testo delle pagine)
         if "robots.txt" in u: print("  ROBOTS", " | ".join(l for l in h.splitlines() if l.strip())[:900])
         links = sorted(set(re.findall(r'href="((?:https?://www\.ilgolosario\.it)?/[a-z][^"\s#?]*)"', h)))
+        ids = re.findall(r'data-id="([0-9a-f]{24})" data-card', h); print("  SCHEDE", len(ids), ids[:2])
+        if u.endswith(".js"):
+            for k in ("StoreCTA", "data-from", ".data(\"from", "from:", "limit:", "ajax("):
+                for m in list(re.finditer(re.escape(k), h))[:3]: print("  JS", k, "::", h[max(0, m.start() - 200):m.start() + 300].replace("\n", " "))
         low = h.lower(); print("  PAROLE", {k: low.count(k) for k in ("corona", "radios", "faccino", "sorriso", "contento", "-ip", "2027", "pagina", "page=")})
         for m in re.finditer(r'(-ip\d+)"', h):
             w = h[m.start():m.start() + 3000]; sim = re.findall(r'(faccino[\w-]*|radios[\w-]*|corona[\w-]*|contento[\w-]*)', w)
