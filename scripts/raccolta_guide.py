@@ -33,6 +33,11 @@ def prova(indirizzi):
         if "robots.txt" in u: print("  ROBOTS", " | ".join(l for l in h.splitlines() if l.strip())[:900])
         links = sorted(set(re.findall(r'href="((?:https?://www\.ilgolosario\.it)?/[a-z][^"\s#?]*)"', h)))
         low = h.lower(); print("  PAROLE", {k: low.count(k) for k in ("corona", "radios", "faccino", "sorriso", "contento", "-ip", "2027", "pagina", "page=")})
+        for m in re.finditer(r'(-ip\d+)"', h):
+            w = h[m.start():m.start() + 3000]; sim = re.findall(r'(faccino[\w-]*|radios[\w-]*|corona[\w-]*|contento[\w-]*)', w)
+            print("  VOCE", m.group(1), sim[:3])
+        print("  AJAX", sorted(set(re.findall(r'["\'](/(?:ccm|index\.php|tools|application/tools|mosaic)[^"\'\s]{0,120})["\']', h)))[:40])
+        print("  DATA", sorted(set(re.findall(r'(data-[a-z-]+)="', h)))[:60])
         print("  LINK", len(links)); [print("   ", l[:140]) for l in links[:150]]
         time.sleep(1.5)
     json.dump(idx, open(f"{OUT}/indice.json", "w"), indent=1)
