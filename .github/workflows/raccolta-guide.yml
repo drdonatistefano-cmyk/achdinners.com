@@ -1,0 +1,38 @@
+name: Raccolta guide (Golosario e Falstaff, una tantum)
+# 19/11/2026, decisione di Stefano: raccolta una tantum di Golosario e Falstaff 2027 per Dinners, con i minuti gratuiti
+# del repository pubblico. Nessun commit: il risultato va in un artefatto tenuto 1 giorno, che la chat scarica nel
+# repository privato e poi cancella (il testo delle pagine altrui non resta qui).
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "prova | falstaff | golosario"
+        required: true
+        default: prova
+      indirizzi:
+        description: "Solo per prova: indirizzi, uno per riga"
+        required: false
+        default: ''
+permissions:
+  contents: read
+concurrency:
+  group: raccolta-guide
+  cancel-in-progress: false
+jobs:
+  raccolta:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Raccolta
+        env:
+          INDIRIZZI: ${{ github.event.inputs.indirizzi }}
+        run: python3 scripts/raccolta_guide.py "${{ github.event.inputs.modo }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: raccolta-${{ github.event.inputs.modo }}
+          path: out/
+          retention-days: 1

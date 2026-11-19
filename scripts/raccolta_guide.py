@@ -1,0 +1,38 @@
+"""Raccolta una tantum di Golosario e Falstaff per Dinners (19/11/2026, decisione di Stefano «ok 1 e 2»).
+
+Legge pagine pubbliche una volta sola (REGOLE 6) e scrive il risultato in out/ (artefatto del giro, tenuto 1 giorno,
+poi scaricato nel repository privato e cancellato). Nel repository pubblico non resta nessun testo di pagine altrui.
+Modi:
+  prova      legge gli indirizzi dati (uno per riga) e salva l'HTML grezzo, per studiare le pagine
+  falstaff   (da scrivere dopo la prova)
+  golosario  (da scrivere dopo la prova)
+"""
+import os, sys, time, json, re, hashlib, urllib.request, urllib.error
+UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36 (+https://achdinners.com/chi-siamo/)"
+OUT = "out"
+def leggi(url, tentativi=2):
+    for t in range(tentativi):
+        try:
+            r = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Language": "it-IT,it;q=0.9"}), timeout=40)
+            return r.status, r.read().decode("utf-8", "replace")
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 503) and t + 1 < tentativi: time.sleep(10); continue
+            return e.code, ""
+        except Exception as e:
+            if t + 1 < tentativi: time.sleep(5); continue
+            return 0, str(e)
+def prova(indirizzi):
+    idx = []
+    for u in indirizzi:
+        st, h = leggi(u)
+        nome = hashlib.md5(u.encode()).hexdigest()[:10] + ".html"
+        open(f"{OUT}/{nome}", "w").write(h)
+        idx.append({"url": u, "stato": st, "byte": len(h), "file": nome})
+        print(st, len(h), u)
+        time.sleep(1.5)
+    json.dump(idx, open(f"{OUT}/indice.json", "w"), indent=1)
+if __name__ == "__main__":
+    os.makedirs(OUT, exist_ok=True)
+    modo = sys.argv[1]
+    if modo == "prova": prova([u.strip() for u in os.environ.get("INDIRIZZI", "").splitlines() if u.strip()])
+    else: sys.exit("modo non ancora pronto: " + modo)
