@@ -10,7 +10,7 @@ if(L!=="it"&&L!=="en"&&(navigator.webdriver||/bot|crawl|spider|slurp|lighthouse/
 if(L!=="it"&&L!=="en"){var ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"it"];L="en";for(var i=0;i<ls.length;i++)if(/^it\b/i.test(ls[i]||"")){L="it";break;}}
 window.ACH_LANG=L;
 if(L==="en"){d.lang="en";d.classList.add("en-wait");setTimeout(function(){d.classList.remove("en-wait");},1200);
-window.ACH_EN_MAN={"note":"en.note.8dd1ac41bf.json"};var s=document.createElement("script");s.src="en.9333ec00c4.js";s.async=true;document.head.appendChild(s);}
+window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.9333ec00c4.js";s.async=true;document.head.appendChild(s);}
 function bottone(){if(document.getElementById("langbtn"))return;var b=document.createElement("button");b.id="langbtn";b.type="button";b.setAttribute("data-noen","");
 b.setAttribute("aria-label",L==="en"?"Versione italiana":"English version");b.title=L==="en"?"Italiano":"English";
 b.innerHTML=L==="en"?"<span>IT</span>":"<span>EN</span>";
@@ -29,13 +29,13 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 #langbtn.lb-zoom{margin:0;border:0;box-shadow:none;background:transparent;font-size:12px;opacity:1}
 #langbtn.lb-float{position:fixed;top:10px;right:10px;z-index:99;background:#fff;color:#222}</style>
 
-
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Ach’s Dinners Guide</title>
 <link rel="preload" href="font/inter-400.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="font/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin><style id="caratteri">@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(font/inter-400.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(font/inter-500.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(font/inter-600.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(font/inter-700.woff2) format('woff2')}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;src:url(font/space-grotesk-500.woff2) format('woff2')}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;font-display:swap;src:url(font/space-grotesk-600.woff2) format('woff2')}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:700;font-display:swap;src:url(font/space-grotesk-700.woff2) format('woff2')}</style>
 <meta name="description" content="Ach’s Dinners Guide: i migliori ristoranti d’Italia, scelti solo in base alle voci online: guide, stampa e altre fonti. Gratuita e senza pubblicità.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://achdinners.com/">
+<link rel="canonical" href="https://achdinners.com/">
 <meta property="og:title" content="Ach’s Dinners Guide">
 <meta property="og:description" content="Ach’s Dinners Guide: i migliori ristoranti d’Italia, scelti solo in base alle voci online: guide, stampa e altre fonti. Gratuita e senza pubblicità.">
 <meta property="og:locale" content="it_IT">
@@ -569,7 +569,7 @@ const FAMIGLIA=c=>/^MICH_[123]$/.test(c)?"Stelle Michelin":c==="MICH_BIB"?"Bib G
  c.startsWith("TOP50")?"50 Top (Pizza, Italy, Trattorie)":c==="IDG"?"Identità Golose":c.startsWith("ESP")?"Guide de L'Espresso":c==="ERT"?"Emilia-Romagna a Tavola":c==="W50"?"World's 50 Best":"Altre guide";
 // ---- dati ----
 let D=null,L=[],RX={},DET={},INC={};
-const S={v:"rico",shown:40,q:"",ord:"",ordUtente:false};
+const S={v:"rico",shown:40,q:"",ord:"",ordUtente:false,daLink:false};
 let PT=null,VK=null,VT=null;
 const kmd=(a,b,c,d)=>{const r=Math.PI/180,x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return 12742*Math.asin(Math.sqrt(x));};
 const minu=d=>{const s=d*(d<5?1.45:1.3),v=28+47*(1-Math.exp(-s/30));return 3+s/v*60;};
@@ -582,7 +582,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("count").innerHTML=`<span class="avviso">Carico l'elenco completo dei ${fmt(INL.n_tot)} locali…</span>`;
   $("grid").innerHTML=PRIMI.slice(0,40).map(x=>card(x,{q:[]})).join("");}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_d2c6897b";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_15bf4a8b";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -725,8 +725,8 @@ function passa(x,salta,Q,sp=SP()){for(const id in FACCE){if(id!==salta&&SEL[id].
 function filtrati(){const Q=cercaPrep(),sp=SP();let r=ordinati().filter(x=>passa(x,null,Q,sp));
   if(Q.frase){const a=r.filter(x=>nOf(x).includes(Q.frase));if(a.length&&a.length<r.length){const s=new Set(a);r=a.concat(r.filter(x=>!s.has(x)));}}return r;}
 ["c-cit","c-inf","c-cha","c-sto","c-sito"].forEach(id=>$(id).onchange=()=>{S.shown=40;draw();});
-let tq=null;$("q").addEventListener("input",()=>{$("qx").hidden=!$("q").value;clearTimeout(tq);tq=setTimeout(()=>{S.q=$("q").value;S.shown=40;draw();},150);});
-$("qx").onclick=()=>{$("q").value="";$("qx").hidden=true;S.q="";S.shown=40;draw();$("q").focus();};
+let tq=null;$("q").addEventListener("input",()=>{S.daLink=false;$("qx").hidden=!$("q").value;clearTimeout(tq);tq=setTimeout(()=>{S.q=$("q").value;S.shown=40;draw();},150);});
+$("qx").onclick=()=>{S.daLink=false;$("q").value="";$("qx").hidden=true;S.q="";S.shown=40;draw();$("q").focus();};
 $("q").addEventListener("keydown",e=>{if(e.key==="Enter")$("q").blur();});
 // ---- pannello filtri su telefono ----
 function apriF(){document.body.classList.add("fopen");document.querySelector("#fpan .grab").hidden=false;aggiornaPiede();}
@@ -780,7 +780,7 @@ function attivi(){const out=[];
 $("attivi").onclick=e=>{const b=e.target.closest(".at");if(!b)return;if(b.dataset.az){azzera();return;}
   if(b.dataset.c){$(b.dataset.c).checked=false;}else{SEL[b.dataset.f].delete(b.dataset.v);const m=$(b.dataset.f);m.querySelectorAll(".voci input").forEach(c=>{if(c.value===b.dataset.v)c.checked=false;});etichetta(m);if(b.dataset.f==="f-reg"||b.dataset.f==="f-prov")cascata();}
   S.shown=40;draw();};
-function evid(n,Q){if(!Q.q.length)return esc(n);let h=esc(n);for(const w of Q.q){if(w.length<2)continue;const re=new RegExp("(^|[^\\p{L}\\p{N}])("+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&").split("").map(ch=>{const m={a:"aàáâä",e:"eèéêë",i:"iìíîï",o:"oòóôö",u:"uùúûü"}[ch];return m?"["+m+"]":ch;}).join("")+")","iu");h=h.replace(re,"$1<mark>$2</mark>");}return h;}
+function evid(n,Q){if(!Q.q.length||S.daLink)return esc(n);let h=esc(n);for(const w of Q.q){if(w.length<2)continue;const re=new RegExp("(^|[^\\p{L}\\p{N}])("+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&").split("").map(ch=>{const m={a:"aàáâä",e:"eèéêë",i:"iìíîï",o:"oòóôö",u:"uùúûü"}[ch];return m?"["+m+"]":ch;}).join("")+")","iu");h=h.replace(re,"$1<mark>$2</mark>");}return h;}
 function righe(x,max,soloGuide){const g=x.g2;
   const r1=(max?g.slice(0,max):g).map(badge).join("")+(max&&g.length>max?`<span class="b">+${g.length-max}</span>`:"");
   const r2=soloGuide?"":(x.ns?`<span class="b">📰 Stampa${x.ns>1?" ×"+x.ns:""}</span>`:"")+(x.nb?`<span class="b">📝 Blog${x.nb>1?" ×"+x.nb:""}</span>`:"")+(x.h?`<span class="b st">🏛️ Storico</span>`:"")+(x.nst?`<span class="b">✨ Charme e storia</span>`:"");
@@ -861,7 +861,7 @@ function lede(){const k=S.v==="metodo"?"tutti":S.v;
   $("lede").innerHTML=k==="tutti"?`<b>${fmt(t)}</b> locali in ${fmt(co)} comuni, di cui <b>${fmt(c)}</b> segnalati da guide e stampa.`
     :k==="altri"||k==="altp"?`<b>${fmt(t)}</b> ${cosa} in ${fmt(co)} comuni presenti nelle anagrafi aperte, che nessuna guida o testata cita ancora.`
     :`<b>${fmt(c)}</b> ${cosa} da guide e stampa, su ${fmt(t)} in ${fmt(co)} comuni.`;}
-function rotta(){if(location.hash.startsWith("#cerca=")){const q=decodeURIComponent(location.hash.slice(7));history.replaceState(null,"","#tutti");$("q").value=q;$("qx").hidden=!q;S.q=q;S.shown=40;}const h=(location.hash||"#ristoranti").slice(1);const v={ristoranti:"rico",ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti",apprezzati:"altri",apprezzate:"altp",metodo:"metodo"}[h]||"rico";
+function rotta(){if(location.hash.startsWith("#cerca=")){const q=decodeURIComponent(location.hash.slice(7));history.replaceState(null,"","#tutti");$("q").value=q;$("qx").hidden=!q;S.q=q;S.shown=40;S.daLink=true;}const h=(location.hash||"#ristoranti").slice(1);const v={ristoranti:"rico",ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti",apprezzati:"altri",apprezzate:"altp",metodo:"metodo"}[h]||"rico";
   document.querySelectorAll("nav.tabs a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
   $("lista").hidden=v==="metodo";$("metodo").hidden=v!=="metodo";if(v==="metodo"){$("azgiu").hidden=true;metodo();return;}
   S.v=v;$("sp-cit").hidden=v!=="tutti";$("sp-inf").hidden=!(v==="altri"||v==="altp");lede();
