@@ -32,6 +32,7 @@ def prova(indirizzi):
         # nel registro solo stato, robots.txt e indirizzi dei link (niente testo delle pagine)
         if "robots.txt" in u: print("  ROBOTS", " | ".join(l for l in h.splitlines() if l.strip())[:900])
         links = sorted(set(re.findall(r'href="((?:https?://www\.ilgolosario\.it)?/[a-z][^"\s#?]*)"', h)))
+        low = h.lower(); print("  PAROLE", {k: low.count(k) for k in ("corona", "radios", "faccino", "sorriso", "contento", "-ip", "2027", "pagina", "page=")})
         print("  LINK", len(links)); [print("   ", l[:140]) for l in links[:150]]
         time.sleep(1.5)
     json.dump(idx, open(f"{OUT}/indice.json", "w"), indent=1)
