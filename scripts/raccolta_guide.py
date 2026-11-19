@@ -29,6 +29,10 @@ def prova(indirizzi):
         open(f"{OUT}/{nome}", "w").write(h)
         idx.append({"url": u, "stato": st, "byte": len(h), "file": nome})
         print(st, len(h), u)
+        # nel registro solo stato, robots.txt e indirizzi dei link (niente testo delle pagine)
+        if "robots.txt" in u: print("  ROBOTS", " | ".join(l for l in h.splitlines() if l.strip())[:900])
+        links = sorted(set(re.findall(r'href="((?:https?://www\.ilgolosario\.it)?/[a-z][^"\s#?]*)"', h)))
+        print("  LINK", len(links)); [print("   ", l[:140]) for l in links[:150]]
         time.sleep(1.5)
     json.dump(idx, open(f"{OUT}/indice.json", "w"), indent=1)
 if __name__ == "__main__":
