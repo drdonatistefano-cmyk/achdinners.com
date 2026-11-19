@@ -37,6 +37,9 @@ def prova(indirizzi):
             w = h[m.start():m.start() + 3000]; sim = re.findall(r'(faccino[\w-]*|radios[\w-]*|corona[\w-]*|contento[\w-]*)', w)
             print("  VOCE", m.group(1), sim[:3])
         print("  AJAX", sorted(set(re.findall(r'["\'](/(?:ccm|index\.php|tools|application/tools|mosaic)[^"\'\s]{0,120})["\']', h)))[:40])
+        for t in re.findall(r'<[a-z]+[^>]*data-(?:next|limit|from|simboli|card)=[^>]*>', h)[:6]: print("  TAG", re.sub(r"\s+", " ", t)[:500])
+        for t in re.findall(r'(?:url|endpoint|action)\s*[:=]\s*["\']([^"\']{3,160})["\']', h)[:30]: print("  URLJS", t)
+        print("  SCRIPT", re.findall(r'<script[^>]+src="([^"]+)"', h)[:30])
         print("  DATA", sorted(set(re.findall(r'(data-[a-z-]+)="', h)))[:60])
         print("  LINK", len(links)); [print("   ", l[:140]) for l in links[:150]]
         time.sleep(1.5)
