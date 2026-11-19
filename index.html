@@ -592,6 +592,7 @@ const HIDX=IDXF,M0=lsL(LSK);if(M0&&M0.h===HIDX)usaMan(M0);
 const VISTAH=()=>({"":"rico",ristoranti:"rico",ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti"})[(location.hash||"").slice(1)];
 (function istantanea(){const s=lsL(ISK),v=VISTAH();if(!s||!v||s.idx!==IDXF||!s[v])return;const h=s[v];
   for(const id in h){const e=$(id);if(e)e.innerHTML=h[id];}$("more").hidden=!h.more;})();
+let IST_T=0;function dopoIst(){/* 19/11 velocità: l'istantanea si salva quando il telefono è libero */clearTimeout(IST_T);IST_T=setTimeout(()=>(window.requestIdleCallback||setTimeout)(salvaIst,{timeout:2000}),0);}
 function salvaIst(){if(!L.length||S.q||nAttivi()||vicAttivo()||S.ordUtente||S.shown!==40)return;const s=lsL(ISK)||{};if(s.idx!==IDXF){for(const k in s)delete s[k];s.idx=IDXF;}
   const h={};["grid","count","stats","lede","n-rico","n-piz","n-tutti","n-altri","n-altp"].forEach(id=>{h[id]=$(id).innerHTML;});h.more=!$("more").hidden?1:0;s[S.v]=h;lsS(ISK,s);}
 async function avvioVeloce(){
@@ -636,7 +637,7 @@ async function avvia(d){D=d;const z=d.dz;const C=d.col;const LL=new Array(C.n.le
   
   memo.pulisci(new Set([IDXF,AUXF,EXF,...Object.values(FILES)]));setTimeout(()=>caricaExtra().catch(()=>{}),1500);
   document.querySelectorAll(".ms").forEach(prepara);
-  window.addEventListener("hashchange",rotta);rotta();caricaAux().catch(()=>{});preparaParole();
+  await cede();/* 19/11 velocità: una pausa fra i conteggi e il primo disegno, così il telefono non resta bloccato */window.addEventListener("hashchange",rotta);rotta();caricaAux().catch(()=>{});preparaParole();
   if(TOCCO!=null){const x=L[TOCCO];TOCCO=null;if(x)apri(x);}
   try{const u=localStorage.getItem("achfood_ultp");if(u&&FILES[u])(window.requestIdleCallback||setTimeout)(()=>carica(u).catch(()=>{}),{timeout:3000});}catch(e){}}
 function carica(p){if(DET[p])return Promise.resolve(DET[p]);if(INC[p])return INC[p];
@@ -758,7 +759,7 @@ function draw(){if(!L.length)return;if(!RN&&serveRN()){$("count").innerHTML='<sp
   $("grid").innerHTML=r.length?r.slice(0,S.shown).map(x=>card(x,Q)).join(""):`<div class="empty">Nessun locale con questi filtri.${nAttivi()||Q.qs||vicAttivo()?`<br><button type="button" onclick="azzera()">Azzera i filtri</button>`:""}${Q.qs&&S.v!=="tutti"?` <button type="button" onclick="location.hash='#tutti'">Cerca tra tutti i locali</button>`:""}</div>`;
   $("more").hidden=r.length<=S.shown;$("more").textContent=`Mostra altri (${fmt(r.length-S.shown)})`;
   attivi();mostraAzzera();const n=nAttivi();$("fazzd").hidden=!n&&!S.q;$("nfil").hidden=!n;$("nfil").textContent=n;$("mfil").classList.toggle("on",n>0);aggiornaPiede();
-  document.querySelectorAll(".ms.aperto").forEach(m=>conta(m.id));precarica(r);salvaIst();}
+  document.querySelectorAll(".ms.aperto").forEach(m=>conta(m.id));precarica(r);dopoIst();}
 function aggiornaPiede(){$("fok").textContent=`Mostra ${fmt(ULT.length)} ${ULT.length===1?"locale":"locali"}`;}
 // altri locali: si aggiungono in fondo senza ridisegnare tutto; arrivando in fondo si caricano da soli
 function aggiungi(){const r=ULT;if(S.shown>=r.length)return;const Q=cercaPrep(),a=S.shown;S.shown+=60;
