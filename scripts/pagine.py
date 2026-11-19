@@ -130,7 +130,7 @@ def pagina(P, tabs_n, titolo, descr, url, corpo, ld):
 <div class="wrap">
 {tabs}
 {corpo}
-<p class="legale"><a href="/chi-siamo/">Chi siamo</a> · <a href="/privacy/">Privacy</a></p>
+<p class="legale"><a href="/chi-siamo/">Chi siamo</a> · <a href="/privacy/">Privacy</a> · <a href="/collaborano/">Collaborano con noi</a></p>
 </div>
 {GC}
 </body></html>
