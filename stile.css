@@ -402,6 +402,7 @@ html[data-stile=D] .card.pz:not(.cit) .mono{background:linear-gradient(135deg,#c
   .ach-guide__arr{opacity:.45;font-size:14px;transition:transform .2s,opacity .2s}
   .ach-guide__btn:hover .ach-guide__arr{opacity:.8;transform:translateX(2px)}
   @media (max-width:420px){.ach-guide{gap:8px}.ach-guide__btn{flex:1 1 0;min-width:0;padding:8px 10px 8px 8px}.ach-guide__arr{display:none}}
+  @media (max-width:420px){.ach-guide__btn.ach-guide__coll{flex:1 1 100%;justify-content:center}}
   @media (prefers-reduced-motion:reduce){.ach-guide__btn,.ach-guide__arr{transition:none}}
   
 /* pagine statiche (scripts/pagine.py): stesso aspetto della guida */
