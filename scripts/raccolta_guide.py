@@ -48,8 +48,28 @@ def prova(indirizzi):
         print("  LINK", len(links)); [print("   ", l[:140]) for l in links[:150]]
         time.sleep(1.5)
     json.dump(idx, open(f"{OUT}/indice.json", "w"), indent=1)
+def michelin():
+    """20/11/2026 (Stefano: «ti autorizzo a leggere Michelin»; strada A del 19/11): elenco nazionale dei «Selected Restaurants»
+    della Guida Michelin Italia (guide.michelin.com, robots.txt lo permette), una pagina dopo l'altra finché ci sono schede.
+    Salva l'HTML grezzo delle pagine-elenco (compresso) per il confronto nel repository privato: qui non resta nulla."""
+    import gzip
+    base = "https://guide.michelin.com/it/it/ristoranti/the-plate-michelin"
+    idx, visti = [], set()
+    for n in range(1, 200):
+        u = base if n == 1 else f"{base}/page/{n}"
+        st, h = leggi(u, 3)
+        schede = sorted(set(re.findall(r'href="(/it/it/[^"]+/ristorante/[^"]+)"', h)))
+        nuove = [s for s in schede if s not in visti]; visti.update(schede)
+        gzip.open(f"{OUT}/pagina-{n:03d}.html.gz", "wt").write(h)
+        idx.append({"url": u, "stato": st, "byte": len(h), "schede": len(schede), "nuove": len(nuove)})
+        print(st, len(h), "schede", len(schede), "nuove", len(nuove), u)
+        if st != 200 or not nuove: break
+        time.sleep(2)
+    json.dump(idx, open(f"{OUT}/indice.json", "w"), indent=1)
+    print("schede in tutto", len(visti))
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     modo = sys.argv[1]
     if modo == "prova": prova([u.strip() for u in os.environ.get("INDIRIZZI", "").splitlines() if u.strip()])
+    elif modo == "michelin": michelin()
     else: sys.exit("modo non ancora pronto: " + modo)

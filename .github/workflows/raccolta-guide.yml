@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       modo:
-        description: "prova | falstaff | golosario"
+        description: "prova | michelin | falstaff | golosario"
         required: true
         default: prova
       indirizzi:
