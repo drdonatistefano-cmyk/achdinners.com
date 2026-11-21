@@ -1,6 +1,6 @@
 # Arezzo24, sezione wine e food
 # https://www.arezzo24.net/notizie/wine-food/
-# letto il 2026-11-18
+# letto il 2026-11-21
 
 Wine & Food - Arezzo24 
  
@@ -72,7 +72,26 @@ Wine & Food - Arezzo24
  
  
  
- mercoledì | 18-11-2026 
+ 
+ 
+ 
+ sabato | 21-11-2026 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
  
  
  
@@ -124,6 +143,159 @@ Wine & Food - Arezzo24
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ Generic selectors 
+ 
+ 
+ 
+ 
+ 
+ 
+ Exact matches only 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Search in title 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Search in content 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Post Type Selectors 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+
+ 
+
  
  
  
@@ -213,14 +385,6 @@ Wine & Food - Arezzo24
  
  
  
-
- 
- 
- 
- 
- 
- 
- 
  
 
  
@@ -229,114 +393,6 @@ Wine & Food - Arezzo24
  
  
  
- 
- 
- 
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
- 
- 
- 
-
- 
-
- 
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
- 
-
- 
- 
-
- 
- 
- 
-
- 
- 
-
- 
- 
- 
-
- 
- 
-
- 
- 
- 
- 
-
- 
- 
- 
-
- 
- 
- 
- Generic selectors 
- 
- 
- 
- 
- 
- 
- Exact matches only 
- 
- 
- 
- 
- 
- 
- 
- Search in title 
- 
- 
- 
- 
- 
- 
- 
- Search in content 
- 
- 
- 
- 
- 
- 
- 
- Post Type Selectors 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
  
  
  
@@ -354,6 +410,70 @@ Wine & Food - Arezzo24
  
  
 
+ 
+ 
+ 
+ 
+
+ 
+
+ “Il gusto dell’incontro”. A Rondine un viaggio tra sapori, storie e culture dal mondo per sostenere i giovani della pace 
+
+ 
+ 
+ di Redazione Arezzo24 
+ 
+
+ 20/11/2026 11:56 
+ 
+ 
+ 
+
+ Sabato 21 novembre, dalle ore 16:00, a Rondine Cittadella della […] 
+ 
+ 
+ 
+ 
+ 
+
+ Foto 
+ 
+
+ L’azienda De’ Magi premiata ai World Cheese Awards 
+
+ 
+ 
+ di Redazione Arezzo24 
+ 
+
+ 20/11/2026 11:51 
+ 
+ 
+ 
+
+ A Cordova, in Spagna, “Maestro Scifu” conquista il Super Gold […] 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ Arte Dolce di Stefano Lorenzoni unica pasticceria aretina guida Le migliori Pasticcerie d’Italia 2027 del Gambero Rosso 
+
+ 
+ 
+ di Claudio Zeni 
+ 
+
+ 20/11/2026 11:31 
+ 
+ 
+ 
+
+ La Pasticceria Agricola Cilentana Pietro Macellaro di Piaggine (SA) è […] 
+ 
  
  
  
@@ -2211,70 +2331,6 @@ Wine & Food - Arezzo24
  
 
  Il Calcio Storico Fiorentino è prima di tutto una sfida […] 
- 
- 
- 
- 
- 
-
- 
-
- San Giovanni accoglie il Pizza Festival 
-
- 
- 
- di Redazione Arezzo24 
- 
-
- 03/07/2026 05:05 
- 
- 
- 
-
- Tre giorni di gusto, tradizione e divertimento in piazza Cavour […] 
- 
- 
- 
- 
- 
-
- 
-
- Cibo vero, musica e parterre in festa: a Cortona la notte gialla tra Street food contadino e Dj set sotto le stelle 
-
- 
- 
- di Redazione Arezzo24 
- 
-
- 02/07/2026 05:39 
- 
- 
- 
-
- Questo giovedì 2 luglio è in programma la 14ª edizione […] 
- 
- 
- 
- 
- 
-
- Gallery 
- 
-
- Cena Bianca, torna in Piazza Grande la notte più elegante dell’estate 
-
- 
- 
- di Redazione Arezzo24 
- 
-
- 01/07/2026 15:37 
- 
- 
- 
-
- Giovedì 9 luglio torna uno degli appuntamenti simbolo dell'estate aretina. […] 
  
  
  
