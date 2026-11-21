@@ -720,12 +720,12 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("grid").innerHTML=PRIMI.slice(0,12).map(x=>card(x,{q:[]})).join("");
   setTimeout(()=>{if(!L.length&&$("grid").children.length===12)$("grid").insertAdjacentHTML("beforeend",PRIMI.slice(12,40).map(x=>card(x,{q:[]})).join(""));},0);}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_6609b738";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_e94b9623";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
 const HIDX=IDXF,M0=lsL(LSK);if(M0&&M0.h===HIDX)usaMan(M0);
-const VISTAH=()=>({"":"rico",ristoranti:"rico",ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti"})[(location.hash||"").slice(1)];
+const VISTAH=()=>{const v=({"":"rico",ristoranti:"rico",ordina:"rico",classifica:"rico",pizzerie:"piz",tutti:"tutti"})[(location.hash||"").slice(1)];if(!v)return v;/* 21/11/2026: l'istantanea vale solo con gli stessi pesi della classifica personale */let w="";try{w=localStorage.getItem("dinners-pesi")||"";}catch(_){}return w?v+"|"+w.length+"|"+[...w].reduce((h,c)=>(h*31+c.charCodeAt(0))|0,7):v;};
 (function istantanea(){const s=lsL(ISK),v=VISTAH();if(!s||!v||s.idx!==IDXF||!s[v])return;const h=s[v];
   for(const id in h){const e=$(id);if(e)e.innerHTML=h[id];}$("more").hidden=!h.more;})();
 let IST_T=0;function dopoIst(){/* 19/11 velocità: l'istantanea si salva quando il telefono è libero */clearTimeout(IST_T);IST_T=setTimeout(()=>(window.requestIdleCallback||setTimeout)(salvaIst,{timeout:2000}),0);}
@@ -787,14 +787,19 @@ const VISTE={rico:x=>x.s>0&&!x.pz,piz:x=>x.pz&&x.s>0,tutti:()=>true,altri:x=>!(x
 // etichette dei numeri per scheda
 const LAB={rico:"ristoranti segnalati",piz:"pizzerie segnalate",tutti:"locali",altri:"ristoranti apprezzati",altp:"pizzerie apprezzate"};
 // ordinamenti su numeri già pronti (posizione in classifica, ordine alfabetico): niente confronti di testo su 48.000 righe
-const ORDS={punteggio:["Citazioni",(a,b)=>(b._sp??b.s)-(a._sp??a.s)||(a.pos||1e9)-(b.pos||1e9)||RN[a.i]-RN[b.i]],nome:["Nome (A-Z)",(a,b)=>RN[a.i]-RN[b.i]],comune:["Comune",null],
+const ORDS={punteggio:["Citazioni",(a,b)=>(PP_SP?PP_SP[b.i]:b.s)-(PP_SP?PP_SP[a.i]:a.s)||(a.pos||1e9)-(b.pos||1e9)||RN[a.i]-RN[b.i]],nome:["Nome (A-Z)",(a,b)=>RN[a.i]-RN[b.i]],comune:["Comune",null],
   fonti:["Più fonti",(a,b)=>b.nf-a.nf||(a.pos||1e9)-(b.pos||1e9)||RN[a.i]-RN[b.i]],dist:["Distanza",(a,b)=>(a._d??1e9)-(b._d??1e9)]};
 const BASE={},ORD={};
 const base=()=>BASE[S.v]||(BASE[S.v]=L.filter(VISTE[S.v]));
 const nomeK=x=>x._nk??(x._nk=(x.n.replace(/^[^A-Za-zÀ-ÿ]+/,"")||x.n));
-function ordinati(){if(typeof ppPrepara==="function")ppPrepara();const o=S.ord,k=S.v+"|"+o;if(o==="dist")return base().slice().sort(ORDS.dist[1]);
+function ordinati(){if(typeof ppPrepara==="function")ppPrepara();const o=S.ord,k=S.v+"|"+o;if(o==="dist")return primaCitati(base().slice().sort(ORDS.dist[1]));
   if(o==="nome"&&(S.v==="altri"||S.v==="altp"))return ORD[k]||(ORD[k]=base().slice().sort((a,b)=>((a.nf>0||a.h)?0:1)-((b.nf>0||b.h)?0:1)||COL.compare(nomeK(a),nomeK(b))||RN[a.i]-RN[b.i]));
-  if(o==="dist")return base().slice().sort(ORDS.dist[1]);return ORD[k]||(ORD[k]=o==="comune"?base():base().slice().sort(ORDS[o][1]));}
+  if(o==="dist")return primaCitati(base().slice().sort(ORDS.dist[1]));
+  if(o==="punteggio"){if(ORD[k])return ORD[k];const B=base(),c=[];for(const x of B)if(x.s>0)c.push(x);c.sort(ORDS.punteggio[1]);
+    const u=UNC[S.v]||(UNC[S.v]=B.filter(x=>!(x.s>0)).sort((a,b)=>(a.pos||1e9)-(b.pos||1e9)||RN[a.i]-RN[b.i]));return ORD[k]=c.length?(u.length?c.concat(u):c):u;}
+  return ORD[k]||(ORD[k]=primaCitati(o==="comune"?base():base().slice().sort(ORDS[o][1])));}
+const UNC={};
+function primaCitati(a){const c=[],u=[];for(const x of a)(x.s>0?c:u).push(x);return c.length&&u.length?c.concat(u):a;}
 function opzOrd(){const o=Object.entries(ORDS).filter(([k])=>k!=="dist"||PT);if(!S.ordUtente||!ORDS[S.ord]||(S.ord==="dist"&&!PT))S.ord=PT&&vicAttivo()?"dist":(S.v==="altri"||S.v==="altp")?"nome":"punteggio";
   $("ord").innerHTML=o.map(([k,[t]])=>`<option value="${k}"${k===S.ord?" selected":""}>${t}</option>`).join("");}
 $("ord").onchange=()=>{S.ord=$("ord").value;S.ordUtente=true;S.shown=40;draw();};
@@ -1131,7 +1136,7 @@ const PP_P=o=>Object.assign(Object.fromEntries(Object.keys(PP_R).map(k=>[k,1])),
 const PP_PROF=[
  /* 21/11/2026 (Stefano): La scelta di Ach = molta più tradizione e prezzo-qualità, meno eleganti e creativi.
     Profili più spinti e ognuno sulle sue guide, perché passando dall'uno all'altro la classifica cambi davvero. */
- ["La scelta di Ach",PP_P({sf:1.6,bib:1.6,gamb:1.6,t50tr:1.5,gol:1.4,reg:1.3,sel:1.1,stelle:0.8,forch:0.85,bott:0.85,w50:0.65,t50gr:0.7,esp:0.65,idg:0.5})],
+ ["La scelta di Ach",PP_P({sf:2,bib:2,gamb:2,t50tr:1.9,gol:1.8,reg:1.7,sel:1.2,stelle:0.5,forch:0.6,bott:0.6,w50:0.3,t50gr:0.4,esp:0.35,idg:0.25})],
  ["Tradizione",PP_P({sf:2,gol:2,reg:1.9,t50tr:1.8,gamb:1.3,bib:0.9,sel:0.8,spic:0.6,t50pz:0.6,stelle:0.5,forch:0.6,bott:0.6,w50:0.3,t50gr:0.4,esp:0.4,idg:0.2,crit:0.8})],
  ["Esperienza",PP_P({forch:2,bott:2,grp:1.8,stelle:1.3,t50gr:1.4,w50:1.2,esp:0.9,idg:0.8,sf:0.5,bib:0.4,gamb:0.6,t50tr:0.5,spic:0.3,t50pz:0.3,gol:0.6,reg:0.6})],
  ["Prezzo-qualità",PP_P({bib:2,spic:1.1,t50pz:1.1,gamb:1.4,sel:1.4,t50tr:1.3,sf:1,gol:1,stelle:0.3,w50:0.2,esp:0.3,idg:0.3,t50gr:0.3,forch:0.5,bott:0.4})],
@@ -1142,10 +1147,24 @@ const PP_UNO=PP_P({}),PP_CONF=new Set(["CRIT","BLOG","SOCIAL"]);
 let PP={prof:0,W:{...PP_PROF[0][1]},ok:false};
 try{const s=JSON.parse(localStorage.getItem("dinners-pesi")||"null");if(s&&s.w){PP.prof=s.p??0;PP.W=PP.prof>=0&&PP_PROF[PP.prof]?{...PP_PROF[PP.prof][1]}:Object.assign({...PP_PROF[0][1]},s.w);}}catch(_){}
 const ppSalva=()=>{try{localStorage.setItem("dinners-pesi",JSON.stringify({p:PP.prof,w:PP.W}))}catch(_){}};
-function ppCalc(x,w){const LG=INL.legenda||{},SO=new Set(INL.solo||[]);let b=[],agg=0;
-  for(const c of x.g2){const k=w[PP_DI[c]]??1;if(!k)continue;if(PP_CONF.has(c)||SO.has(c)){agg+=k;continue}b.push(Math.min(250,((LG[c]||[])[1]||0)*k))/* tetto 250: con il tetto 100 i riconoscimenti alzati finivano tutti pari */;}
-  agg+=(x.ns+x.nb)*w.crit;b.sort((a,c)=>c-a);agg+=Math.max(0,b.length-1);const top=b[0]||0;if(!top&&!agg)return 0;const per=3*w.conf;return (top+Math.min(3*per,per*agg))/1.09;}
-function ppPrepara(force){if(PP.ok&&!force)return;if(!L||!L.length)return;for(const x of L){x._sp=x.s>0?x.s+ppCalc(x,PP.W)-(x._p1??(x._p1=ppCalc(x,PP_UNO))):0;}PP.ok=true;}
+/* 21/11/2026: insiemi preparati una volta e niente ordinamento per locale (stesso risultato, più veloce) */
+let PP_LG=null,PP_SO=null;
+function ppCalc(x,w){if(!PP_LG){PP_LG=INL.legenda||{};PP_SO=new Set(INL.solo||[]);}let top=0,nb=0,agg=0;
+  for(const c of x.g2){const k=w[PP_DI[c]]??1;if(!k)continue;if(PP_CONF.has(c)||PP_SO.has(c)){agg+=k;continue}
+    const v=Math.min(250,((PP_LG[c]||[])[1]||0)*k)/* tetto 250: con il tetto 100 i riconoscimenti alzati finivano tutti pari */;nb++;if(v>top)top=v;}
+  agg+=(x.ns+x.nb)*w.crit;if(nb>1)agg+=nb-1;if(!top&&!agg)return 0;const per=3*w.conf;return (top+Math.min(3*per,per*agg))/1.09;}
+/* 21/11/2026 (Stefano): chi non ha nessuna menzione resta sempre in fondo e senza numero; chi è citato resta sempre sopra (in ordinati i due gruppi sono separati) */
+let PP_CIT=null;
+/* velocità: i punteggi personali si ricordano nel telefono (stessa versione dell'elenco e stessi pesi): alla visita dopo non si ricalcolano */
+const PP_MK="dinners-pp-memo";
+function ppFirma(){return (typeof IDXF!=="undefined"?IDXF:"")+"|"+PP_CIT.length+"|"+JSON.stringify(PP.W);}
+/* velocità: punteggi in due colonne di numeri (per posizione) invece che come campi nuovi su 49.000 oggetti, che rallentavano tutta la pagina */
+let PP_SP=null,PP_P1=null;
+function ppPrepara(force){if(PP.ok&&!force)return;if(!L||!L.length)return;if(!PP_CIT){PP_CIT=[];for(const x of L)if(x.s>0)PP_CIT.push(x);PP_SP=new Float64Array(L.length);PP_P1=new Float64Array(L.length).fill(NaN);}
+  const f=ppFirma();let m=null;try{m=JSON.parse(localStorage.getItem(PP_MK)||"null");}catch(_){}
+  if(m&&m.f===f&&m.v&&m.v.length===PP_CIT.length){for(let i=0;i<PP_CIT.length;i++)PP_SP[PP_CIT[i].i]=m.v[i];PP.ok=true;return;}
+  for(const x of PP_CIT){let p1=PP_P1[x.i];if(p1!==p1)p1=PP_P1[x.i]=ppCalc(x,PP_UNO);PP_SP[x.i]=x.s+ppCalc(x,PP.W)-p1;}PP.ok=true;
+  (window.requestIdleCallback||setTimeout)(()=>{try{localStorage.setItem(PP_MK,JSON.stringify({f,v:PP_CIT.map(x=>Math.round(PP_SP[x.i]*1e4)/1e4)}));}catch(_){}});}
 function ppRicalcola(){ppPrepara(true);for(const k in ORD)delete ORD[k];}
 const ppParola=v=>v<.05?"Non conta":v<.55?"Molto meno":v<.95?"Meno":v<=1.05?"Come oggi":v<=1.3?"Un po' di più":v<=1.65?"Di più":"Molto di più";
 function ppChips(){const pers=PP.prof<0,mod=Object.keys(PP_R).filter(k=>Math.abs(PP.W[k]-1)>.04).length;
@@ -1238,7 +1257,7 @@ function guidePag(){const el=$("guidep");if(el.dataset.ok||!L.length)return;el.d
    <li>il cursore «Critica e blog» cambia quanto valgono articoli e blog.</li>
   </ul>
   <p>Il tuo punteggio è il punteggio di Dinners più la differenza fra il calcolo con i tuoi pesi e quello con tutti i pesi a 1. Per questo, con tutti i cursori a «come oggi», la classifica è identica a quella di Dinners.</p>
-  <p class="gv-es">Con «La scelta di Ach» la trattoria dell'esempio sale: Tre Gamberi pesa 1,6, quindi 90 × 1,6 = 144, più 6 di conferme: (144 + 6) ÷ 1,09 = 138 invece di 88, cioè 50 punti in più. Il tre stelle scende: le stelle pesano 0,8, quindi 100 × 0,8 = 80 e 80 ÷ 1,09 = 73 invece di 92.</p>
+  <p class="gv-es">Con «La scelta di Ach» la trattoria dell'esempio sale: Tre Gamberi pesa 2, quindi 90 × 2 = 180, più 6 di conferme: (180 + 6) ÷ 1,09 = 171 invece di 88. Il tre stelle scende: le stelle pesano 0,5, quindi 100 × 0,5 = 50 e 50 ÷ 1,09 = 46 invece di 92.</p>
   <p>Le categorie già pronte sono solo pesi diversi sugli stessi cursori; nelle schede qui sopra vedi quali guide alza o abbassa ognuna. Le tue scelte restano sul tuo telefono: non le mandiamo a nessuno.</p>
   <p><button type="button" class="pp-regola" onclick="location.hash='#ristoranti';setTimeout(()=>ppApri(true),300)"><span class="pp-ic" aria-hidden="true">✦</span><span>Crea la tua guida personale</span></button></p>`;}
 
