@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="it">
 <head>
-<link rel="preload" id="pl-mappa" href="mappa.46045824f8.json" as="fetch" crossorigin="anonymous" fetchpriority="high">
+<link rel="preload" id="pl-mappa" href="mappa.1b23f83369.json" as="fetch" crossorigin="anonymous" fetchpriority="high">
 <meta charset="utf-8">
 <script id="en-boot">/* 14/11/2026 (come Ach's Places Guide, 13/11): lingua della pagina. Scelta salvata, oppure ?lang=, altrimenti la lingua del browser
    (senza l'italiano tra le lingue del browser la guida si apre in inglese). Pulsante IT/EN in alto. */
@@ -337,7 +337,7 @@ for(let i=B.length-1;i>=0;i--){const [x,y,n,lab]=B[i],r=(W<700?Math.min(19,7+Mat
 }catch(e){}})();</script>
 <script>
 (async()=>{
-const NOME="mappa.46045824f8.json",NOMEN="mappan.dcbfb82382.json",NOMED="mappad.137e34a9ef.json";let DATA=null;
+const NOME="mappa.1b23f83369.json",NOMEN="mappan.a11951189d.json",NOMED="mappad.6591b93d5f.json";let DATA=null;
 /* 12/11: i nomi, i link e le schede arrivano da un secondo file, scaricato in parallelo: la mappa si disegna prima */
 /* 13/11/2026: il file dei nomi (320 KB) parte quando e' arrivato quello della mappa (144 KB): prima si dividevano la rete e la mappa compariva dopo entrambi */
 let _mappaOk;const MAPPA_OK=new Promise(r=>_mappaOk=r);setTimeout(()=>_mappaOk(),6000);
@@ -608,9 +608,9 @@ function apri(pi){aperta=pi;lastFocus=document.activeElement;const p=P[pi],c=C[p
     <div class="facts"><div class="fact"><span class="ic" aria-hidden="true">📍</span><small>Indirizzo</small><div>${esc(ad||c.n)}</div></div></div>
     <div class="acts">
       <button class="act map" type="button" id="vedi">${ic('pin')}Vedi sulla mappa</button>
-      <a class="act pri" href="${gm}" target="_blank" rel="noopener">${ic('nav')}Come arrivare</a>
-      ${w?`<a class="act" href="${esc(w)}" target="_blank" rel="noopener">${ic('ext')}Sito del locale</a>`:''}
-      <a class="act" href="${photoUrl(p)}" target="_blank" rel="noopener">${ic('cam')}Foto</a>
+      <a class="act pri" href="${gm}"${gcA(p,c,'mappa','Mappa')} target="_blank" rel="noopener">${ic('nav')}Come arrivare</a>
+      ${w?`<a class="act" href="${esc(w)}"${gcA(p,c,'sito','Sito')} target="_blank" rel="noopener">${ic('ext')}Sito del locale</a>`:''}
+      <a class="act" href="${photoUrl(p)}"${gcA(p,c,'foto','Foto')} target="_blank" rel="noopener">${ic('cam')}Foto</a>
       <a class="act" href="index.html#cerca=${encodeURIComponent(p.n)}">${ic('book')}Apri nella guida</a>
     </div>
     ${fo.length?`<div class="src"><b>Fonti</b><ul>${fo.map(s=>`<li><a href="${esc(s[2])}" target="_blank" rel="noopener">${esc(s[1])}</a><span class="rel uff">${esc(s[3]||'')}</span></li>`).join('')}</ul></div>`:''}`;
@@ -640,5 +640,9 @@ misura();{const h=casa();S.cx=h[0];S.cy=h[1];}filtri(desk());disegnaFiltri();she
 try{document.fonts.ready.then(()=>{if(W)completo();});}catch(e){}
 })();
 </script>
-</body>
+<script>const slugT=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+function gcA(p,c,k,t){const n=slugT(p.n).slice(0,60).replace(/^-+|-+$/g,""),cc=slugT(c.n),sl=n.endsWith(cc)?n:n+"-"+cc;return ` data-goatcounter-click="locale/${k}/${sl}" data-goatcounter-title="Clic «${t}»"`;}
+document.addEventListener("click",ev=>{const a=ev.target&&ev.target.closest&&ev.target.closest("[data-goatcounter-click]");
+ if(!a||a.dataset.goatcounterBound||!window.goatcounter||!goatcounter.count)return;
+ try{goatcounter.count({path:a.dataset.goatcounterClick,title:a.dataset.goatcounterTitle||"",event:true});}catch(_){}},true);</script></body>
 </html>
