@@ -3,6 +3,10 @@ name: Pulizia dei rami già pubblicati
 # Stefano non deve più cancellarli a mano (sì di Stefano 22/11/2026 17:22). Un ramo con anche un solo cambiamento
 # non su main resta; se GitHub non risponde il ramo resta. Lancio a mano con togli=no: elenca soltanto.
 on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 3 * * *"
   workflow_dispatch:
     inputs:
       togli:
