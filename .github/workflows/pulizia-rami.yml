@@ -1,0 +1,42 @@
+name: Pulizia dei rami già pubblicati
+# Toglie da solo i rami claude/... che non hanno più nessun cambiamento fuori da main (tutto già pubblicato):
+# Stefano non deve più cancellarli a mano (sì di Stefano 22/11/2026 17:22). Un ramo con anche un solo cambiamento
+# non su main resta; se GitHub non risponde il ramo resta. Lancio a mano con togli=no: elenca soltanto.
+on:
+  workflow_dispatch:
+    inputs:
+      togli:
+        description: "si = toglie i rami già pubblicati; no = elenca soltanto"
+        default: "no"
+permissions:
+  contents: write
+concurrency:
+  group: pulizia-rami
+  cancel-in-progress: false
+jobs:
+  pulizia:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Rami claude/ già interi su main
+        env:
+          GH_TOKEN: ${{ github.token }}
+          R: ${{ github.repository }}
+          TOGLI: ${{ github.event_name == 'workflow_dispatch' && inputs.togli || 'si' }}
+        run: |
+          set -u
+          tolti=0
+          nomi=$(gh api "repos/$R/branches" --paginate -q '.[].name') || { echo "elenco dei rami non letto: non tolgo niente"; exit 0; }
+          for b in $(echo "$nomi" | grep '^claude/' || true); do
+            avanti=$(gh api "repos/$R/compare/main...$b" -q '.ahead_by' 2>/dev/null || echo errore)
+            if [ "$avanti" = "0" ]; then
+              if [ "$TOGLI" = "si" ]; then
+                gh api -X DELETE "repos/$R/git/refs/heads/$b" >/dev/null && { echo "TOLTO: $b"; tolti=$((tolti+1)); } || echo "non riuscito: $b"
+              else
+                echo "DA TOGLIERE (prova, non tolto): $b"
+              fi
+            else
+              echo "RESTA: $b (cambiamenti non su main: $avanti)"
+            fi
+          done
+          echo "rami tolti: $tolti"
