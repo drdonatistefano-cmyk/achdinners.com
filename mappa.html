@@ -282,7 +282,7 @@ html.boot *,html.boot *::before,html.boot *::after{transition:none!important;ani
 #levels span.on{color:var(--ac)!important;font-weight:800}
 #q:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .salta{position:absolute;left:12px;top:-60px;z-index:100;padding:10px 14px;border-radius:10px;background:#1a1815;color:#f8f3ea;font-weight:600;text-decoration:none}.salta:focus{top:10px}
-.grabz{border-top:2px solid color-mix(in srgb,var(--tx) 55%,transparent)!important;border-radius:0}
+#fclose{border:1.5px solid color-mix(in srgb,var(--tx) 60%,transparent)!important}#items:focus{outline:none}
 #levels span{cursor:pointer;min-height:30px;-webkit-tap-highlight-color:transparent}#levels span:hover{color:var(--ac)}#levels span:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:4px!important}
 html[data-t=carta] #levels span.on{color:#523e0a!important}
 @media (min-width:700px) and (max-width:1279.98px){#zoom{top:calc(96px + env(safe-area-inset-top))!important;bottom:auto!important}}/* iPad: lo zoom sotto il riquadro, non sopra */
@@ -300,7 +300,7 @@ const sl=s=>s.normalize('NFD').replace(/[^\x00-\x7f]/g,'').toLowerCase().replace
 D.C=D.C2.map(c=>{const p=D.CP[c[3]]||['',''];return [c[0],p[0],p[1],'',c[1],c[2],sl(c[0])+'-'+c[3].toLowerCase(),c[3],0];});delete D.C2;}
 document.documentElement.classList.add('boot');</script></head>
 <body>
-<a class="salta" href="#q">Salta alla ricerca</a>
+<a class="salta" href="#items">Salta all’elenco dei locali</a>
 <div id="app">
   <aside id="filt" class="gl" aria-label="Filtri">
     <div class="fh">
@@ -342,7 +342,7 @@ document.documentElement.classList.add('boot');</script></head>
   <section id="list" class="gl" aria-label="Luoghi in vista">
     <button class="grabz" id="grab" aria-label="Allarga o riduci l'elenco"><span class="grab"></span></button>
     <div class="head"><div><div id="nv">—</div><div id="nvl">locali in vista</div></div><div id="nvr"></div></div>
-    <div id="items"></div>
+    <div id="items" role="main" tabindex="-1" aria-label="Elenco dei locali"></div>
   </section>
 </div>
 

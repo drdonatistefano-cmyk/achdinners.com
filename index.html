@@ -558,14 +558,14 @@ h1,.cname{text-wrap:balance}
 /* 22/11 (Stefano): i link alle altre guide con il loro logo ufficiale (coordinamento/loghi/firma-*.svg) */
 .mast nav.ach-guide .ach-guide__logo{display:inline-flex}.ach-guide__logo .lg{width:36px;height:36px;display:block}
 /* 22/11 (Stefano): «Collaborano con noi» più in evidenza, tutto a destra; tondini delle altre guide più grandi */
-.mast nav.ach-guide .ach-guide__btn.ach-guide__coll{order:5;margin-left:8px;padding:0 16px;min-height:42px;border:1.5px solid var(--acc);border-radius:999px;background:var(--acc-soft);color:var(--acc-ink)}
+.mast nav.ach-guide .ach-guide__btn.ach-guide__coll{margin-left:8px;padding:0 16px;min-height:42px;border:1.5px solid var(--acc);border-radius:999px;background:var(--acc-soft);color:var(--acc-ink)}
 .mast nav.ach-guide .ach-guide__btn.ach-guide__coll b{font-weight:700;color:var(--acc-ink)}
 .mast nav.ach-guide .ach-guide__btn.ach-guide__coll:hover{background:var(--acc);color:var(--on)}.mast nav.ach-guide .ach-guide__btn.ach-guide__coll:hover b{color:var(--on)}
-.mast nav.ach-guide #langbtn{order:4}
+.mast nav.ach-guide #langbtn{margin-left:8px}
 .mast nav.ach-guide .ach-guide__btn{gap:8px}
 @media (max-width:640px){.mast nav.ach-guide{margin:0;width:100%}.mast nav.ach-guide .ach-guide__btn{padding:6px 6px 6px 0;gap:6px}.ach-guide__logo .lg{width:28px;height:28px}.mast nav.ach-guide b{font-size:13px}.mast nav.ach-guide{gap:0}.mast nav.ach-guide .ach-guide__btn{padding:6px 5px 6px 0;gap:5px}
-  .mast nav.ach-guide #langbtn{margin:0 6px 0 0!important;padding:0 9px!important;min-width:0!important}.mast nav.ach-guide .ach-guide__btn{padding-right:3px}.ach-guide__logo .lg{width:26px;height:26px}
-  .mast nav.ach-guide .ach-guide__btn.ach-guide__coll{margin-left:auto;padding:0 10px;min-height:38px}.mast nav.ach-guide .ach-guide__btn.ach-guide__coll b{font-size:12.5px;white-space:nowrap}}
+  .mast nav.ach-guide #langbtn{margin-left:6px!important}.mast nav.ach-guide .ach-guide__btn{padding-right:3px}.ach-guide__logo .lg{width:26px;height:26px}
+  .mast nav.ach-guide .ach-guide__btn.ach-guide__coll{margin-left:auto;padding:0 9px;min-height:38px}.mast nav.ach-guide .ach-guide__btn.ach-guide__coll b{font-size:12.5px;white-space:nowrap}}
 .mast nav.ach-guide .ach-guide__btn:hover b{color:var(--ink)}
 .mast nav.ach-guide b{font:600 14px/1 var(--sans)}
 @media (max-width:640px){.mast{padding-bottom:6px}.mast nav.ach-guide{width:100%;margin:0 -8px;justify-content:flex-start}
@@ -843,7 +843,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("grid").innerHTML=PRIMI.slice(0,12).map(x=>card(x,{q:[]})).join("");
   setTimeout(()=>{if(!L.length&&$("grid").children.length===12)$("grid").insertAdjacentHTML("beforeend",PRIMI.slice(12,40).map(x=>card(x,{q:[]})).join(""));},0);}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_b6190f65";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_46a989a3";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
