@@ -31,7 +31,8 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Ach’s Dinners Guide</title>
-<link rel="preload" href="font/inter-400.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="font/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin><style id="caratteri">@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(font/inter-400.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(font/inter-500.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(font/inter-600.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(font/inter-700.woff2) format('woff2')}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;src:url(font/space-grotesk-500.woff2) format('woff2')}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;font-display:swap;src:url(font/space-grotesk-600.woff2) format('woff2')}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:700;font-display:swap;src:url(font/space-grotesk-700.woff2) format('woff2')}</style>
+<link rel="preload" href="font/inter-400.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="font/space-grotesk-600.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="font/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin><style id="caratteri">@font-face{font-family:'Inter';font-style:normal;font-weight:400 500;font-display:swap;src:url(font/inter-400.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(font/inter-600.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(font/inter-700.woff2) format('woff2')}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;src:url(font/space-grotesk-500.woff2) format('woff2')}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;font-display:swap;src:url(font/space-grotesk-600.woff2) format('woff2')}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:700;font-display:swap;src:url(font/space-grotesk-700.woff2) format('woff2')}</style>
+<script>/* velocizza_food.py: elenco chiesto subito */(function(){try{var f="idx.b5d3037b24.json",m=JSON.parse(localStorage.getItem("achfood_man")||"null");if(m&&m.h===f&&m.idx)f=m.idx;if(localStorage.getItem("achfood_memo")===f||!window.fetch||!window.Blob)return;window.PRE={};window.PRE[f]=fetch(f,{priority:"low"}).then(function(r){return r.ok?r.blob():null;})["catch"](function(){return null;});}catch(e){}})();</script>
 <meta name="description" content="Ach’s Dinners Guide: i migliori ristoranti d’Italia, scelti solo in base alle voci online: guide, stampa e altre fonti. Gratuita e senza pubblicità.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://achdinners.com/">
@@ -814,7 +815,7 @@ const memo={db:null,
   async leggi(k){const db=await this.apri();if(!db)return null;return new Promise(ok=>{try{const q=db.transaction("f").objectStore("f").get(k);q.onsuccess=()=>ok(q.result||null);q.onerror=()=>ok(null);}catch(e){ok(null);}});},
   async scrivi(k,v){const db=await this.apri();if(!db)return;try{db.transaction("f","readwrite").objectStore("f").put(v,k);}catch(e){}},
   async pulisci(tieni){const db=await this.apri();if(!db)return;try{const s=db.transaction("f","readwrite").objectStore("f");const q=s.getAllKeys();q.onsuccess=()=>q.result.forEach(k=>{if(!tieni.has(k))s.delete(k);});}catch(e){}}};
-async function scarica0(nome){let m=null;try{m=await memo.leggi(nome);if(m instanceof Blob)m=await new Response(m).json();}catch(e){m=null;}if(m)return m;const r=await fetch(nome);if(!r.ok)throw new Error("HTTP "+r.status);
+async function scarica0(nome){const P0=window.PRE&&window.PRE[nome];if(P0){delete window.PRE[nome];const b0=await P0.catch(()=>null);if(b0){try{const j0=JSON.parse(await b0.text());try{memo.scrivi(nome,b0);}catch(e){}return j0;}catch(e){}}}let m=null;try{m=await memo.leggi(nome);if(m instanceof Blob)m=await new Response(m).json();}catch(e){m=null;}if(m)return m;const r=await fetch(nome);if(!r.ok)throw new Error("HTTP "+r.status);
   /* nel telefono si salva il file così com'è (Blob), non l'oggetto: copiarlo costava 100-150 ms di blocco */
   /* 20/11/2026: se il Blob non si legge (Safari dentro un riquadro: «Blob loading failed») si rilegge come testo */
   let tx;try{const b=await r.blob();tx=await b.text();try{memo.scrivi(nome,b);}catch(e){}}catch(e){const r2=await fetch(nome,{cache:"no-store"});if(!r2.ok)throw new Error("HTTP "+r2.status);tx=await r2.text();}return JSON.parse(tx);}
@@ -824,8 +825,8 @@ const LAV=(()=>{try{if(!window.Worker||!window.Blob||!window.URL||!window.Int32A
 async function leggi(k){const d=await apri();if(!d)return null;return new Promise(ok=>{try{const q=d.transaction("f").objectStore("f").get(k);q.onsuccess=()=>ok(q.result||null);q.onerror=()=>ok(null);}catch(e){ok(null);}});}
 async function scrivi(k,v){const d=await apri();if(!d)return;try{d.transaction("f","readwrite").objectStore("f").put(v,k);}catch(e){}}
 const I32=a=>Int32Array.from(a);
-onmessage=async e=>{const {id,nome,url}=e.data;try{let m=await leggi(nome),j;
-  if(m&&!(m instanceof Blob))j=m;else{let b=m;if(!b){const r=await fetch(url);if(!r.ok)throw new Error("HTTP "+r.status);b=await r.blob();scrivi(nome,b);}j=JSON.parse(await b.text());}
+onmessage=async e=>{const {id,nome,url,pre}=e.data;try{let m=pre?null:await leggi(nome),j;if(pre)scrivi(nome,pre);
+  if(m&&!(m instanceof Blob))j=m;else{let b=pre||m;if(!b){const r=await fetch(url);if(!r.ok)throw new Error("HTTP "+r.status);b=await r.blob();scrivi(nome,b);}j=JSON.parse(await b.text());}
   const tr=[];
   if(j&&j.col&&j.col.n){const C=j.col,n=C.n,g=C.g;const NN=["c","p","k","cu","st","w","s","ns","nb","nst","h","pos"];const c0=C.c,p0=C.p;/* copie per l'indice delle parole: le colonne passate al telefono qui non si leggono più */
     for(const k of NN){C[k]=I32(C[k]);tr.push(C[k].buffer);}
@@ -848,7 +849,9 @@ onmessage=async e=>{const {id,nome,url}=e.data;try{let m=await leggi(nome),j;
     if(m.pezzi){a.j=m.dati;a.j.col.n=[];return;}if(m.nomi!=null){const v=m.nomi.split("\u0001");for(const t of v)a.j.col.n.push(t);return;}
     delete att[m.id];if(m.nfine){if(a.j.col.n.length!==a.j.col.nl){a.no(new Error("indice incompleto"));return;}delete a.j.col.nl;a.ok(a.j);return;}a.ok(m.dati);};
   w.onerror=e=>{try{e.preventDefault();}catch(x){}for(const k in att){const a=att[k];delete att[k];a.no(new Error("lavoratore"));}for(const k in PAR)PAR[k].ok(null);};
-  return {chiedi:nome=>new Promise((ok,no)=>{const id=++n;att[id]={ok,no};w.postMessage({id,nome,url:new URL(nome,location.href).href});}),
+  /* 22/11/2026: se la pagina ha già chiesto il file in testa (PRE), il lavoratore riceve quello: niente seconda richiesta */
+  return {chiedi:nome=>new Promise((ok,no)=>{const id=++n;att[id]={ok,no};const P=window.PRE&&window.PRE[nome];if(P)delete window.PRE[nome];
+    (P||Promise.resolve(null)).catch(()=>null).then(pre=>w.postMessage({id,nome,url:new URL(nome,location.href).href,pre:pre||null}));}),
     parole(nome){const p=par(nome);setTimeout(()=>p.ok(null),30000);return p;}};
  }catch(e){return null;}})();
 const scarica=nome=>LAV?LAV.chiedi(nome).catch(()=>scarica0(nome)):scarica0(nome);
@@ -882,7 +885,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("grid").innerHTML=PRIMI.slice(0,12).map(x=>card(x,{q:[]})).join("");
   setTimeout(()=>{if(!L.length&&$("grid").children.length===12)$("grid").insertAdjacentHTML("beforeend",PRIMI.slice(12,40).map(x=>card(x,{q:[]})).join(""));},0);}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_ad606e59";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_c057b2b4";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -897,7 +900,7 @@ async function avvioVeloce(){
   const fresco=fetch("manifest.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null);
   const p=scarica(IDXF).catch(async e=>{const m=await fresco;if(!m||!m.idx||m.idx===IDXF)throw e;usaMan(m);lsS(LSK,Object.assign({},m,{h:HIDX}));return scarica(IDXF);});
   await new Promise(r=>requestAnimationFrame(()=>setTimeout(r,0)));
-  const dati=await p;
+  const dati=await p;try{localStorage.setItem("achfood_memo",IDXF);}catch(e){}/* 22/11: l'indice è nel telefono, la prossima volta non si chiede in anticipo */
   fresco.then(async m=>{if(!m||!m.idx)return;lsS(LSK,Object.assign({},m,{h:HIDX}));if(m.idx===IDXF){usaMan(m);return;}
     try{await scarica(m.idx);if(sessionStorage.getItem("achfood_rl")!==m.idx){sessionStorage.setItem("achfood_rl",m.idx);location.reload();}}catch(e){}});
   return dati;}
@@ -922,7 +925,13 @@ let RN=null;
 /* l'elenco dei 48.000 locali si costruisce a pezzi di 10 ms, lasciando respirare il telefono fra un pezzo e l'altro */
 const cede=()=>window.scheduler&&scheduler.yield?scheduler.yield():new Promise(r=>{const m=new MessageChannel();m.port1.onmessage=()=>r();m.port2.postMessage(0);});
 async function avvia(d){D=d;const z=d.dz;const C=d.col;const LL=new Array(C.n.length);let t0=performance.now();
-  for(let i=0;i<LL.length;i++){if(!(i&127)&&performance.now()-t0>10){await cede();t0=performance.now();}const n0=C.n[i];LL[i]=((n0,i)=>{const g2=C.goff?Array.from(C.gfl.subarray(C.goff[i],C.goff[i+1]),j=>z.g[j]):C.g[i].map(j=>z.g[j]),cu=C.cu[i],st=C.st[i];const x={i,n:n0,c:z.c[C.c[i]],p:z.p[C.p[i]],la:null,lo:null,k:C.k[i],cu:cu<0?"":z.cu[cu],st:st<0?"":z.st[st],w:C.w[i],s:C.s[i]/10,g2,ns:C.ns[i],nb:C.nb[i],nst:C.nst[i],h:C.h[i],pos:C.pos[i]};
+  const MZ=new Map(),mz=j=>{let v=MZ.get(j);if(!v){const c=z.g[j];v={c,piz:PIZ.test(c),ri:RIST.test(c),f:FAMIGLIA(c)};MZ.set(j,v);}return v;};
+  const rigaV=(i,n0)=>{const a=C.goff[i],b=C.goff[i+1],g2=new Array(b-a),fam=[];let pz=false,ri=false;
+    for(let q=a;q<b;q++){const m=mz(C.gfl[q]);g2[q-a]=m.c;if(m.piz)pz=true;if(m.ri)ri=true;if(!fam.includes(m.f))fam.push(m.f);}
+    const cu=C.cu[i],st=C.st[i];const x={i,n:n0,c:z.c[C.c[i]],p:z.p[C.p[i]],la:null,lo:null,k:C.k[i],cu:cu<0?"":z.cu[cu],st:st<0?"":z.st[st],w:C.w[i],s:C.s[i]/10,g2,ns:C.ns[i],nb:C.nb[i],nst:C.nst[i],h:C.h[i],pos:C.pos[i]};
+    x.r=d.regp[x.p]||"";x.pz=pz||(x.cu==="Pizzeria"&&!ri);x.fam=fam;const fo=[];if(x.ns)fo.push("📰 Stampa");if(x.nb)fo.push("📝 Blog");if(x.nst)fo.push("✨ Charme e storia");x.fo=fo;x.nf=g2.length+x.ns+x.nb+x.nst;
+    (RX[x.p]||(RX[x.p]=[]))[x.k]=x;return x;};
+  for(let i=0;i<LL.length;i++){if(!(i&127)&&performance.now()-t0>10){await cede();t0=performance.now();}const n0=C.n[i];LL[i]=C.goff?rigaV(i,n0):((n0,i)=>{const g2=C.goff?Array.from(C.gfl.subarray(C.goff[i],C.goff[i+1]),j=>z.g[j]):C.g[i].map(j=>z.g[j]),cu=C.cu[i],st=C.st[i];const x={i,n:n0,c:z.c[C.c[i]],p:z.p[C.p[i]],la:null,lo:null,k:C.k[i],cu:cu<0?"":z.cu[cu],st:st<0?"":z.st[st],w:C.w[i],s:C.s[i]/10,g2,ns:C.ns[i],nb:C.nb[i],nst:C.nst[i],h:C.h[i],pos:C.pos[i]};
     x.r=d.regp[x.p]||"";x.pz=g2.some(c=>PIZ.test(c))||(x.cu==="Pizzeria"&&!g2.some(c=>RIST.test(c)));
     x.fam=[...new Set(g2.map(FAMIGLIA))];x.fo=[x.ns?"📰 Stampa":"",x.nb?"📝 Blog":"",x.nst?"✨ Charme e storia":""].filter(Boolean);x.nf=g2.length+x.ns+x.nb+x.nst;
     (RX[x.p]||(RX[x.p]=[]))[x.k]=x;return x;})(n0,i);}
