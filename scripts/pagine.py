@@ -145,8 +145,8 @@ def acard(h, href):
 
 def guide(places):
     return f"""<nav class="ach-guide" aria-label="Le guide di Ach">
-    <a class="ach-guide__btn" href="https://achevents.com/"><span class="ach-guide__ico" aria-hidden="true">🎭</span><span class="ach-guide__txt"><b>Events</b><small>spettacoli, mostre, cinema</small></span><span class="ach-guide__arr" aria-hidden="true">→</span></a>
-    <a class="ach-guide__btn" href="{places}"><span class="ach-guide__ico" aria-hidden="true">🏛️</span><span class="ach-guide__txt"><b>Places</b><small>cosa visitare</small></span><span class="ach-guide__arr" aria-hidden="true">→</span></a>
+    <a class="ach-guide__btn" href="https://achevents.com/"><span class="ach-guide__ico ach-guide__logo" aria-hidden="true"><svg class="lg" aria-hidden="true" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#3d5f7d"/><circle cx="50" cy="50" r="42" fill="none" stroke="#f6efe4" stroke-width="2"/><g transform="translate(18 18) scale(.64)" stroke="#f6efe4" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M18 30h64v12a8 8 0 0 0 0 16v12H18V58a8 8 0 0 0 0-16Z"/><path d="M60 32v6M60 47v6M60 62v6"/></g></svg></span><span class="ach-guide__txt"><b>Events</b><small>spettacoli, mostre, cinema</small></span><span class="ach-guide__arr" aria-hidden="true">→</span></a>
+    <a class="ach-guide__btn" href="{places}"><span class="ach-guide__ico ach-guide__logo" aria-hidden="true"><svg class="lg" aria-hidden="true" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#2f7a5c"/><circle cx="50" cy="50" r="42" fill="none" stroke="#f6efe4" stroke-width="2"/><g transform="translate(17 15) scale(.66)" stroke="#f6efe4" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M50 86C50 86 24 58 24 40a26 26 0 0 1 52 0C76 58 50 86 50 86Z"/><circle cx="50" cy="40" r="5" fill="#f6efe4"/></g></svg></span><span class="ach-guide__txt"><b>Places</b><small>cosa visitare</small></span><span class="ach-guide__arr" aria-hidden="true">→</span></a>
   </nav>"""
 
 
