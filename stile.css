@@ -511,6 +511,11 @@ h1,.cname{text-wrap:balance}
 .mast nav.ach-guide .ach-guide__btn{flex:none;border:0;background:none;padding:10px 12px;border-radius:10px;min-height:44px;color:var(--mute)}
 .mast nav.ach-guide .ach-guide__btn:hover{background:var(--sunk);color:var(--ink)}
 .mast nav.ach-guide .ach-guide__ico,.mast nav.ach-guide .ach-guide__arr,.mast nav.ach-guide small{display:none}
+/* 22/11 (Stefano): i link alle altre guide con il loro logo ufficiale (coordinamento/loghi/firma-*.svg) */
+.mast nav.ach-guide .ach-guide__logo{display:inline-flex}.ach-guide__logo .lg{width:26px;height:26px;display:block}
+.mast nav.ach-guide .ach-guide__btn{gap:8px}
+@media (max-width:640px){.mast nav.ach-guide{margin:0 -4px;width:calc(100% + 8px)}.mast nav.ach-guide .ach-guide__btn{padding:8px 5px;gap:5px}.ach-guide__logo .lg{width:22px;height:22px}.mast nav.ach-guide b{font-size:13px}}
+.mast nav.ach-guide .ach-guide__btn:hover b{color:var(--ink)}
 .mast nav.ach-guide b{font:600 14px/1 var(--sans)}
 @media (max-width:640px){.mast{padding-bottom:6px}.mast nav.ach-guide{width:100%;margin:0 -8px;justify-content:flex-start}
   .mast nav.ach-guide .ach-guide__btn{padding:8px;min-height:40px}.mast nav.ach-guide b{font-size:13.5px}.sig{width:46px;height:46px}.mast-nome b{font-size:1.18rem}}
