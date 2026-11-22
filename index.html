@@ -10,9 +10,9 @@ if(L!=="it"&&L!=="en"&&(navigator.webdriver||/bot|crawl|spider|slurp|lighthouse/
 if(L!=="it"&&L!=="en"){var ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"it"];L="en";for(var i=0;i<ls.length;i++)if(/^it\b/i.test(ls[i]||"")){L="it";break;}}
 window.ACH_LANG=L;
 if(L==="en"){d.lang="en";d.classList.add("en-wait");setTimeout(function(){d.classList.remove("en-wait");},1200);
-window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.ec496d6adb.js";s.async=true;document.head.appendChild(s);}
+window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.bd549032fd.js";s.async=true;document.head.appendChild(s);}
 function bottone(){if(document.getElementById("langbtn"))return;var b=document.createElement("button");b.id="langbtn";b.type="button";b.setAttribute("data-noen","");
-b.setAttribute("aria-label",L==="en"?"Versione italiana":"English version");b.title=L==="en"?"Italiano":"English";
+b.setAttribute("aria-label",L==="en"?"IT · Versione italiana":"EN · English version");b.title=L==="en"?"Italiano":"English";
 b.innerHTML=L==="en"?"<span>IT</span>":"<span>EN</span>";
 b.onclick=function(){var n=L==="en"?"it":"en";try{localStorage.setItem("lang",n);}catch(e){}var u=location.href.replace(/([?&])lang=(it|en)&?/,"$1").replace(/[?&]$/,"");location.href=u;if(u===location.href)location.reload();};
 var g=document.querySelector(".ach-guide")||document.getElementById("gbtn");/* Dinners: nella Guida dentro il menu «Le guide di Ach», nella Mappa accanto al tasto Guida */
@@ -536,7 +536,7 @@ body.fopen #fpan{display:block;position:fixed;left:50%;transform:translateX(-50%
    oro del sigillo come unico accento, crema e inchiostro; testata con il sigillo; schede a sottolineatura; fatti in una riga;
    un solo bottone pieno oro per schermata (la guida personale); filtri in un pannello laterale su schermi larghi. */
 /* 22/11 (Stefano): oro più scuro e grigi più scuri, per leggere meglio soprattutto sul telefono; il sigillo resta nel suo oro */
-:root{--bg:#f8f3ea;--paper:#fffdf8;--ink:#1a1815;--mute:#55504a;--faint:#7c766d;--line:#ddd1bc;--sunk:#f0e8da;
+:root{--bg:#f8f3ea;--paper:#fffdf8;--ink:#1a1815;--mute:#55504a;--faint:#6b655d;--line:#ddd1bc;--sunk:#f0e8da;
   --acc:#765c14;--acc2:#8a6d1f;--acc-soft:#f1e5c6;--acc-ink:#523e0a;--on:#fffdf8;--r:18px;
   --shadow:0 1px 1px rgba(60,45,10,.04),0 8px 22px -10px rgba(60,45,10,.14);--pop:0 22px 60px -14px rgba(40,30,5,.34)}
 @media (prefers-color-scheme:dark){:root{--bg:#151310;--paper:#1e1b17;--ink:#efe9de;--mute:#a9a193;--faint:#7d7566;--line:#383226;--sunk:#262219;
@@ -630,6 +630,12 @@ dialog .sheet{border-top:4px solid var(--acc)}
 /* 22/11 (Stefano): le spiegazioni delle guide nel regolatore in grassetto */
 .pp-gd{font-weight:700;color:var(--ink)}
 @media (max-width:480px){.pp-r1 h2{font-size:1.05rem;white-space:nowrap}.pp-r1 .pp-come2{font-size:12.5px;line-height:1.15;margin-left:6px}.pp-r1 .pp-txt{padding-left:6px;padding-right:6px}}
+/* 22/11 (verifica WebAbility): salto all'elenco per chi usa la tastiera, bordo della ricerca visibile, link sottolineato, stellina leggibile */
+.salta{position:absolute;left:12px;top:-60px;z-index:100;padding:10px 14px;border-radius:10px;background:var(--ink);color:var(--bg);font-weight:600;text-decoration:none}
+.salta:focus{top:10px}
+.search input{border-color:color-mix(in srgb,var(--ink) 48%,var(--bg))}
+.pp-come2{text-decoration:underline;text-underline-offset:3px}
+.pp-ic{background:rgba(0,0,0,.28);color:#fff}
 /* chiusura: il sigillo intero */
 .piede-sig{display:flex;align-items:center;gap:16px;margin:44px 0 0;padding-top:22px;border-top:1px solid var(--line)}
 .piede-sig svg{width:112px;height:112px;flex:none}
@@ -640,6 +646,7 @@ footer{margin-top:16px;border-top:0;padding-top:0}
 <link rel="manifest" href="/app.webmanifest"><link rel="apple-touch-icon" href="/icona-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Dinners">
 </head>
 <body>
+<a class="salta" href="#lista">Vai all’elenco dei locali</a>
 <div class="wrap">
 <div class="mast">
   <a class="mast-logo" href="#ristoranti" aria-label="Ach’s Dinners Guide"><svg class="sig" viewBox="0 0 100 100" aria-hidden="true"><circle class="so" cx="50" cy="50" r="49"/><circle class="sl" cx="50" cy="50" r="43.5" fill="none" stroke-width="1.2"/><circle class="sc" cx="50" cy="50" r="33"/><g class="sp" transform="translate(21 21) scale(.58)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M34 22v18c0 6 4 9 9 9s9-3 9-9V22M43 22v56"/><path d="M66 78V22c-7 6-10 16-10 28h10"/></g></svg><span class="mast-nome"><b data-noen>Ach’s Dinners</b><small>Guida ai ristoranti d’Italia</small></span></a>
@@ -666,7 +673,7 @@ footer{margin-top:16px;border-top:0;padding-top:0}
   @media (prefers-reduced-motion:reduce){.ach-guide__btn,.ach-guide__arr{transition:none}}
   </style>
 </div>
-<nav class="tabs" role="tablist">
+<nav class="tabs" aria-label="Sezioni della guida">
   <a href="#ristoranti" data-v="rico"><span class="t" style="display:inline-flex;align-items:center;gap:7px"><svg class="ti" viewBox="16 12 68 76" aria-hidden="true"><path stroke-width="7" d="M34 22v18c0 6 4 9 9 9s9-3 9-9V22M43 22v56"/><path stroke-width="7" d="M66 78V22c-7 6-10 16-10 28h10"/></svg>Segnalati</span><span class="n" id="n-rico"></span></a>
   <a href="#pizzerie" data-v="piz"><span class="t" style="display:inline-flex;align-items:center;gap:7px"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7c6-3 12-3 18 0L12 21 3 7z"/><path d="M10 10.5h.01M14 12.5h.01M12 15.5h.01"/></svg>Segnalate</span><span class="n" id="n-piz"></span></a>
   <a href="#apprezzati" data-v="altri"><span class="t" style="display:inline-flex;align-items:center;gap:7px"><svg class="ti" viewBox="16 12 68 76" aria-hidden="true"><path stroke-width="7" d="M34 22v18c0 6 4 9 9 9s9-3 9-9V22M43 22v56"/><path stroke-width="7" d="M66 78V22c-7 6-10 16-10 28h10"/></svg>Apprezzati</span><span class="n" id="n-altri"></span></a>
@@ -686,8 +693,8 @@ footer{margin-top:16px;border-top:0;padding-top:0}
     <div class="row">
       <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="text" inputmode="search" enterkeyhint="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Cerca locale o comune"><span id="qconta"></span><button type="button" id="qx" aria-label="Cancella" hidden>×</button></label>
       <a class="tbtn mapbtn" href="mappa.html" aria-label="Mappa d'Italia dei locali"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mappa</span></a>
-      <button type="button" class="tbtn" id="mfil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filtri</span><span class="k" id="nfil" hidden></span></button>
-      <button type="button" class="tbtn" id="mvic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Vicino a…</span></button>
+      <button type="button" class="tbtn" id="mfil" aria-label="Filtri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filtri</span><span class="k" id="nfil" hidden></span></button>
+      <button type="button" class="tbtn" id="mvic" aria-label="Vicino a…"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Vicino a…</span></button>
     </div>
     <div class="vriga" id="vriga" hidden><span id="vrt"></span><button type="button" id="vcambia">Cambia</button><button type="button" id="vx" aria-label="Togli">×</button></div>
   </div>
@@ -828,7 +835,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("grid").innerHTML=PRIMI.slice(0,12).map(x=>card(x,{q:[]})).join("");
   setTimeout(()=>{if(!L.length&&$("grid").children.length===12)$("grid").insertAdjacentHTML("beforeend",PRIMI.slice(12,40).map(x=>card(x,{q:[]})).join(""));},0);}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_87e66234";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_021c2c64";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -1221,7 +1228,7 @@ if(GC&&ON_WEB){try{const s=document.createElement("script");s.async=true;s.datas
     try{goatcounter.count({path:a.dataset.goatcounterClick,title:a.dataset.goatcounterTitle||"",event:true});}catch(_){}},true);}
 </script>
 <div class="pp-velo" id="pp-velo"></div>
-<section class="pp-pan" id="pp-pan" role="dialog" aria-modal="true" aria-labelledby="pp-tit" aria-hidden="true">
+<section class="pp-pan" id="pp-pan" role="dialog" aria-modal="true" aria-labelledby="pp-tit" aria-hidden="true" inert>
   <div class="pp-testa"><div class="pp-man" aria-hidden="true"></div>
     <div class="pp-r1"><h2 id="pp-tit">Le tue guide</h2><a class="pp-txt pp-come2" href="#guide" onclick="ppApri(false)">Come funziona</a><button class="pp-txt" id="pp-rip" type="button">Ripristina</button><button class="pp-fatto" id="pp-fatto" type="button">Fatto</button></div>
     <div class="pp-podio" id="pp-podio" aria-live="polite"></div></div>
@@ -1289,7 +1296,7 @@ function ppCorpo(){const B=base();
   document.querySelectorAll("#pp-corpo input[type=range]").forEach(r=>{let a=0;r.oninput=()=>{const k=r.id.slice(5),v=+r.value;PP.W[k]=v;PP.prof=-1;r.style.setProperty("--p",v*50+"%");r.setAttribute("aria-valuetext",ppParola(v));
     const g=$("pp-g-"+k);g.querySelector(".pp-gv").textContent=ppParola(v);g.classList.toggle("mod",Math.abs(v-1)>.04);if(!a)a=requestAnimationFrame(()=>{a=0;ppRicalcola();ppPodio();});};r.onchange=ppSalva;});
   document.querySelectorAll("#pp-corpo .pp-gv").forEach(b=>b.onclick=()=>{PP.W[b.dataset.k]=1;PP.prof=-1;ppSalva();ppRicalcola();ppCorpo();ppPodio();});}
-function ppApri(on){$("pp-pan").classList.toggle("on",on);$("pp-velo").classList.toggle("on",on);$("pp-pan").setAttribute("aria-hidden",!on);document.body.style.overflow=on?"hidden":"";
+function ppApri(on){$("pp-pan").classList.toggle("on",on);$("pp-velo").classList.toggle("on",on);$("pp-pan").setAttribute("aria-hidden",!on);$("pp-pan").inert=!on;document.body.style.overflow=on?"hidden":"";
   if(on){ppPrepara();ppCorpo();ppPodio();$("pp-fatto").focus();}else{ppChips();draw();}}
 $("pp-fatto").onclick=()=>ppApri(false);$("pp-velo").onclick=()=>ppApri(false);
 
