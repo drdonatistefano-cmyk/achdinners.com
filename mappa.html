@@ -11,7 +11,7 @@ if(L!=="it"&&L!=="en"&&(navigator.webdriver||/bot|crawl|spider|slurp|lighthouse/
 if(L!=="it"&&L!=="en"){var ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"it"];L="en";for(var i=0;i<ls.length;i++)if(/^it\b/i.test(ls[i]||"")){L="it";break;}}
 window.ACH_LANG=L;
 if(L==="en"){d.lang="en";d.classList.add("en-wait");setTimeout(function(){d.classList.remove("en-wait");},1200);
-window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.bd549032fd.js";s.async=true;document.head.appendChild(s);}
+window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.57f766844a.js";s.async=true;document.head.appendChild(s);}
 function bottone(){if(document.getElementById("langbtn"))return;var b=document.createElement("button");b.id="langbtn";b.type="button";b.setAttribute("data-noen","");
 b.setAttribute("aria-label",L==="en"?"IT · Versione italiana":"EN · English version");b.title=L==="en"?"Italiano":"English";
 b.innerHTML=L==="en"?"<span>IT</span>":"<span>EN</span>";
@@ -280,6 +280,7 @@ html.boot *,html.boot *::before,html.boot *::after{transition:none!important;ani
 #levels span+span::before{content:"›";margin:0 7px;opacity:.5;font-weight:400}
 #levels span:has(~ span.on){color:var(--mut)}
 #levels span.on{color:var(--ac)!important;font-weight:800}
+#q:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 #levels span{cursor:pointer;min-height:30px;-webkit-tap-highlight-color:transparent}#levels span:hover{color:var(--ac)}#levels span:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:4px!important}
 html[data-t=carta] #levels span.on{color:#523e0a!important}
 @media (min-width:700px) and (max-width:1279.98px){#zoom{top:calc(96px + env(safe-area-inset-top))!important;bottom:auto!important}}/* iPad: lo zoom sotto il riquadro, non sopra */

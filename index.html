@@ -10,7 +10,7 @@ if(L!=="it"&&L!=="en"&&(navigator.webdriver||/bot|crawl|spider|slurp|lighthouse/
 if(L!=="it"&&L!=="en"){var ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"it"];L="en";for(var i=0;i<ls.length;i++)if(/^it\b/i.test(ls[i]||"")){L="it";break;}}
 window.ACH_LANG=L;
 if(L==="en"){d.lang="en";d.classList.add("en-wait");setTimeout(function(){d.classList.remove("en-wait");},1200);
-window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.bd549032fd.js";s.async=true;document.head.appendChild(s);}
+window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.57f766844a.js";s.async=true;document.head.appendChild(s);}
 function bottone(){if(document.getElementById("langbtn"))return;var b=document.createElement("button");b.id="langbtn";b.type="button";b.setAttribute("data-noen","");
 b.setAttribute("aria-label",L==="en"?"IT · Versione italiana":"EN · English version");b.title=L==="en"?"Italiano":"English";
 b.innerHTML=L==="en"?"<span>IT</span>":"<span>EN</span>";
@@ -442,7 +442,7 @@ html[data-stile=D] .card.pz:not(.cit) .mono{background:linear-gradient(135deg,#c
 .pp-regola{min-height:42px;border:0;border-radius:999px;background:var(--acc);color:var(--on);font:700 14.5px var(--sans);padding:0 16px 0 12px;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 14px color-mix(in srgb,var(--acc) 35%,transparent);cursor:pointer;white-space:nowrap}
 .pp-regola:hover{filter:brightness(1.07)}
 .pp-regola:active{transform:translateY(1px)}
-.pp-ic{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--on);color:var(--acc);font-size:12px} /* 22/11: stellina leggibile (WebAbility 1.4.3) */
+.pp-ic{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--on) 22%,transparent);font-size:12px}
 @media (max-width:420px){.pp-lt{align-items:flex-end}.pp-regola{font-size:13.5px;padding:0 12px 0 9px}}
 .pp-chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:2px 16px 4px}
 .pp-chips::-webkit-scrollbar{display:none}
@@ -631,8 +631,8 @@ dialog .sheet{border-top:4px solid var(--acc)}
 .pp-gd{font-weight:700;color:var(--ink)}
 @media (max-width:480px){.pp-r1 h2{font-size:1.05rem;white-space:nowrap}.pp-r1 .pp-come2{font-size:12.5px;line-height:1.15;margin-left:6px}.pp-r1 .pp-txt{padding-left:6px;padding-right:6px}}
 /* 22/11 (verifica WebAbility): salto all'elenco per chi usa la tastiera, bordo della ricerca visibile, link sottolineato, stellina leggibile */
-.salta{position:absolute;left:12px;top:10px;z-index:100;clip-path:inset(50%);white-space:nowrap;padding:10px 14px;border-radius:10px;background:var(--ink);color:var(--bg);font-weight:600;text-decoration:none}
-.salta:focus,.salta:focus-visible{clip-path:none}
+.salta{position:absolute;left:12px;top:-60px;z-index:100;padding:10px 14px;border-radius:10px;background:var(--ink);color:var(--bg);font-weight:600;text-decoration:none}
+.salta:focus{top:10px}
 .search input{border-color:color-mix(in srgb,var(--ink) 48%,var(--bg))}
 .pp-come2{text-decoration:underline;text-underline-offset:3px}
 .pp-ic{background:rgba(0,0,0,.28);color:#fff}
@@ -646,7 +646,7 @@ footer{margin-top:16px;border-top:0;padding-top:0}
 <link rel="manifest" href="/app.webmanifest"><link rel="apple-touch-icon" href="/icona-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Dinners">
 </head>
 <body>
-<a class="salta" href="#lista">Vai all’elenco dei locali</a>
+<a class="salta" href="#lista" onclick="event.preventDefault();document.getElementById('q').focus()">Salta al contenuto</a>
 <div class="wrap">
 <div class="mast">
   <a class="mast-logo" href="#ristoranti"><svg class="sig" viewBox="0 0 100 100" aria-hidden="true"><circle class="so" cx="50" cy="50" r="49"/><circle class="sl" cx="50" cy="50" r="43.5" fill="none" stroke-width="1.2"/><circle class="sc" cx="50" cy="50" r="33"/><g class="sp" transform="translate(21 21) scale(.58)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M34 22v18c0 6 4 9 9 9s9-3 9-9V22M43 22v56"/><path d="M66 78V22c-7 6-10 16-10 28h10"/></g></svg><span class="mast-nome"><b data-noen>Ach’s Dinners</b><small>Guida ai ristoranti d’Italia</small></span></a>
@@ -699,7 +699,7 @@ footer{margin-top:16px;border-top:0;padding-top:0}
     <div class="vriga" id="vriga" hidden><span id="vrt"></span><button type="button" id="vcambia">Cambia</button><button type="button" id="vx" aria-label="Togli">×</button></div>
   </div>
   <div class="dove" id="dove" role="group" aria-label="Dove"><div class="ms" id="f-reg" data-vuoto="Tutte le regioni"></div><div class="ms" id="f-prov" data-vuoto="Tutte le province"></div><div class="ms" id="f-com" data-vuoto="Tutti i comuni"></div></div>
-  <div class="pp-riga" id="pp-riga" hidden><div class="pp-lt"><span class="pp-lab">Come ti piace mangiare <a class="pp-come" href="#guide">Come funziona?</a></span><button class="pp-regola" id="pp-regola" type="button" aria-haspopup="dialog"><span class="pp-ic" aria-hidden="true">✦</span><span id="pp-regt">Crea la tua guida personale</span></button></div><div class="pp-chips" id="pp-chips" role="group" aria-label="Come ti piace mangiare"></div></div>
+  <div class="pp-riga" id="pp-riga" hidden><div class="pp-lt"><span class="pp-lab">Come ti piace mangiare <a class="pp-come" href="#guide">Come funziona?</a></span><button class="pp-regola" id="pp-regola" type="button" aria-haspopup="dialog"><span class="pp-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></svg></span><span id="pp-regt">Crea la tua guida personale</span></button></div><div class="pp-chips" id="pp-chips" role="group" aria-label="Come ti piace mangiare"></div></div>
   <div id="fback"></div>
   <div class="lay">
   <aside id="fpan" aria-label="Filtri">
@@ -835,7 +835,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("grid").innerHTML=PRIMI.slice(0,12).map(x=>card(x,{q:[]})).join("");
   setTimeout(()=>{if(!L.length&&$("grid").children.length===12)$("grid").insertAdjacentHTML("beforeend",PRIMI.slice(12,40).map(x=>card(x,{q:[]})).join(""));},0);}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_021c2c64";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_1e1407dd";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -1296,7 +1296,9 @@ function ppCorpo(){const B=base();
   document.querySelectorAll("#pp-corpo input[type=range]").forEach(r=>{let a=0;r.oninput=()=>{const k=r.id.slice(5),v=+r.value;PP.W[k]=v;PP.prof=-1;r.style.setProperty("--p",v*50+"%");r.setAttribute("aria-valuetext",ppParola(v));
     const g=$("pp-g-"+k);g.querySelector(".pp-gv").textContent=ppParola(v);g.classList.toggle("mod",Math.abs(v-1)>.04);if(!a)a=requestAnimationFrame(()=>{a=0;ppRicalcola();ppPodio();});};r.onchange=ppSalva;});
   document.querySelectorAll("#pp-corpo .pp-gv").forEach(b=>b.onclick=()=>{PP.W[b.dataset.k]=1;PP.prof=-1;ppSalva();ppRicalcola();ppCorpo();ppPodio();});}
-function ppApri(on){$("pp-pan").classList.toggle("on",on);$("pp-velo").classList.toggle("on",on);$("pp-pan").setAttribute("aria-hidden",!on);$("pp-pan").inert=!on;document.body.style.overflow=on?"hidden":"";
+/* 22/11: a regolatore chiuso i suoi comandi non si raggiungono con il Tab */
+function ppTab(on){$("pp-pan").querySelectorAll("a,button,input").forEach(e=>{if(on)e.removeAttribute("tabindex");else e.tabIndex=-1;});}
+function ppApri(on){$("pp-pan").classList.toggle("on",on);$("pp-velo").classList.toggle("on",on);$("pp-pan").setAttribute("aria-hidden",!on);$("pp-pan").inert=!on;ppTab(on);document.body.style.overflow=on?"hidden":"";
   if(on){ppPrepara();ppCorpo();ppPodio();$("pp-fatto").focus();}else{ppChips();draw();}}
 $("pp-fatto").onclick=()=>ppApri(false);$("pp-velo").onclick=()=>ppApri(false);
 
@@ -1374,12 +1376,12 @@ function guidePag(){const el=$("guidep");if(el.dataset.ok||!L.length)return;el.d
   <p>Il tuo punteggio è il punteggio di Dinners più la differenza fra il calcolo con i tuoi pesi e quello con tutti i pesi a 1. Per questo, con tutti i cursori a «come oggi», la classifica è identica a quella di Dinners.</p>
   <p class="gv-es">Con «La scelta di Ach» la trattoria dell'esempio sale: Tre Gamberi pesa 2, quindi 90 × 2 = 180, più 6 di conferme: (180 + 6) ÷ 1,09 = 171 invece di 88. Il tre stelle scende: le stelle pesano 0,5, quindi 100 × 0,5 = 50 e 50 ÷ 1,09 = 46 invece di 92.</p>
   <p>Le categorie già pronte sono solo pesi diversi sugli stessi cursori; nelle schede qui sopra vedi quali guide alza o abbassa ognuna. Le tue scelte restano sul tuo telefono: non le mandiamo a nessuno.</p>
-  <p><button type="button" class="pp-regola" onclick="location.hash='#ristoranti';setTimeout(()=>ppApri(true),300)"><span class="pp-ic" aria-hidden="true">✦</span><span>Crea la tua guida personale</span></button></p>`;}
+  <p><button type="button" class="pp-regola" onclick="location.hash='#ristoranti';setTimeout(()=>ppApri(true),300)"><span class="pp-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></svg></span><span>Crea la tua guida personale</span></button></p>`;}
 
 $("pp-rip").onclick=()=>{PP.prof=0;PP.W={...PP_PROF[0][1]};ppSalva();ppRicalcola();ppCorpo();ppPodio();};
 document.addEventListener("keydown",e=>{if(e.key=="Escape"&&$("pp-pan").classList.contains("on"))ppApri(false)});
 (()=>{let y0=null;const t=document.querySelector(".pp-testa");t.addEventListener("touchstart",e=>{y0=e.touches[0].clientY},{passive:true});t.addEventListener("touchmove",e=>{if(y0!==null&&e.touches[0].clientY-y0>70){y0=null;ppApri(false);}},{passive:true});t.addEventListener("touchend",()=>y0=null);})();
-$("pp-regola").onclick=()=>ppApri(true);ppChips();
+$("pp-regola").onclick=()=>ppApri(true);ppTab(false);ppChips();
 </script>
 <script src="/installa.js" data-colore="#8a6d1f" data-icona="/icona-192.png" data-sw="/sw.js" defer></script>
 </body>
