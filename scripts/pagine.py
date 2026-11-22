@@ -98,9 +98,9 @@ h2.sez{font:600 1.25rem/1.2 var(--serif);margin:26px 2px 12px}
 """
     a = s.find('<nav class="tabs"'); b = s.find("</nav>", a) + 6
     tabs = re.sub(r'href="#', f'href="{SITO}/#', s[a:b])
-    cerca = re.search(r'<label class="search">(<svg.*?</svg>)', s, re.S).group(1)
+    cerca = re.search(r'<label class="search"[^>]*>(<svg.*?</svg>)', s, re.S).group(1)
     mappa = re.search(r'<a class="tbtn mapbtn".*?</a>', s, re.S).group(0).replace('href="mappa.html"', f'href="{SITO}/mappa.html"')
-    filtri = re.search(r'id="mfil">(<svg.*?</svg>)', s, re.S).group(1)
+    filtri = re.search(r'id="mfil"[^>]*>(<svg.*?</svg>)', s, re.S).group(1)  # 22/11: il bottone ha anche aria-label
     decl = re.search(r'<p class="decl"[^>]*>(.*?)</p>', s, re.S).group(1)
     return dict(stile=stile, tabs=tabs, cerca=cerca, mappa=mappa, filtri=filtri, decl=decl)
 
