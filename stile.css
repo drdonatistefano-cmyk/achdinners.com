@@ -488,6 +488,102 @@ body.fopen #fpan{display:block;position:fixed;left:50%;transform:translateX(-50%
 #fpan #fazz{border:0;background:none;color:var(--mute);padding:0 6px}
 #fpan #fok{flex:1;border:0;background:var(--acc);color:var(--on)}
 @media (max-width:699px){.dove{grid-template-columns:1fr 1fr}.dove #f-com{grid-column:1/-1}}
+/* ===== 22/11/2026 (Stefano): grafica istituzionale, dal sigillo «Segnalato su Ach's Dinners» (REGOLE 9.5) =====
+   oro del sigillo come unico accento, crema e inchiostro; testata con il sigillo; schede a sottolineatura; fatti in una riga;
+   un solo bottone pieno oro per schermata (la guida personale); filtri in un pannello laterale su schermi larghi. */
+/* 22/11 (Stefano): oro più scuro e grigi più scuri, per leggere meglio soprattutto sul telefono; il sigillo resta nel suo oro */
+:root{--bg:#f8f3ea;--paper:#fffdf8;--ink:#1a1815;--mute:#55504a;--faint:#7c766d;--line:#ddd1bc;--sunk:#f0e8da;
+  --acc:#765c14;--acc2:#8a6d1f;--acc-soft:#f1e5c6;--acc-ink:#523e0a;--on:#fffdf8;--r:18px;
+  --shadow:0 1px 1px rgba(60,45,10,.04),0 8px 22px -10px rgba(60,45,10,.14);--pop:0 22px 60px -14px rgba(40,30,5,.34)}
+@media (prefers-color-scheme:dark){:root{--bg:#151310;--paper:#1e1b17;--ink:#efe9de;--mute:#a9a193;--faint:#7d7566;--line:#383226;--sunk:#262219;
+  --acc:#d9b65c;--acc2:#e6c877;--acc-soft:#332a14;--acc-ink:#ecd28a;--on:#1b1608;--shadow:0 1px 0 rgba(255,255,255,.03) inset,0 10px 30px -14px rgba(0,0,0,.8)}}
+body{background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 7%,var(--bg)) 0,var(--bg) 340px) no-repeat,var(--bg);background-attachment:scroll}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+h1,.cname{text-wrap:balance}
+/* testata con il sigillo */
+.mast{display:flex;align-items:center;justify-content:space-between;gap:14px 20px;flex-wrap:wrap;padding:max(14px,env(safe-area-inset-top)) 0 12px}
+.mast-logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);min-height:52px}
+.sig{width:52px;height:52px;flex:none;filter:drop-shadow(0 2px 5px rgba(60,45,10,.22))}
+.sig .so{fill:#8a6d1f}.sig .sc{fill:#f6efe3}.sig .sl{stroke:#f6efe3}.sig .sp{stroke:#8a6d1f}
+.mast-nome b{display:block;font:700 1.3rem/1.05 var(--disp);letter-spacing:-.02em}
+.mast-nome small{display:block;margin-top:4px;font:600 10.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--acc-ink)}
+.mast nav.ach-guide{margin:0;gap:2px;flex-wrap:nowrap;align-items:center}
+.mast nav.ach-guide .ach-guide__btn{flex:none;border:0;background:none;padding:10px 12px;border-radius:10px;min-height:44px;color:var(--mute)}
+.mast nav.ach-guide .ach-guide__btn:hover{background:var(--sunk);color:var(--ink)}
+.mast nav.ach-guide .ach-guide__ico,.mast nav.ach-guide .ach-guide__arr,.mast nav.ach-guide small{display:none}
+.mast nav.ach-guide b{font:600 14px/1 var(--sans)}
+@media (max-width:640px){.mast{padding-bottom:6px}.mast nav.ach-guide{width:100%;margin:0 -8px;justify-content:flex-start}
+  .mast nav.ach-guide .ach-guide__btn{padding:8px;min-height:40px}.mast nav.ach-guide b{font-size:13.5px}.sig{width:46px;height:46px}.mast-nome b{font-size:1.18rem}}
+/* schede: sottolineatura oro, una riga che scorre sul telefono */
+nav.tabs{display:flex;gap:2px;background:none;border:0;border-bottom:1px solid var(--line);border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0;margin:0;overflow-x:auto;scroll-snap-type:x proximity}
+nav.tabs a{flex:none;flex-direction:row;gap:7px;border:0;background:none;box-shadow:none;border-radius:0;padding:13px 14px 11px;margin-bottom:-1px;border-bottom:3px solid transparent;color:var(--mute);font:600 14.5px/1.2 var(--sans);letter-spacing:0;scroll-snap-align:start;min-height:44px}
+nav.tabs a:hover{background:none;color:var(--ink)}
+nav.tabs a.on{background:none;box-shadow:none;color:var(--ink);border-bottom-color:var(--acc)}
+nav.tabs .n{font:600 12px/1 var(--sans);color:var(--faint);opacity:1;font-variant-numeric:tabular-nums}
+nav.tabs a.on .n{color:var(--acc-ink)}
+nav.tabs a.met{margin-left:auto}
+.ti{width:17px;height:17px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs a.on .ti{color:var(--acc)}
+@media (max-width:560px){nav.tabs{display:flex;gap:0;overflow-x:auto;margin:0 -16px;padding:0 16px;-webkit-mask-image:linear-gradient(90deg,#000 86%,transparent);mask-image:linear-gradient(90deg,#000 86%,transparent)}
+  nav.tabs a{flex-direction:row;gap:6px;padding:12px 11px 10px;border-radius:0;font-size:14px;letter-spacing:0;text-align:left}
+  nav.tabs a.met{margin-left:0;grid-column:auto}nav.tabs .n{font-size:11.5px}}
+/* apertura: titolo, riga di fiducia, fatti in una riga */
+.hero{padding:22px 0 4px}.kick{display:none}
+h1{font:700 clamp(1.9rem,4.6vw,3rem)/1.04 var(--disp);letter-spacing:-.03em;margin-top:0}
+.lede{font-size:16.5px;margin-top:8px}
+.decl{position:relative;padding-left:24px;max-width:64ch}
+.decl::before{content:"";position:absolute;left:0;top:.1em;width:16px;height:16px;background:var(--acc);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3 5 6v6c0 4.4 3 7.6 7 9 4-1.4 7-4.6 7-9V6l-7-3z'/%3E%3Cpath d='m9 12 2.2 2.2L15.2 10'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3 5 6v6c0 4.4 3 7.6 7 9 4-1.4 7-4.6 7-9V6l-7-3z'/%3E%3Cpath d='m9 12 2.2 2.2L15.2 10'/%3E%3C/svg%3E") center/contain no-repeat}
+.stats{display:flex;flex-wrap:wrap;gap:0;margin:16px 0 0;padding:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{display:flex;align-items:baseline;gap:8px;background:none;border:0;border-radius:0;box-shadow:none;padding:11px 24px 11px 0;margin-right:24px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0;margin-right:0}
+.stat b{display:inline;font:700 1.3rem/1 var(--disp);color:var(--ink);font-variant-numeric:tabular-nums}
+.stat span{display:inline;margin:0;font-size:13px;font-weight:500}
+@media (max-width:560px){.stats{display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between}
+  .stat{flex-direction:column;gap:3px;padding:9px 0;margin:0;border:0}.stat b{font-size:1.12rem}.stat span{font-size:11.5px;line-height:1.2}}
+/* ricerca e bottoni */
+.tools{background:color-mix(in srgb,var(--bg) 82%,transparent);padding:12px 0 8px;margin-top:10px}
+.search input,.tbtn{border-radius:14px;height:48px}
+.search input:focus{border-color:var(--acc);box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 18%,transparent)}
+.tools .tbtn.mapbtn{background:var(--ink)!important;color:var(--bg)!important;box-shadow:none!important}
+.tools .tbtn.mapbtn:hover{filter:none;background:color-mix(in srgb,var(--ink) 84%,var(--acc))!important}
+.dove .ms>button{border-radius:14px;height:46px}
+/* categorie e guida personale: il solo bottone pieno oro */
+.pp-riga{display:grid;grid-template-columns:1fr auto;grid-template-areas:"lab cta" "chips chips";gap:8px 14px;align-items:center;margin:10px 0 10px}
+.pp-riga[hidden]{display:none}.pp-lt{display:contents}.pp-lab{grid-area:lab}.pp-regola{grid-area:cta}.pp-chips{grid-area:chips}
+.pp-chip{min-height:40px}
+.pp-chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pp-regola{box-shadow:0 6px 16px -6px color-mix(in srgb,var(--acc) 70%,transparent)}
+@media (max-width:560px){.pp-riga{grid-template-columns:1fr;grid-template-areas:"lab" "chips" "cta";gap:6px}
+  .pp-lab{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.pp-regola{justify-content:center;width:100%;min-height:46px}}
+/* locali: numero come piccolo sigillo, bordo sobrio */
+.card{border-color:var(--line)}
+@media (hover:hover){.card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}.card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--acc) 45%,var(--line));box-shadow:0 14px 30px -14px rgba(60,45,10,.28)}}
+.cpos{min-width:1.9em;height:1.9em;padding:0 .3em;border-radius:999px;background:var(--acc);color:var(--on);box-shadow:inset 0 0 0 2px var(--acc),inset 0 0 0 3px color-mix(in srgb,var(--on) 75%,transparent);font-size:.72em;vertical-align:.2em}
+.count b{color:var(--acc-ink)}
+/* filtri: pannello laterale sugli schermi larghi, foglio dal basso sugli altri */
+#fpan .fhead h2{font:700 1.25rem var(--disp)}
+#fpan .fsec{color:var(--acc-ink)}
+#fpan .sp:has(input:checked){background:var(--acc-soft);border-color:var(--acc);color:var(--ink)}
+#fpan #fok{background:var(--acc);color:var(--on)}
+@media (min-width:900px){body.fopen #fpan{left:auto;right:0;top:0;bottom:0;transform:none;width:min(440px,100%);max-height:none;height:100dvh;border-radius:22px 0 0 22px;padding:22px 24px 0;box-shadow:-18px 0 50px -10px rgba(30,20,0,.3);animation:entra .22s ease-out}
+  @keyframes entra{from{transform:translateX(30px);opacity:0}to{transform:none;opacity:1}}
+  body.fopen #fpan{display:flex;flex-direction:column}#fpan .grab{display:none}#fpan .fgrid{grid-template-columns:1fr}#fpan #fpiede{margin:auto -24px 0;padding-left:24px;padding-right:24px}}
+@media (max-width:699px){.lede{color:var(--ink)}.decl{color:var(--mute);font-size:13.5px}.cmeta{font-size:14.5px;color:var(--mute)}
+  .brow .b{font-weight:700}.citda{color:var(--ink)}nav.tabs a{color:var(--mute)}nav.tabs .n{color:var(--mute)}.pp-lab{color:var(--mute)}.stat span{color:var(--mute);font-weight:600}}
+/* interno delle schede: titolo, fonti e riquadri nei colori del sigillo */
+dialog .sheet{border-top:4px solid var(--acc)}
+.sheet h2{font:700 1.6rem/1.12 var(--disp);letter-spacing:-.02em;text-wrap:balance}
+.sx{background:var(--bg)}
+.box{background:var(--bg);border-color:var(--line)}
+.fonti .grp{color:var(--acc-ink)}
+.fonti a{text-decoration-color:color-mix(in srgb,var(--acc) 60%,transparent);text-underline-offset:3px}
+.fonti a:hover{color:var(--acc-ink)}
+/* chiusura: il sigillo intero */
+.piede-sig{display:flex;align-items:center;gap:16px;margin:44px 0 0;padding-top:22px;border-top:1px solid var(--line)}
+.piede-sig svg{width:112px;height:112px;flex:none}
+.piede-sig p{margin:0;font-size:14px;color:var(--mute);max-width:46ch}.piede-sig b{display:block;font:700 1.05rem var(--disp);color:var(--ink);margin-bottom:3px}
+footer{margin-top:16px;border-top:0;padding-top:0}
+@media (prefers-reduced-motion:reduce){.card,.card:hover{transition:none;transform:none}body.fopen #fpan{animation:none}}
 
 
   .ach-guide{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px}
