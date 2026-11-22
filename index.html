@@ -622,6 +622,9 @@ dialog .sheet{border-top:4px solid var(--acc)}
 .fonti .grp{color:var(--acc-ink)}
 .fonti a{text-decoration-color:color-mix(in srgb,var(--acc) 60%,transparent);text-underline-offset:3px}
 .fonti a:hover{color:var(--acc-ink)}
+/* 22/11 (Stefano): le spiegazioni delle guide nel regolatore in grassetto */
+.pp-gd{font-weight:700;color:var(--ink)}
+@media (max-width:480px){.pp-r1 h2{font-size:1.05rem;white-space:nowrap}.pp-r1 .pp-come2{font-size:12.5px;line-height:1.15;margin-left:6px}.pp-r1 .pp-txt{padding-left:6px;padding-right:6px}}
 /* chiusura: il sigillo intero */
 .piede-sig{display:flex;align-items:center;gap:16px;margin:44px 0 0;padding-top:22px;border-top:1px solid var(--line)}
 .piede-sig svg{width:112px;height:112px;flex:none}
@@ -820,7 +823,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("grid").innerHTML=PRIMI.slice(0,12).map(x=>card(x,{q:[]})).join("");
   setTimeout(()=>{if(!L.length&&$("grid").children.length===12)$("grid").insertAdjacentHTML("beforeend",PRIMI.slice(12,40).map(x=>card(x,{q:[]})).join(""));},0);}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_ff4897c8";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_684d9a97";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
