@@ -600,6 +600,38 @@ dialog .sheet{border-top:4px solid var(--acc)}
 .search input{border-color:color-mix(in srgb,var(--ink) 48%,var(--bg))}
 .pp-come2{text-decoration:underline;text-underline-offset:3px}
 .pp-ic{background:rgba(0,0,0,.28);color:#fff}
+/* 22/11/2026 (Stefano): soluzioni prese da AchRecipes. Filtri: sezioni con icona e righe di separazione, chiusura tonda.
+   In fondo pagina: barra dei comandi (Filtri, Mappa, La tua guida, Su) e, nelle pagine Metodo e Guide, «Torna ai locali». */
+#fpan .fsec{display:flex;align-items:center;gap:10px;font:700 15.5px/1.2 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink);margin:18px 0 10px;padding-top:16px;border-top:1px solid var(--line)}
+#fpan .fgrid>.fsec:first-child{border-top:0;padding-top:0;margin-top:6px}
+.fi{width:32px;height:32px;padding:7px;box-sizing:border-box;border-radius:50%;background:var(--acc-soft);color:var(--acc-ink);fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+#fpan #fchiudi{width:44px;height:44px;padding:0;border-radius:50%;border:0;background:var(--sunk);color:var(--ink);font-size:0;position:relative}
+#fpan #fchiudi::before{content:"";position:absolute;inset:0;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M7 7l10 10M17 7 7 17'/%3E%3C/svg%3E") center/20px no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M7 7l10 10M17 7 7 17'/%3E%3C/svg%3E") center/20px no-repeat}
+.dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));z-index:30;display:flex;align-items:center;gap:2px;padding:6px;border-radius:999px;background:color-mix(in srgb,var(--ink) 94%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:var(--pop);max-width:calc(100vw - 16px)}
+.dock[hidden]{display:none}
+.dock>*,.dock-torna{display:inline-flex;align-items:center;gap:7px;height:46px;padding:0 14px;border:0;border-radius:999px;background:none;color:var(--bg);font:600 14.5px var(--sans);text-decoration:none;cursor:pointer;white-space:nowrap}
+.dock>[hidden]{display:none}
+.dock svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.dock .dk1{background:var(--acc);color:var(--on);padding:0 16px}
+.dock #dk-n{min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--on);color:var(--acc-ink);font-size:13px;display:inline-flex;align-items:center;justify-content:center}
+.dock #dk-n[hidden]{display:none}
+.dock #dk-su{padding:0 12px}
+.dock.dock-torna>svg{height:19px;padding:0;border-radius:0}.dock.dock-torna>span{height:auto;padding:0}
+.dock.dock-torna{gap:8px;padding:0 22px 0 16px;height:50px;color:var(--bg);background:color-mix(in srgb,var(--ink) 94%,transparent)}
+@media (min-width:1025px){#dock{display:none}}
+@media (max-width:1024px){#su{display:none!important}#azgiu{bottom:calc(78px + env(safe-area-inset-bottom))}}
+@media (max-width:400px){.dock>*{padding:0 11px;font-size:13.500px}.dock .dk1{padding:0 13px}}
+/* aree tematiche: riquadri uguali */
+.pp-chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;overflow:visible;margin:0;padding:2px 0 4px}
+.pp-chip{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:68px;border-radius:14px;padding:9px 4px 8px;font:600 13.500px/1.1 var(--sans);text-align:center;cursor:pointer}
+.pp-chip svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--acc);flex:none}
+.pp-chip[aria-pressed="true"] svg{color:var(--acc2)}
+@media (hover:hover){.pp-chip:not([disabled]):hover{border-color:var(--acc)}}
+@media (max-width:560px){.pp-chips{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.pp-chip{min-height:62px;font-size:12.500px;padding:8px 2px 7px}
+  .pp-chip:first-child{grid-column:span 2;flex-direction:row;gap:8px;font-size:14px}}
+/* 22/11/2026 (Stefano): area scelta in oro con la scritta bianca accesa e in grassetto */
+.pp-chip[aria-pressed="true"]{background:var(--acc)!important;border-color:var(--acc)!important;color:#fff!important;font-weight:800;box-shadow:0 6px 16px -6px color-mix(in srgb,var(--acc) 75%,transparent)}
+.pp-chip[aria-pressed="true"] svg{color:#fff!important}
 /* chiusura: il sigillo intero */
 .piede-sig{display:flex;align-items:center;gap:16px;margin:44px 0 0;padding-top:22px;border-top:1px solid var(--line)}
 .piede-sig svg{width:112px;height:112px;flex:none}
