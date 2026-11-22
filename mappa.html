@@ -11,7 +11,7 @@ if(L!=="it"&&L!=="en"&&(navigator.webdriver||/bot|crawl|spider|slurp|lighthouse/
 if(L!=="it"&&L!=="en"){var ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"it"];L="en";for(var i=0;i<ls.length;i++)if(/^it\b/i.test(ls[i]||"")){L="it";break;}}
 window.ACH_LANG=L;
 if(L==="en"){d.lang="en";d.classList.add("en-wait");setTimeout(function(){d.classList.remove("en-wait");},1200);
-window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.57f766844a.js";s.async=true;document.head.appendChild(s);}
+window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.ea2ee536b2.js";s.async=true;document.head.appendChild(s);}
 function bottone(){if(document.getElementById("langbtn"))return;var b=document.createElement("button");b.id="langbtn";b.type="button";b.setAttribute("data-noen","");
 b.setAttribute("aria-label",L==="en"?"IT · Versione italiana":"EN · English version");b.title=L==="en"?"Italiano":"English";
 b.innerHTML=L==="en"?"<span>IT</span>":"<span>EN</span>";
@@ -281,6 +281,15 @@ html.boot *,html.boot *::before,html.boot *::after{transition:none!important;ani
 #levels span:has(~ span.on){color:var(--mut)}
 #levels span.on{color:var(--ac)!important;font-weight:800}
 #q:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+/* 22/11/2026 (Stefano): sul telefono «Guida» e «Filtri» stanno in fondo allo schermo, a portata di pollice */
+@media (max-width:699.98px){
+  #gbtn,#fbtn{position:fixed!important;bottom:calc(12px + env(safe-area-inset-bottom));z-index:9;height:48px!important;border-radius:999px!important;padding:0 18px 0 14px!important;font-size:15px!important;font-weight:650!important;box-shadow:0 10px 26px -8px rgba(30,20,0,.55)!important;pointer-events:auto}
+  #gbtn{right:calc(50% + 4px);background:#1a1815!important;color:#f8f3ea!important;border-color:#1a1815!important}
+  #gbtn .lg2{display:inline!important}
+  #fbtn{left:calc(50% + 4px);background:#765c14!important;color:#fffdf8!important;border-color:#765c14!important}
+  #fbtn b{background:#fffdf8!important;color:#523e0a!important}
+  #items{padding-bottom:76px}
+}
 .salta{position:absolute;left:12px;top:-60px;z-index:100;padding:10px 14px;border-radius:10px;background:#1a1815;color:#f8f3ea;font-weight:600;text-decoration:none}.salta:focus{top:10px}
 #fclose{border:1.5px solid color-mix(in srgb,var(--tx) 60%,transparent)!important}#items:focus{outline:none}
 #levels span{cursor:pointer;min-height:30px;-webkit-tap-highlight-color:transparent}#levels span:hover{color:var(--ac)}#levels span:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:4px!important}

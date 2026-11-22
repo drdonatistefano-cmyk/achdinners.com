@@ -10,7 +10,7 @@ if(L!=="it"&&L!=="en"&&(navigator.webdriver||/bot|crawl|spider|slurp|lighthouse/
 if(L!=="it"&&L!=="en"){var ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"it"];L="en";for(var i=0;i<ls.length;i++)if(/^it\b/i.test(ls[i]||"")){L="it";break;}}
 window.ACH_LANG=L;
 if(L==="en"){d.lang="en";d.classList.add("en-wait");setTimeout(function(){d.classList.remove("en-wait");},1200);
-window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.57f766844a.js";s.async=true;document.head.appendChild(s);}
+window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.ea2ee536b2.js";s.async=true;document.head.appendChild(s);}
 function bottone(){if(document.getElementById("langbtn"))return;var b=document.createElement("button");b.id="langbtn";b.type="button";b.setAttribute("data-noen","");
 b.setAttribute("aria-label",L==="en"?"IT · Versione italiana":"EN · English version");b.title=L==="en"?"Italiano":"English";
 b.innerHTML=L==="en"?"<span>IT</span>":"<span>EN</span>";
@@ -644,6 +644,38 @@ dialog .sheet{border-top:4px solid var(--acc)}
 .search input{border-color:color-mix(in srgb,var(--ink) 48%,var(--bg))}
 .pp-come2{text-decoration:underline;text-underline-offset:3px}
 .pp-ic{background:rgba(0,0,0,.28);color:#fff}
+/* 22/11/2026 (Stefano): soluzioni prese da AchRecipes. Filtri: sezioni con icona e righe di separazione, chiusura tonda.
+   In fondo pagina: barra dei comandi (Filtri, Mappa, La tua guida, Su) e, nelle pagine Metodo e Guide, «Torna ai locali». */
+#fpan .fsec{display:flex;align-items:center;gap:10px;font:700 15.5px/1.2 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink);margin:18px 0 10px;padding-top:16px;border-top:1px solid var(--line)}
+#fpan .fgrid>.fsec:first-child{border-top:0;padding-top:0;margin-top:6px}
+.fi{width:32px;height:32px;padding:7px;box-sizing:border-box;border-radius:50%;background:var(--acc-soft);color:var(--acc-ink);fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+#fpan #fchiudi{width:44px;height:44px;padding:0;border-radius:50%;border:0;background:var(--sunk);color:var(--ink);font-size:0;position:relative}
+#fpan #fchiudi::before{content:"";position:absolute;inset:0;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M7 7l10 10M17 7 7 17'/%3E%3C/svg%3E") center/20px no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M7 7l10 10M17 7 7 17'/%3E%3C/svg%3E") center/20px no-repeat}
+.dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));z-index:30;display:flex;align-items:center;gap:2px;padding:6px;border-radius:999px;background:color-mix(in srgb,var(--ink) 94%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:var(--pop);max-width:calc(100vw - 16px)}
+.dock[hidden]{display:none}
+.dock>*,.dock-torna{display:inline-flex;align-items:center;gap:7px;height:46px;padding:0 14px;border:0;border-radius:999px;background:none;color:var(--bg);font:600 14.5px var(--sans);text-decoration:none;cursor:pointer;white-space:nowrap}
+.dock>[hidden]{display:none}
+.dock svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.dock .dk1{background:var(--acc);color:var(--on);padding:0 16px}
+.dock #dk-n{min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--on);color:var(--acc-ink);font-size:13px;display:inline-flex;align-items:center;justify-content:center}
+.dock #dk-n[hidden]{display:none}
+.dock #dk-su{padding:0 12px}
+.dock.dock-torna>svg{height:19px;padding:0;border-radius:0}.dock.dock-torna>span{height:auto;padding:0}
+.dock.dock-torna{gap:8px;padding:0 22px 0 16px;height:50px;color:var(--bg);background:color-mix(in srgb,var(--ink) 94%,transparent)}
+@media (min-width:1025px){#dock{display:none}}
+@media (max-width:1024px){#su{display:none!important}#azgiu{bottom:calc(78px + env(safe-area-inset-bottom))}}
+@media (max-width:400px){.dock>*{padding:0 11px;font-size:13.500px}.dock .dk1{padding:0 13px}}
+/* aree tematiche: riquadri uguali */
+.pp-chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;overflow:visible;margin:0;padding:2px 0 4px}
+.pp-chip{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:68px;border-radius:14px;padding:9px 4px 8px;font:600 13.500px/1.1 var(--sans);text-align:center;cursor:pointer}
+.pp-chip svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--acc);flex:none}
+.pp-chip[aria-pressed="true"] svg{color:var(--acc2)}
+@media (hover:hover){.pp-chip:not([disabled]):hover{border-color:var(--acc)}}
+@media (max-width:560px){.pp-chips{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.pp-chip{min-height:62px;font-size:12.500px;padding:8px 2px 7px}
+  .pp-chip:first-child{grid-column:span 2;flex-direction:row;gap:8px;font-size:14px}}
+/* 22/11/2026 (Stefano): area scelta in oro con la scritta bianca accesa e in grassetto */
+.pp-chip[aria-pressed="true"]{background:var(--acc)!important;border-color:var(--acc)!important;color:#fff!important;font-weight:800;box-shadow:0 6px 16px -6px color-mix(in srgb,var(--acc) 75%,transparent)}
+.pp-chip[aria-pressed="true"] svg{color:#fff!important}
 /* chiusura: il sigillo intero */
 .piede-sig{display:flex;align-items:center;gap:16px;margin:44px 0 0;padding-top:22px;border-top:1px solid var(--line)}
 .piede-sig svg{width:112px;height:112px;flex:none}
@@ -714,14 +746,14 @@ footer{margin-top:16px;border-top:0;padding-top:0}
     <div class="grab" hidden></div>
     <div class="fhead"><h2>Filtri</h2><button type="button" id="fchiudi">Chiudi</button></div>
     <div class="fgrid">
-      <div class="fsec">Cosa</div>
+      <div class="fsec"><svg class="fi" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3v6c0 1.7 1 2.6 2.4 2.6S12.800 10.700 12.800 9V3M10.400 3v18"/><path d="M17 21V3c-2 1.700-2.900 4.600-2.900 8H17"/></svg>Cosa</div>
       <div class="ms" id="f-cuc" data-vuoto="Ogni cucina"></div>
       <div class="ms" id="f-sti" data-vuoto="Ogni tipo di locale"></div>
-      <div class="fsec">Chi lo cita</div>
+      <div class="fsec"><svg class="fi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5.500"/><path d="M8.500 13.500 7 21l5-2.600L17 21l-1.500-7.500"/></svg>Chi lo cita</div>
       <div class="ms" id="f-ric" data-vuoto="Ogni riconoscimento"></div>
       <div class="ms" id="f-fon" data-vuoto="Stampa, blog e storia"></div>
     </div>
-    <div class="fsec">In più</div>
+    <div class="fsec"><svg class="fi" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.200 6.300L20.500 11.500l-6.300 2.200L12 20l-2.200-6.300L3.500 11.500l6.300-2.200z"/></svg>In più</div>
     <div class="spunte">
       <label class="sp" id="sp-cit"><input type="checkbox" id="c-cit">🏅 Solo segnalati</label>
       <label class="sp" id="sp-inf" hidden><input type="checkbox" id="c-inf">📎 Con qualche citazione</label>
@@ -755,6 +787,13 @@ footer{margin-top:16px;border-top:0;padding-top:0}
   <div class="vsez"><div class="vtit"><span>Tempo in auto <small style="font-weight:500;color:var(--mute)">(stima)</small></span><output id="vtv">Qualsiasi</output></div><input type="range" id="vtr" min="5" max="95" step="5" value="95" aria-label="Tempo in minuti"><div class="vch" id="vtc"></div></div>
   <div class="vpiede"><button type="button" id="vtogli">Togli</button><button type="button" id="vok">Scegli da dove parti</button></div>
 </div></dialog>
+<nav class="dock" id="dock" aria-label="Comandi rapidi" hidden>
+  <button type="button" class="dk1" id="dk-fil"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filtri</span><b id="dk-n" hidden></b></button>
+  <a href="mappa.html" id="dk-map"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mappa</span></a>
+  <button type="button" id="dk-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h9M18 7h1M5 17h1M10 17h9"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span>La tua guida</span></button>
+  <button type="button" id="dk-su" aria-label="Torna su"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+</nav>
+<a class="dock dock-torna" id="dk-torna" href="#ristoranti" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span>Torna ai locali</span></a>
 <button type="button" id="su" aria-label="Torna su" hidden>↑</button>
 <button class="giu via" id="azgiu" type="button" hidden data-goatcounter-click="filtri/azzera-dinners">✕ Azzera i filtri <span class="n">0</span></button>
 <dialog id="dlg"><div class="sheet" id="sheet" role="document"></div></dialog>
@@ -843,7 +882,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("grid").innerHTML=PRIMI.slice(0,12).map(x=>card(x,{q:[]})).join("");
   setTimeout(()=>{if(!L.length&&$("grid").children.length===12)$("grid").insertAdjacentHTML("beforeend",PRIMI.slice(12,40).map(x=>card(x,{q:[]})).join(""));},0);}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_29c56594";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_ad606e59";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -1263,7 +1302,7 @@ const PP_P=o=>Object.assign(Object.fromEntries(Object.keys(PP_R).map(k=>[k,1])),
 const PP_PROF=[
  /* 21/11/2026 (Stefano): La scelta di Ach = molta più tradizione e prezzo-qualità, meno eleganti e creativi.
     Profili più spinti e ognuno sulle sue guide, perché passando dall'uno all'altro la classifica cambi davvero. */
- ["La scelta di Ach",PP_P({sf:2,bib:2,gamb:2,t50tr:1.9,gol:1.8,reg:1.7,sel:1.2,stelle:0.5,forch:0.6,bott:0.6,w50:0.3,t50gr:0.4,esp:0.35,idg:0.25})],
+ ["La scelta di Ach",PP_P({ost:6,cha:3,sto:2,sf:2,reg:2,gamb:1.8,t50tr:1.8,gol:1.7,bib:2,spic:1.1,t50pz:1.1,sel:0.3,stelle:0.05,forch:0.25,bott:0.4,grp:0.5,w50:0.1,t50gr:0.15,esp:0.15,idg:0.1})],
  ["Tradizione",PP_P({sf:2,gol:2,reg:1.9,t50tr:1.8,gamb:1.3,bib:0.9,sel:0.8,spic:0.6,t50pz:0.6,stelle:0.5,forch:0.6,bott:0.6,w50:0.3,t50gr:0.4,esp:0.4,idg:0.2,crit:0.8})],
  ["Esperienza",PP_P({forch:2,bott:2,grp:1.8,stelle:1.3,t50gr:1.4,w50:1.2,esp:0.9,idg:0.8,sf:0.5,bib:0.4,gamb:0.6,t50tr:0.5,spic:0.3,t50pz:0.3,gol:0.6,reg:0.6})],
  ["Prezzo-qualità",PP_P({bib:2,spic:1.1,t50pz:1.1,gamb:1.4,sel:1.4,t50tr:1.3,sf:1,gol:1,stelle:0.3,w50:0.2,esp:0.3,idg:0.3,t50gr:0.3,forch:0.5,bott:0.4})],
@@ -1279,7 +1318,10 @@ let PP_LG=null,PP_SO=null;
 function ppCalc(x,w){if(!PP_LG){PP_LG=INL.legenda||{};PP_SO=new Set(INL.solo||[]);}let top=0,nb=0,agg=0;
   for(const c of x.g2){const k=w[PP_DI[c]]??1;if(!k)continue;if(PP_CONF.has(c)||PP_SO.has(c)){agg+=k;continue}
     const v=Math.min(250,((PP_LG[c]||[])[1]||0)*k)/* tetto 250: con il tetto 100 i riconoscimenti alzati finivano tutti pari */;nb++;if(v>top)top=v;}
-  agg+=(x.ns+x.nb)*w.crit;if(nb>1)agg+=nb-1;if(!top&&!agg)return 0;const per=3*w.conf;return (top+Math.min(3*per,per*agg))/1.09;}
+  agg+=(x.ns+x.nb)*w.crit;if(nb>1)agg+=nb-1;if(!top&&!agg)return 0;const per=3*w.conf;
+  /* 22/11/2026 (Stefano): una categoria può dare punti in più a osterie e trattorie, ai locali con charme e a quelli storici */
+  const piu=(w.ost&&x.st==="Osteria e trattoria"?w.ost:0)+(w.cha&&x.nst?w.cha:0)+(w.sto&&x.h?w.sto:0);
+  return (top+Math.min(3*per,per*agg))/1.09+piu;}
 /* 21/11/2026 (Stefano): chi non ha nessuna menzione resta sempre in fondo e senza numero; chi è citato resta sempre sopra (in ordinati i due gruppi sono separati) */
 let PP_CIT=null;
 /* velocità: i punteggi personali si ricordano nel telefono (stessa versione dell'elenco e stessi pesi): alla visita dopo non si ricalcolano */
@@ -1294,8 +1336,11 @@ function ppPrepara(force){if(PP.ok&&!force)return;if(!L||!L.length)return;if(!PP
   (window.requestIdleCallback||setTimeout)(()=>{try{localStorage.setItem(PP_MK,JSON.stringify({f,v:PP_CIT.map(x=>Math.round(PP_SP[x.i]*1e4)/1e4)}));}catch(_){}});}
 function ppRicalcola(){ppPrepara(true);for(const k in ORD)delete ORD[k];}
 const ppParola=v=>v<.05?"Non conta":v<.55?"Molto meno":v<.95?"Meno":v<=1.05?"Come oggi":v<=1.3?"Un po' di più":v<=1.65?"Di più":"Molto di più";
+/* 22/11/2026 (Stefano): le aree tematiche come riquadri uguali, con icona e parola breve (il nome intero resta nel titolo) */
+const PP_BREVE={"La scelta di Ach":"Scelta di Ach","Prezzo-qualità":"Prezzo","Cucina d'autore":"Autore","Ne parlano tutti":"Popolari"};
+const PP_ICO=['<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.500"/>','<path d="M5 10h14v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4v-5zM3 10h18M9.500 6.500c0-1.200 1-1.200 1-2.500M14 6.500c0-1.200 1-1.200 1-2.500"/>','<path d="M8 3h8l-1 6a3 3 0 0 1-6 0L8 3zM12 12v8M8.500 20h7"/>','<path d="M3 12V4h8l10 10-8 8L3 12z"/><path d="M7.500 8.500h.01"/>','<path d="M6 4h12l3 5-9 11L3 9l3-5zM3 9h18"/>','<path d="M7 14a4 4 0 1 1 1.500-7.700 4 4 0 0 1 7 0A4 4 0 1 1 17 14v5H7v-5zM7 17h10"/>','<path d="M4 5h16v11H9l-5 4V5z"/>','<path d="M5 7h9M18 7h1M5 17h1M10 17h9"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>'].map(d=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+d+'</svg>');
 function ppChips(){const pers=PP.prof<0,mod=Object.keys(PP_R).filter(k=>Math.abs(PP.W[k]-1)>.04).length;
-  $("pp-chips").innerHTML=PP_PROF.map(([t],i)=>`<button class="pp-chip" type="button" aria-pressed="${i==PP.prof}">${t}</button>`).join("")+(pers?`<button class="pp-chip" type="button" aria-pressed="true" disabled>Personalizzata</button>`:""); $("pp-regt").textContent=pers?"La tua guida · "+mod+(mod===1?" guida cambiata":" guide cambiate"):"Crea la tua guida personale";
+  $("pp-chips").innerHTML=PP_PROF.map(([t],i)=>`<button class="pp-chip" type="button" aria-pressed="${i==PP.prof}" title="${esc(t)}">${PP_ICO[i]||""}<span>${PP_BREVE[t]||t}</span></button>`).join("")+(pers?`<button class="pp-chip" type="button" aria-pressed="true" disabled title="Personalizzata">${PP_ICO[7]}<span>La tua</span></button>`:""); $("pp-regt").textContent=pers?"La tua guida · "+mod+(mod===1?" guida cambiata":" guide cambiate"):"Crea la tua guida personale";
   [...$("pp-chips").children].forEach((b,i)=>{if(i<PP_PROF.length)b.onclick=()=>{PP.prof=i;PP.W={...PP_PROF[i][1]};ppSalva();ppRicalcola();ppChips();draw();};});}
 function ppRiga(){const on=(S.v==="rico"||S.v==="piz"||S.v==="tutti")&&S.ord==="punteggio";$("pp-riga").hidden=!on;}
 function ppPodio(){const r=filtrati().filter(x=>x.s>0);$("pp-podio").innerHTML="In testa ora: "+r.slice(0,3).map((x,j)=>`<b>${j+1}. ${esc(x.n)}</b>`).join(" · ")+(r.length?"":"nessun locale con questi filtri");}
@@ -1386,13 +1431,20 @@ function guidePag(){const el=$("guidep");if(el.dataset.ok||!L.length)return;el.d
    <li>il cursore «Critica e blog» cambia quanto valgono articoli e blog.</li>
   </ul>
   <p>Il tuo punteggio è il punteggio di Dinners più la differenza fra il calcolo con i tuoi pesi e quello con tutti i pesi a 1. Per questo, con tutti i cursori a «come oggi», la classifica è identica a quella di Dinners.</p>
-  <p class="gv-es">Con «La scelta di Ach» la trattoria dell'esempio sale: Tre Gamberi pesa 2, quindi 90 × 2 = 180, più 6 di conferme: (180 + 6) ÷ 1,09 = 171 invece di 88. Il tre stelle scende: le stelle pesano 0,5, quindi 100 × 0,5 = 50 e 50 ÷ 1,09 = 46 invece di 92.</p>
-  <p>Le categorie già pronte sono solo pesi diversi sugli stessi cursori; nelle schede qui sopra vedi quali guide alza o abbassa ognuna. Le tue scelte restano sul tuo telefono: non le mandiamo a nessuno.</p>
+  <p class="gv-es">Con «La scelta di Ach» la trattoria dell'esempio sale: Tre Gamberi pesa 1,8, quindi 90 × 1,8 = 162, più 6 di conferme: (162 + 6) ÷ 1,09 = 154 invece di 88. Il tre stelle scende: le stelle pesano 0,05, quindi 100 × 0,05 = 5 e 5 ÷ 1,09 = 5 invece di 92.</p>
+  <p>Le categorie già pronte sono pesi diversi sugli stessi cursori. «La scelta di Ach» in più dà qualche punto alle osterie e trattorie (+6), ai locali con charme (+3) e a quelli storici (+2), per avvicinarsi al gusto di Ach senza coincidere con «Tradizione». Nelle schede qui sopra vedi quali guide alza o abbassa ognuna. Le tue scelte restano sul tuo telefono: non le mandiamo a nessuno.</p>
   <p><button type="button" class="pp-regola" onclick="location.hash='#ristoranti';setTimeout(()=>ppApri(true),300)"><span class="pp-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></svg></span><span>Crea la tua guida personale</span></button></p>`;}
 
 $("pp-rip").onclick=()=>{PP.prof=0;PP.W={...PP_PROF[0][1]};ppSalva();ppRicalcola();ppCorpo();ppPodio();};
 document.addEventListener("keydown",e=>{if(e.key=="Escape"&&$("pp-pan").classList.contains("on"))ppApri(false)});
 (()=>{let y0=null;const t=document.querySelector(".pp-testa");t.addEventListener("touchstart",e=>{y0=e.touches[0].clientY},{passive:true});t.addEventListener("touchmove",e=>{if(y0!==null&&e.touches[0].clientY-y0>70){y0=null;ppApri(false);}},{passive:true});t.addEventListener("touchend",()=>y0=null);})();
+/* 22/11/2026 (Stefano, dalle soluzioni di AchRecipes): barra in fondo pagina, a portata di pollice, quando la ricerca è scorsa via */
+(function(){const d=$("dock"),t=$("dk-torna");let att=false;
+  function agg(){att=false;const pag=$("lista").hidden;t.hidden=!pag;d.hidden=pag||scrollY<$("lista").offsetTop+200;
+    if(!d.hidden){const n=nAttivi(),b=$("dk-n");b.hidden=!n;b.textContent=n;$("dk-pp").hidden=$("pp-riga").hidden;}}
+  addEventListener("scroll",()=>{if(!att){att=true;requestAnimationFrame(agg);}},{passive:true});
+  addEventListener("hashchange",()=>{setTimeout(agg,80);setTimeout(agg,700);});setTimeout(agg,1500);setTimeout(agg,4000);
+  $("dk-fil").onclick=apriF;$("dk-pp").onclick=()=>ppApri(true);$("dk-su").onclick=()=>scrollTo({top:0,behavior:"smooth"});})();
 $("pp-regola").onclick=()=>ppApri(true);ppTab(false);ppChips();
 </script>
 <script src="/installa.js" data-colore="#8a6d1f" data-icona="/icona-192.png" data-sw="/sw.js" defer></script>
