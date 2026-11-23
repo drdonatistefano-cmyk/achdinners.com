@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="it">
 <head>
-<link rel="preload" id="pl-mappa" href="mappa.90230db3fa.json" as="fetch" crossorigin="anonymous" fetchpriority="high">
+<link rel="preload" id="pl-mappa" href="mappa.2d324a6d59.json" as="fetch" crossorigin="anonymous" fetchpriority="high">
 <meta charset="utf-8">
 <script id="en-boot">/* 14/11/2026 (come Ach's Places Guide, 13/11): lingua della pagina. Scelta salvata, oppure ?lang=, altrimenti la lingua del browser
    (senza l'italiano tra le lingue del browser la guida si apre in inglese). Pulsante IT/EN in alto. */
@@ -289,6 +289,8 @@ html.boot *,html.boot *::before,html.boot *::after{transition:none!important;ani
   #fbtn{left:calc(50% + 4px);background:#765c14!important;color:#fffdf8!important;border-color:#765c14!important}
   #fbtn b{background:#fffdf8!important;color:#523e0a!important}
   #items{padding-bottom:76px}
+  /* 23/11/2026 (Stefano, foto da iPhone): con i filtri o la guida aperti i due pulsanti coprivano «Azzera» e «Mostra i locali» */
+  html:has(#filt:not(.off)) #gbtn,html:has(#filt:not(.off)) #fbtn,html:has(#gs:not(.off)) #gbtn,html:has(#gs:not(.off)) #fbtn{display:none!important}
 }
 .salta{position:absolute;left:12px;top:-60px;z-index:100;padding:10px 14px;border-radius:10px;background:#1a1815;color:#f8f3ea;font-weight:600;text-decoration:none}.salta:focus{top:10px}
 #fclose{border:1.5px solid color-mix(in srgb,var(--tx) 60%,transparent)!important}#items:focus{outline:none}
@@ -307,7 +309,19 @@ html[data-t=carta] #levels span.on{color:#523e0a!important}
 D.pt=D.pt.split(',').map(s=>{const a=[];for(let k=0;k<s.length;k++)a.push(s.charCodeAt(k)-97);return a;});D.pf=D.pf.split(',');
 const sl=s=>s.normalize('NFD').replace(/[^\x00-\x7f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
 D.C=D.C2.map(c=>{const p=D.CP[c[3]]||['',''];return [c[0],p[0],p[1],'',c[1],c[2],sl(c[0])+'-'+c[3].toLowerCase(),c[3],0];});delete D.C2;}
-document.documentElement.classList.add('boot');</script></head>
+document.documentElement.classList.add('boot');</script><style>
+#levels{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.magg{display:inline-flex;align-items:center;margin-top:1px;height:22px;border:1px solid var(--bd,#ddd1bc);border-radius:999px;background:var(--panel,#fffdf8)}
+.magg button{border:0;background:none;width:26px;height:20px;font:600 15px/1 system-ui;color:#523e0a;cursor:pointer;border-radius:999px}
+.magg button:disabled{opacity:.3;cursor:default}.magg span{font-size:11.5px;font-weight:700;color:#523e0a;min-width:64px;text-align:center}
+#list.zona .head,#list.zona #items{display:none!important}
+#zitems{display:none}#list.zona #zitems{display:block}
+#zitems .zh{display:flex;justify-content:space-between;align-items:baseline;padding:4px 4px 10px}#zitems .zh b{font-size:22px}#zitems .zh span{color:var(--mut,#6b655d);font-size:13px}
+#zitems button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:10px;text-align:left;border:1px solid var(--bd,#ddd1bc);background:var(--panel,#fffdf8);border-radius:14px;padding:11px 14px;margin:0 0 8px;font:inherit;color:inherit;cursor:pointer}
+#zitems button b{font-size:16px}#zitems button small{display:block;color:var(--mut,#6b655d);font-size:12.5px}#zitems button i{font-style:normal;color:#765c14;font-size:20px}
+#zitems button.on{border-color:#765c14;background:#f3e9cf}
+#zitems p{font-size:12px;color:var(--mut,#6b655d);margin:6px 4px 70px}
+</style></head>
 <body>
 <a class="salta" href="#items">Salta all’elenco dei locali</a>
 <div id="app">
@@ -378,7 +392,7 @@ for(let i=B.length-1;i>=0;i--){const [x,y,n,lab]=B[i],r=(W<700?Math.min(19,7+Mat
 }catch(e){}})();</script>
 <script>
 (async()=>{
-const NOME="mappa.90230db3fa.json",NOMEN="mappan.b66899f58f.json",NOMED="mappad.7bea573c1e.json";let DATA=null;
+const NOME="mappa.2d324a6d59.json",NOMEN="mappan.05d94cf38e.json",NOMED="mappad.a96183aa89.json";let DATA=null;
 /* 12/11: i nomi, i link e le schede arrivano da un secondo file, scaricato in parallelo: la mappa si disegna prima */
 /* 13/11/2026: il file dei nomi (320 KB) parte quando e' arrivato quello della mappa (144 KB): prima si dividevano la rete e la mappa compariva dopo entrambi */
 let _mappaOk;const MAPPA_OK=new Promise(r=>_mappaOk=r);setTimeout(()=>_mappaOk(),6000);
@@ -583,7 +597,7 @@ $('gps').onclick=()=>{const b=$('gps');if(!navigator.geolocation){toast('Posizio
     if(best<0||bd>40*40){toast('Sei fuori dai comuni della guida');return;}
     const c=C[best];S.sel=best;S.pin=[x,y];vai(c.x,c.y,Math.max(S.k,14));if(isPhone())sheetTo('mid');toast('Sei vicino a '+c.n);
   },e=>{b.classList.remove('busy');toast(e.code===1?'Consenti l’accesso alla posizione nelle impostazioni':'Posizione non trovata, riprova');},{enableHighAccuracy:false,timeout:10000,maximumAge:300000});};
-$('zin').onclick=()=>vai(S.cx,S.cy,S.k*2);$('zout').onclick=()=>vai(S.cx,S.cy,S.k/2);$('home').onclick=()=>{S.sel=null;S.pin=null;const h=casa();vai(h[0],h[1],1);};document.querySelectorAll('#levels span').forEach(sp=>{sp.setAttribute('role','button');sp.tabIndex=0;
+$('zin').onclick=()=>vai(S.cx,S.cy,S.k*2);$('zout').onclick=()=>vai(S.cx,S.cy,S.k/2);$('home').onclick=()=>{S.sel=null;S.pin=null;const h=casa();vai(h[0],h[1],1);};window.MAPVAI=(la,lo,k)=>{S.sel=null;S.pin=null;const q=proj(la,lo);vai(q[0],q[1],k);};window.MAPSHEET=s=>{try{sheetTo(s);}catch(e){}};document.querySelectorAll('#levels span').forEach(sp=>{sp.setAttribute('role','button');sp.tabIndex=0;
 const va=()=>{const l=+sp.dataset.l;if(l===0){S.sel=null;S.pin=null;const h=casa();vai(h[0],h[1],1);}
  else if(l===1)vai(S.cx,S.cy,S.k<2.6||S.k>=7.5?3.6:S.k);else vai(S.cx,S.cy,Math.max(S.k,9));};
 sp.addEventListener('click',va);sp.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();va();}});});
@@ -688,5 +702,20 @@ try{document.fonts.ready.then(()=>{if(W)completo();});}catch(e){}
 function gcA(p,c,k,t){const n=slugT(p.n).slice(0,60).replace(/^-+|-+$/g,""),cc=slugT(c.n),sl=n.endsWith(cc)?n:n+"-"+cc;return ` data-goatcounter-click="locale/${k}/${sl}" data-goatcounter-title="Clic «${t}»"`;}
 document.addEventListener("click",ev=>{const a=ev.target&&ev.target.closest&&ev.target.closest("[data-goatcounter-click]");
  if(!a||a.dataset.goatcounterBound||!window.goatcounter||!goatcounter.count)return;
- try{goatcounter.count({path:a.dataset.goatcounterClick,title:a.dataset.goatcounterTitle||"",event:true});}catch(_){}},true);</script></body>
+ try{goatcounter.count({path:a.dataset.goatcounterClick,title:a.dataset.goatcounterTitle||"",event:true});}catch(_){}},true);</script><script>(()=>{const lv=document.getElementById('levels'),lst=document.getElementById('list');if(!lv||!lst)return;const ZC=[{"n": "Romagna", "la": 44.1397, "lo": 12.2925, "k": 3.81, "q": 1352, "s": 135}, {"n": "Salento", "la": 40.1514, "lo": 18.1732, "k": 4.97, "q": 665, "s": 43}, {"n": "Penisola Sorrentina", "la": 40.6256, "lo": 14.3699, "k": 14, "q": 61, "s": 22}, {"n": "Lario", "la": 45.8124, "lo": 9.0854, "k": 9.63, "q": 133, "s": 19}, {"n": "Costiera Amalfitana", "la": 40.6294, "lo": 14.5857, "k": 14, "q": 43, "s": 18}, {"n": "Langhe", "la": 44.6834, "lo": 8.0307, "k": 14, "q": 44, "s": 16}, {"n": "Cilento", "la": 40.3511, "lo": 14.9992, "k": 13.42, "q": 47, "s": 16}, {"n": "Val di Chiana", "la": 43.1796, "lo": 11.9043, "k": 14, "q": 42, "s": 13}, {"n": "Chianti", "la": 43.5575, "lo": 11.3041, "k": 14, "q": 34, "s": 11}, {"n": "Brianza", "la": 45.5886, "lo": 9.2696, "k": 13.22, "q": 139, "s": 10}, {"n": "Golfo Paradiso", "la": 44.3552, "lo": 9.153, "k": 14, "q": 29, "s": 10}, {"n": "Monferrato", "la": 45.1239, "lo": 8.4506, "k": 8.21, "q": 33, "s": 7}, {"n": "Castelli Romani", "la": 41.7252, "lo": 12.6774, "k": 14, "q": 32, "s": 7}, {"n": "Gallura", "la": 40.9234, "lo": 9.4987, "k": 8.11, "q": 80, "s": 7}, {"n": "Roero", "la": 44.6967, "lo": 7.8561, "k": 14, "q": 25, "s": 6}, {"n": "Valle d'Itria", "la": 40.7413, "lo": 17.3369, "k": 14, "q": 48, "s": 6}, {"n": "Bassa mantovana", "la": 45.1579, "lo": 10.7944, "k": 14, "q": 47, "s": 6}, {"n": "Valtellina", "la": 46.1726, "lo": 10.0678, "k": 7.92, "q": 45, "s": 5}, {"n": "Maremma", "la": 42.7626, "lo": 11.112, "k": 5.21, "q": 83, "s": 5}, {"n": "Alto Garda", "la": 45.889, "lo": 10.8601, "k": 14, "q": 48, "s": 5}, {"n": "Lunigiana", "la": 44.2374, "lo": 9.9632, "k": 13.81, "q": 38, "s": 4}, {"n": "Mugello", "la": 43.958, "lo": 11.3721, "k": 14, "q": 30, "s": 4}, {"n": "Franciacorta", "la": 45.6028, "lo": 9.9772, "k": 14, "q": 14, "s": 3}, {"n": "Carnia", "la": 46.4192, "lo": 13.0148, "k": 14, "q": 13, "s": 3}, {"n": "Irpinia", "la": 40.9152, "lo": 14.7909, "k": 14, "q": 42, "s": 3}, {"n": "Valpolicella", "la": 45.5309, "lo": 10.9383, "k": 14, "q": 15, "s": 2}, {"n": "Val d'Orcia", "la": 43.077, "lo": 11.6793, "k": 14, "q": 9, "s": 2}, {"n": "Valnerina", "la": 42.788, "lo": 13.0922, "k": 14, "q": 16, "s": 2}, {"n": "Murge", "la": 40.8255, "lo": 16.5516, "k": 14, "q": 60, "s": 2}, {"n": "Lomellina", "la": 45.2522, "lo": 8.7383, "k": 14, "q": 11, "s": 1}, {"n": "Alto Molise", "la": 41.811, "lo": 14.3733, "k": 14, "q": 10, "s": 1}, {"n": "Altopiano del Poro", "la": 38.6772, "lo": 15.8968, "k": 14, "q": 12, "s": 1}, {"n": "Etna", "la": 37.7838, "lo": 14.8406, "k": 12.89, "q": 25, "s": 1}, {"n": "Barbagia", "la": 40.2037, "lo": 9.3516, "k": 14, "q": 11, "s": 1}, {"n": "Garfagnana", "la": 44.1482, "lo": 10.408, "k": 14, "q": 17, "s": 0}, {"n": "Ciociaria", "la": 41.7264, "lo": 13.3424, "k": 14, "q": 16, "s": 0}, {"n": "Gran Sasso", "la": 42.3916, "lo": 13.7879, "k": 14, "q": 6, "s": 0}, {"n": "Pollino", "la": 40.1465, "lo": 16.2848, "k": 14, "q": 5, "s": 0}, {"n": "Campidano", "la": 39.5121, "lo": 8.8187, "k": 14, "q": 16, "s": 0}];
+ const L=['Comuni','Province','Zone','Regioni'];let zona=false,mio=0;
+ lv.insertAdjacentHTML('afterend','<span class="magg" role="group" aria-label="Aggregatore della mappa"><button type="button" id="mg-meno" aria-label="Più dettaglio">−</button><span id="mg-lab" aria-live="polite"></span><button type="button" id="mg-piu" aria-label="Più raggruppato">+</button></span>');
+ document.getElementById('items').insertAdjacentHTML('afterend','<div id="zitems" role="list" aria-label="Zone tradizionali"><div class="zh"><b>'+ZC.length+' zone</b><span>tradizionali</span></div>'+ZC.map((z,i)=>`<button type="button" data-i="${i}"><span><b>${z.n}</b><small>${z.s} segnalati · ${z.q} locali</small></span><i aria-hidden="true">›</i></button>`).join('')+'<p>Prototipo: le zone sono quelle di AchRecipes; per ora contano i comuni d’esempio (Salento = provincia di Lecce, Romagna = Forlì-Cesena, Ravenna, Rimini).</p></div>');
+ const sp=n=>[...lv.querySelectorAll('span')].find(s=>s.textContent.trim()===n);
+ const cur=()=>{if(zona)return 2;const o=[...lv.querySelectorAll('span')].find(s=>s.classList.contains('on'));const t=o?o.textContent.trim():'Regioni';return t==='Comuni'?0:t==='Province'?1:3;};
+ const upd=()=>{const i=cur();document.getElementById('mg-lab').textContent=L[i];document.getElementById('mg-meno').disabled=i<=0;document.getElementById('mg-piu').disabled=i>=3;lst.classList.toggle('zona',zona);};
+ const vola=(la,lo,k)=>{mio=Date.now();if(window.MAPVAI)MAPVAI(la,lo,k);};
+ const va=i=>{const era=zona;zona=i===2;if(zona){document.querySelectorAll('#zitems button.on').forEach(b=>b.classList.remove('on'));vola(42.3,12.6,1);if(window.MAPSHEET)MAPSHEET('mid');upd();return;}
+  mio=Date.now();const s=sp(L[i]);if(s)s.click();setTimeout(upd,400);};
+ document.getElementById('mg-piu').onclick=()=>{const i=cur();if(i<3)va(i+1);};document.getElementById('mg-meno').onclick=()=>{const i=cur();if(i>0)va(i-1);};
+ document.querySelectorAll('#zitems button').forEach(b=>b.onclick=()=>{const z=ZC[+b.dataset.i];document.querySelectorAll('#zitems button').forEach(x=>x.classList.toggle('on',x===b));vola(z.la,z.lo,z.k);if(window.MAPSHEET)MAPSHEET('low');});
+ /* se la mappa cambia livello per mano di chi la usa (dita, zoom, «Tutta l'Italia»), si esce dalle zone */
+ new MutationObserver(()=>{if(zona&&Date.now()-mio>1500){zona=false;}upd();}).observe(lv,{subtree:true,attributes:true,attributeFilter:['class'],childList:true});
+ ['zin','zout','home','loc'].forEach(id=>{const b=document.getElementById(id);if(b)b.addEventListener('click',()=>{if(zona){zona=false;upd();}});});
+ upd();})();</script></body>
 </html>
