@@ -691,6 +691,7 @@ footer{margin-top:16px;border-top:0;padding-top:0}
 /* iPhone */
 @media (max-width:699px){
  #count b{font-size:24px}
+ .conta{flex-wrap:wrap;row-gap:6px}.conta #azsu{margin-left:auto}
  .conta .agg-ctl{height:34px}.conta .agg-ctl button{height:32px;width:30px}.conta .agg-ctl span{min-width:70px}
  .conta.agg-giu .agg-ctl{visibility:hidden}
  .pp-riga{grid-template-areas:"chips" "cta"!important;grid-template-columns:1fr!important;margin:4px 0 6px!important}
