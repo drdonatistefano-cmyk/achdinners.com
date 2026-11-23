@@ -736,6 +736,7 @@ footer{margin-top:16px;border-top:0;padding-top:0}
 /* iPhone */
 @media (max-width:699px){
  #count b{font-size:24px}
+ .conta{flex-wrap:wrap;row-gap:6px}.conta #azsu{margin-left:auto}
  .conta .agg-ctl{height:34px}.conta .agg-ctl button{height:32px;width:30px}.conta .agg-ctl span{min-width:70px}
  .conta.agg-giu .agg-ctl{visibility:hidden}
  .pp-riga{grid-template-areas:"chips" "cta"!important;grid-template-columns:1fr!important;margin:4px 0 6px!important}
@@ -943,7 +944,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("grid").innerHTML=PRIMI.slice(0,12).map(x=>card(x,{q:[]})).join("");
   setTimeout(()=>{if(!L.length&&$("grid").children.length===12)$("grid").insertAdjacentHTML("beforeend",PRIMI.slice(12,40).map(x=>card(x,{q:[]})).join(""));},0);}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_59b9405b";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_7e478e00";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -1407,7 +1408,7 @@ const ppParola=v=>v<.05?"Non conta":v<.55?"Molto meno":v<.95?"Meno":v<=1.05?"Com
 const PP_BREVE={"La scelta di Ach":"Scelta di Ach","Prezzo-qualità":"Prezzo","Cucina d'autore":"Autore","Ne parlano tutti":"Popolari"};
 const PP_ICO=['<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.500"/>','<path d="M5 10h14v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4v-5zM3 10h18M9.500 6.500c0-1.200 1-1.200 1-2.500M14 6.500c0-1.200 1-1.200 1-2.500"/>','<path d="M8 3h8l-1 6a3 3 0 0 1-6 0L8 3zM12 12v8M8.500 20h7"/>','<path d="M3 12V4h8l10 10-8 8L3 12z"/><path d="M7.500 8.500h.01"/>','<path d="M6 4h12l3 5-9 11L3 9l3-5zM3 9h18"/>','<path d="M7 14a4 4 0 1 1 1.500-7.700 4 4 0 0 1 7 0A4 4 0 1 1 17 14v5H7v-5zM7 17h10"/>','<path d="M4 5h16v11H9l-5 4V5z"/>','<path d="M5 7h9M18 7h1M5 17h1M10 17h9"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>'].map(d=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+d+'</svg>');
 function ppChips(){const pers=PP.prof<0,mod=Object.keys(PP_R).filter(k=>Math.abs(PP.W[k]-1)>.04).length;
-  $("pp-chips").innerHTML=PP_PROF.map(([t],i)=>`<button class="pp-chip" type="button" aria-pressed="${i==PP.prof}" title="${esc(t)}">${PP_ICO[i]||""}<span>${PP_BREVE[t]||t}</span></button>`).join("")+(pers?`<button class="pp-chip" type="button" aria-pressed="true" disabled title="Personalizzata">${PP_ICO[7]}<span>La tua</span></button>`:""); $("pp-regt").textContent=pers?"La tua guida · "+mod+(mod===1?" guida cambiata":" guide cambiate"):"Crea la tua guida personale";
+  $("pp-chips").innerHTML=PP_PROF.map(([t],i)=>`<button class="pp-chip" type="button" aria-pressed="${i==PP.prof}" title="${esc(t)}">${PP_ICO[i]||""}<span>${PP_BREVE[t]||t}</span></button>`).join("");/* 23/11/2026 (Stefano): tolto il riquadro «La tua» che compariva fra i temi con la guida personale: basta il bottone «La tua guida · N guide cambiate» */ $("pp-regt").textContent=pers?"La tua guida · "+mod+(mod===1?" guida cambiata":" guide cambiate"):"Crea la tua guida personale";
   [...$("pp-chips").children].forEach((b,i)=>{if(i<PP_PROF.length)b.onclick=()=>{PP.prof=i;PP.W={...PP_PROF[i][1]};ppSalva();ppRicalcola();ppChips();draw();};});}
 function ppRiga(){const on=(S.v==="rico"||S.v==="piz"||S.v==="tutti")&&S.ord==="punteggio";$("pp-riga").hidden=!on;}
 function ppPodio(){const r=filtrati().filter(x=>x.s>0);$("pp-podio").innerHTML="In testa ora: "+r.slice(0,3).map((x,j)=>`<b>${j+1}. ${esc(x.n)}</b>`).join(" · ")+(r.length?"":"nessun locale con questi filtri");}
@@ -1530,7 +1531,7 @@ function agDraw(){const g=$("grid"),m=$("more"),a=$("agg");const c=document.quer
  for(const x of ULT)for(const[k,t]of agKeys(x,AGLV)){if(!k)continue;let o=G.get(k);if(!o)G.set(k,o={k,t,n:0,s:0,top:[],m:[]});o.n++;if(x.s>0)o.s++;if(o.top.length<3&&x.s>0)o.top.push(x);o.m.push(x);}
  const v=[...G.values()].sort((p,q)=>q.s-p.s||q.n-p.n);
  $("count").innerHTML=`<b>${fmt(v.length)}</b> ${["","comuni","province","zone","regioni","aree"][AGLV]} · ${fmt(ULT.length)} locali`;
- a.innerHTML=(AGLV===3?`<p class="agg-proto">Prototipo: le zone sono quelle di AchRecipes; per ora contano solo i comuni d'esempio (Salento = provincia di Lecce, Romagna = Forlì-Cesena, Ravenna, Rimini).</p>`:"")+
+ a.innerHTML=(AGLV===3?`<p class="agg-proto">Prototipo: le zone sono quelle di AchDishes; per ora contano solo i comuni d'esempio (Salento = provincia di Lecce, Romagna = Forlì-Cesena, Ravenna, Rimini).</p>`:"")+
   v.slice(0,120).map((o,i)=>`<div class="ag"><h3>${esc(o.t)}</h3><span class="nn">${fmt(o.s)} segnalati su ${fmt(o.n)} locali</span>${o.top.length?`<ol>${o.top.map(x=>`<li>${esc(x.n)}</li>`).join("")}</ol>`:""}<button type="button" data-i="${i}">Vedi i locali ›</button></div>`).join("");
  a.querySelectorAll("button[data-i]").forEach(b=>b.onclick=()=>{const o=v[+b.dataset.i];for(const id in SEL)if(/^f-(reg|prov|com)$/.test(id))SEL[id].clear();
   if(AGLV===2)SEL["f-prov"].add(o.k);else if(AGLV===4)SEL["f-reg"].add(o.k);else if(AGLV===5)Object.keys(AGAREA).filter(r=>AGAREA[r]===o.k).forEach(r=>SEL["f-reg"].add(r));
