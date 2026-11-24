@@ -672,6 +672,16 @@ footer{margin-top:16px;border-top:0;padding-top:0}
 #agg-pill.on{display:inline-flex}
 #agg-pill button{border:0;background:none;width:40px;height:38px;font:600 19px/1 var(--sans);color:var(--acc-ink,#523e0a)}#agg-pill button:disabled{opacity:.3}
 #agg-pill span{font:650 13px var(--sans);min-width:92px;text-align:center}
+/* 24/11/2026 (Stefano, da iPhone): nella barra in fondo via Filtri e Mappa (sono già in alto), «Guida» più piccola, l'aggregatore resta: tutto su una riga, aggregatore a sinistra e Guida + ↑ a destra */
+@media (max-width:699px){
+ #dock #dk-fil,#dock #dk-map{display:none!important}
+ #dock{left:auto;right:12px;transform:none;padding:4px;gap:2px}
+ #dock>*{height:38px}
+ #dock #dk-pp{padding:0 12px;font-size:13px;gap:6px}#dock #dk-pp svg{width:16px;height:16px}
+ #dock #dk-su{padding:0 10px}
+ #agg-pill{left:12px;transform:none;bottom:calc(14px + env(safe-area-inset-bottom));height:46px}
+ #agg-pill button{height:44px}
+}
 /* PC */
 @media (min-width:1100px){
  .tools{padding:8px 0!important}.tools .row{display:flex;gap:8px;align-items:center}
