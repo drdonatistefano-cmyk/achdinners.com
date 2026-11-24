@@ -10,7 +10,7 @@ if(L!=="it"&&L!=="en"&&(navigator.webdriver||/bot|crawl|spider|slurp|lighthouse/
 if(L!=="it"&&L!=="en"){var ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"it"];L="en";for(var i=0;i<ls.length;i++)if(/^it\b/i.test(ls[i]||"")){L="it";break;}}
 window.ACH_LANG=L;
 if(L==="en"){d.lang="en";d.classList.add("en-wait");setTimeout(function(){d.classList.remove("en-wait");},1200);
-window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.c7484c3397.js";s.async=true;document.head.appendChild(s);}
+window.ACH_EN_MAN={"note":"en.note.6feb4b1643.json"};var s=document.createElement("script");s.src="en.92b954ffde.js";s.async=true;document.head.appendChild(s);}
 function bottone(){if(document.getElementById("langbtn"))return;var b=document.createElement("button");b.id="langbtn";b.type="button";b.setAttribute("data-noen","");
 b.setAttribute("aria-label",L==="en"?"IT · Versione italiana":"EN · English version");b.title=L==="en"?"Italiano":"English";
 b.innerHTML=L==="en"?"<span>IT</span>":"<span>EN</span>";
@@ -960,7 +960,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("grid").innerHTML=PRIMI.slice(0,12).map(x=>card(x,{q:[]})).join("");
   setTimeout(()=>{if(!L.length&&$("grid").children.length===12)$("grid").insertAdjacentHTML("beforeend",PRIMI.slice(12,40).map(x=>card(x,{q:[]})).join(""));},0);}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_2b1306de";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_952095e1";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -1143,7 +1143,7 @@ function draw(){if(!L.length)return;if(!RN&&serveRN()){$("count").innerHTML='<sp
   let nr=0;for(const x of r)if(x.s>0)nr++;const sel=nr>0&&S.ord==="punteggio";
   let k=0;for(const x of r.slice(0,S.shown)){x._sel=sel&&x.s>0?++k:0;}S.sel=sel;S.k=k;
   stats(r);$("qconta").textContent=Q.qs?fmt(r.length):"";
-  const lab=LAB[S.v];
+  const lab=r.length===1?({rico:"ristorante segnalato",piz:"pizzeria segnalata",tutti:"locale",altri:"ristorante apprezzato",altp:"pizzeria apprezzata"})[S.v]:LAB[S.v]; /* 24/11: «1 ristorante segnalato», non «1 ristoranti» */
   $("count").innerHTML=`<b>${fmt(r.length)}</b> ${lab}${r.length<base().length?" su "+fmt(base().length):""} · ${S.v==="piz"||S.v==="altp"?"ordinate":"ordinati"} per ${ORDS[S.ord][0].toLowerCase()}`;
   $("grid").innerHTML=r.length?r.slice(0,S.shown).map(x=>card(x,Q)).join(""):`<div class="empty">Nessun locale con questi filtri.${nAttivi()||Q.qs||vicAttivo()?`<br><button type="button" onclick="azzera()">Azzera i filtri</button>`:""}${Q.qs&&S.v!=="tutti"?` <button type="button" onclick="location.hash='#tutti'">Cerca tra tutti i locali</button>`:""}</div>`;
   $("more").hidden=r.length<=S.shown;$("more").textContent=`Mostra altri (${fmt(r.length-S.shown)})`;
@@ -1544,12 +1544,14 @@ function agKeys(x,l){if(l===1)return[[x.p+"|"+x.c,x.c+" ("+x.p+")"]];if(l===2)re
 function agDraw(){const g=$("grid"),m=$("more"),a=$("agg");const c=document.querySelector(".agg-ctl");
  $("agg-lab").textContent=AGLAB[AGLV];$("agg-meno").disabled=AGLV===0;$("agg-piu").disabled=AGLV===5;c.classList.toggle("on",AGLV>0);
  if(!AGLV){a.hidden=true;g.hidden=false;return;}
- g.hidden=true;m.hidden=true;a.hidden=false;const G=new Map();
+ g.hidden=true;m.hidden=true;a.hidden=false;const G=new Map();if(AGLV!==window.AGLAST){window.AGLAST=AGLV;window.AGSHOW=120;}
  for(const x of ULT)for(const[k,t]of agKeys(x,AGLV)){if(!k)continue;let o=G.get(k);if(!o)G.set(k,o={k,t,n:0,s:0,top:[],m:[]});o.n++;if(x.s>0)o.s++;if(o.top.length<3&&x.s>0)o.top.push(x);o.m.push(x);}
  const v=[...G.values()].sort((p,q)=>q.s-p.s||q.n-p.n);
  $("count").innerHTML=`<b>${fmt(v.length)}</b> ${["","comuni","province","zone","regioni","aree"][AGLV]} · ${fmt(ULT.length)} locali`;
  a.innerHTML=(AGLV===3?`<p class="agg-proto">Le zone tradizionali di Ach’s Dishes e Ach’s Places, con i comuni che le formano secondo unioni di comuni, parchi e disciplinari dei vini.</p>`:"")+
-  v.slice(0,120).map((o,i)=>`<div class="ag"><h3>${esc(o.t)}</h3><span class="nn">${fmt(o.s)} segnalati su ${fmt(o.n)} locali</span>${o.top.length?`<ol>${o.top.map(x=>`<li>${esc(x.n)}</li>`).join("")}</ol>`:""}<button type="button" data-i="${i}">Vedi i locali ›</button></div>`).join("");
+  v.slice(0,window.AGSHOW||120).map((o,i)=>`<div class="ag"><h3>${esc(o.t)}</h3><span class="nn">${fmt(o.s)} ${o.s===1?"segnalato":"segnalati"}${o.n>o.s?` su ${fmt(o.n)} locali`:""}</span>${o.top.length?`<ol>${o.top.map(x=>`<li>${esc(x.n)}</li>`).join("")}</ol>`:""}<button type="button" data-i="${i}">Vedi i locali ›</button></div>`).join("");
+ /* 24/11/2026 (controllo di Stefano): oltre i primi 120 gruppi si arriva con «Mostra altri», come nell'elenco dei locali */
+ if(v.length>(window.AGSHOW||120)){a.insertAdjacentHTML("beforeend",`<button type="button" class="more" id="agg-altri">Mostra altri (${fmt(v.length-(window.AGSHOW||120))})</button>`);$("agg-altri").onclick=()=>{window.AGSHOW=(window.AGSHOW||120)+120;agDraw();};}
  a.querySelectorAll("button[data-i]").forEach(b=>b.onclick=()=>{const o=v[+b.dataset.i];for(const id in SEL)if(/^f-(reg|prov|com)$/.test(id))SEL[id].clear();
   if(AGLV===2)SEL["f-prov"].add(o.k);else if(AGLV===4)SEL["f-reg"].add(o.k);else if(AGLV===5)Object.keys(AGAREA).filter(r=>AGAREA[r]===o.k).forEach(r=>SEL["f-reg"].add(r));
   else o.m.forEach(x=>SEL["f-com"].add(x.p+"|"+x.c));
