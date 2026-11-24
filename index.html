@@ -712,7 +712,7 @@ footer{margin-top:16px;border-top:0;padding-top:0}
 .conta .agg-ctl{margin-left:auto;height:38px}.conta .agg-ctl button{height:36px;width:34px}
 .conta .pp-regola{min-height:38px;height:38px}
 #dock #dk-pp{background:var(--acc);color:var(--on);padding:0 16px}#dock #dk-pp svg{stroke:currentColor}
-@media (max-width:699px){html body .tools .row a.tbtn.mapbtn{background:var(--acc)!important;border-color:var(--acc)!important;color:var(--on)!important}#dock #dk-map{background:var(--acc);color:var(--on);padding:0 16px}#dock{gap:4px}html body .pp-chips .pp-chip[aria-pressed="true"],html body .pp-chips .pp-chip[aria-pressed="true"] *{color:#000!important}html body .pp-chips .pp-chip[aria-pressed="true"] svg{color:#000!important;stroke:#000!important}}
+@media (max-width:699px){html body .tools .row a.tbtn.mapbtn{background:var(--acc)!important;border-color:var(--acc)!important;color:var(--on)!important}#dock #dk-map{background:var(--acc);color:var(--on);padding:0 16px}#dock{gap:4px}html body .pp-chips .pp-chip[aria-pressed="true"],html body .pp-chips .pp-chip[aria-pressed="true"] *{color:#fff!important}html body .pp-chips .pp-chip[aria-pressed="true"] svg{color:#fff!important;stroke:#fff!important}}
 #agg-pill{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom));z-index:29;display:none;align-items:center;height:40px;border-radius:999px;background:color-mix(in srgb,var(--paper) 94%,transparent);border:1px solid var(--line);box-shadow:var(--pop);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 #agg-pill.on{display:inline-flex}
 #agg-pill button{border:0;background:none;width:40px;height:38px;font:600 19px/1 var(--sans);color:var(--acc-ink,#523e0a)}#agg-pill button:disabled{opacity:.3}
@@ -723,6 +723,8 @@ footer{margin-top:16px;border-top:0;padding-top:0}
  .tools .row .search{flex:1 1 200px;min-width:160px}.tools .row .search input{height:40px}
  .tools .row .tbtn{height:40px;padding:0 12px;font-size:14px}
  .tools .row #dove{display:flex;gap:6px;margin:0;flex:0 1 auto}.tools .row #dove .ms{width:168px}.tools .row #dove .ms>button{height:40px;font-size:14px}
+/* 24/11/2026 (WebAbility, «pubblica» di Stefano): Regione/Provincia/Comune crescono col testo ingrandito invece di tagliarlo; sul telefono «Scelta di Ach» scelto in bianco (nero su oro: contrasto 3,3, ne serve 4,5) */
+html body .ms>button{height:auto!important;min-height:2.85em}
  .pp-riga{display:block!important;margin:6px 0 4px!important}.pp-lt{display:none}
  .pp-chips{display:flex!important;gap:8px;margin:0!important;padding:2px 0 4px!important;overflow:visible}.pp-chips>*{flex:1 1 0;min-width:0}.pp-chips>[hidden]{display:none}
  .conta{display:grid!important;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px}#count{grid-column:1;grid-row:1;justify-self:start}.conta .pp-regola{grid-column:2;grid-row:1}.conta .agg-ctl{grid-column:3;grid-row:1;justify-self:end;margin-left:0}.conta #azsu{grid-column:3;justify-self:end}#count b{font-size:26px}#count{font-size:15px}
