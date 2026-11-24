@@ -265,6 +265,10 @@ dialog::backdrop{background:rgba(20,15,10,.45)}
 .grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 8px}
 .sx{position:sticky;top:0;float:right;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--paper);font-size:20px;line-height:1}
 .sheet h2{font:600 1.55rem/1.15 var(--serif);margin:4px 46px 4px 0}
+.snav{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;margin:6px 46px 8px 0;padding:6px 0;background:var(--paper)}
+.snav span{font-size:13px;font-weight:650;color:var(--mute);white-space:nowrap}
+.snav button{height:36px;padding:0 13px;border-radius:999px;border:1px solid color-mix(in srgb,var(--acc) 50%,transparent);background:var(--acc-soft,color-mix(in srgb,var(--acc) 10%,var(--paper)));color:var(--acc-ink,var(--acc));font:700 13.5px var(--sans);cursor:pointer}
+.snav button:disabled{opacity:.35;cursor:default}
 .where{color:var(--mute);font-size:14.5px}.where .fascia{font-weight:700;color:var(--ink,inherit);cursor:help}
 .box{margin:14px 0;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--acc) 6%,var(--paper));border:1px solid var(--line)}
 .box h3{margin:0 0 6px;font-size:15px}
@@ -975,7 +979,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("grid").innerHTML=PRIMI.slice(0,12).map(x=>card(x,{q:[]})).join("");
   setTimeout(()=>{if(!L.length&&$("grid").children.length===12)$("grid").insertAdjacentHTML("beforeend",PRIMI.slice(12,40).map(x=>card(x,{q:[]})).join(""));},0);}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_952095e1";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_fbb1cd61";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -1238,19 +1242,27 @@ function azioniExtra(x){
    `<a class="btn" id="spren" href="${GQ(nomeQ(x)+" TheFork prenota")}"${gcA(x,"prenota","Prenota")} target="_blank" rel="noopener noreferrer" title="Cerca la pagina TheFork del locale: se c'è, è il primo risultato">📅 Prenota</a>`;}
 function vicini(x){if(x.la==null||!EX)return[];return EX.luoghi.map(l=>[l,minu(kmd(x.la,x.lo,l[4],l[5]))]).filter(t=>t[1]<=15).sort((a,b)=>a[1]-b[1]).slice(0,6);}
 let aperto=null;
+/* 24/11/2026 (Stefano): come nella mappa, «‹ Precedente · n di N · Successivo ›» per scorrere le schede dei locali
+   dell'elenco così com'è (filtri, ricerca e ordine scelti), senza chiudere la scheda; sul computer anche le frecce */
+function navG(x){const i=ULT.indexOf(x),n=ULT.length;if(i<0||n<2)return "";
+  return `<nav class="snav" aria-label="${EN?"Restaurants in the list":"Schede dell'elenco"}"><button type="button" id="sprev"${i?"":" disabled"}>‹ ${EN?"Previous":"Precedente"}</button><span>${fmt(i+1)} ${EN?"of":"di"} ${fmt(n)}</span><button type="button" id="snext"${i<n-1?"":" disabled"}>${EN?"Next":"Successivo"} ›</button></nav>`;}
+function navGVai(d){const i=ULT.indexOf(aperto);if(i<0)return;const j=i+d;if(j<0||j>=ULT.length)return;apri(ULT[j]);
+  setTimeout(()=>{const b=$(d>0?"snext":"sprev");if(b&&!b.disabled)b.focus({preventScroll:true});},40);}
+function navGBind(){const a=$("sprev"),b=$("snext");if(a)a.onclick=()=>navGVai(-1);if(b)b.onclick=()=>navGVai(1);}
+document.addEventListener("keydown",e=>{if(!aperto||!$("dlg").open)return;if(e.key==="ArrowRight")navGVai(1);else if(e.key==="ArrowLeft")navGVai(-1);});
 function apri(x){aperto=x;try{localStorage.setItem("achfood_ultp",x.p);}catch(e){}const nf=x.nf>0;
   const nearH=x=>{const vv=vicini(x);return vv.length?`<details class="near"><summary>🏛️ Da vedere qui vicino <span class="nn">${vv.length}</span><span class="fr" aria-hidden="true">▼</span></summary><div class="nbox"><ul>${vv.map(([l,m])=>`<li><span class="t">${Math.round(m)} min</span><div>${l[1]} <a class="nlink" href="${"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(l[0]+", "+l[3])}" target="_blank" rel="noopener noreferrer"><b>${esc(l[0])}</b></a><small>${esc(l[2])} · ${esc(l[3])}${l[6]?" (dal centro del comune)":""}</small></div></li>`).join("")}</ul></div></details>`:"";};const near=`<div id="snear">${nearH(x)}</div>`;
   if(!EX||!AUX)Promise.all([caricaExtra(),caricaAux()]).then(()=>{if(aperto===x)$("snear").innerHTML=nearH(x);}).catch(()=>{});
   const perche=x.s>0?"":x.h?`<div class="box"><h3>Locale storico</h3><div class="calc">Iscritto a un registro di locali storici o con storia documentata. Non ha riconoscimenti di guide, quindi non è tra i citati di Ristoranti o Pizzerie.</div></div>`:nf?`<div class="box"><h3>Solo in elenco</h3><div class="calc">Le fonti qui sotto lo citano, ma valgono solo come conferma (articoli, selezioni di anni passati, descrizioni): da sole non lo portano tra i citati.</div></div>`:"";
   const gm="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(x.n+", "+x.c+" "+x.p);
   $("sheet").innerHTML=`<div class="grab"></div><button class="sx" type="button" aria-label="Chiudi" id="sx">×</button>
-   <h2>${esc(x.n)}${segniNome(x)}</h2><div class="where" id="swhere">📍 <b class="com">${esc(x.c)} (${esc(x.p)})</b>${x.cu?" · "+esc(x.cu):""}${x.st?" · "+esc(x.st):""}${PT&&x._d!=null?" · "+distTxt(x):""}</div>
+   <h2>${esc(x.n)}${segniNome(x)}</h2>${navG(x)}<div class="where" id="swhere">📍 <b class="com">${esc(x.c)} (${esc(x.p)})</b>${x.cu?" · "+esc(x.cu):""}${x.st?" · "+esc(x.st):""}${PT&&x._d!=null?" · "+distTxt(x):""}</div>
    <div class="addr" id="sind" hidden></div>
    <div class="actions" id="sazioni"><a class="btn pri" href="${gm}"${gcA(x,"mappa","Mappa")} target="_blank" rel="noopener noreferrer">🗺️ Mappa</a>${azioniExtra(x)}${waDin(x)}</div>
    ${righe(x,0)}${near}${perche}
    <div id="sfonti">${nf||x.h?`<div class="box"><h3>Le fonti</h3><p class="attesa">Carico le fonti…</p></div>`:`<div class="box"><h3>Nessuna informazione trovata</h3><div class="calc">Per ora non abbiamo trovato online nessuna informazione su questo locale: nessuna guida, testata, blog o registro storico lo cita. È in elenco perché esiste nelle anagrafi aperte (Overture Maps, OpenStreetMap).</div></div>`}</div>
    <p class="note" id="snota">Foto, menu e prenotazione aprono una ricerca per nome e comune: voti e recensioni dei clienti restano sulle piattaforme, qui non sono riportati.</p>`;
-  $("sx").onclick=()=>$("dlg").close();
+  $("sx").onclick=()=>$("dlg").close();navGBind();
   try{if(!$("dlg").open)$("dlg").showModal();}catch(e){$("dlg").setAttribute("open","");}$("sheet").scrollTop=0;
   carica(x.p).then(v=>{if(aperto!==x)return;const d=v[x.k];if(!d)return;const [f,w,src,,ind,mz]=d;
     /* 22/11/2026 (Stefano, La Corte del Noce): link indicati dal locale stesso (link_dal_locale.json) per foto e prenotazione */

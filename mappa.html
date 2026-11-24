@@ -309,7 +309,31 @@ html[data-t=carta] #levels span.on{color:#523e0a!important}
 D.pt=D.pt.split(',').map(s=>{const a=[];for(let k=0;k<s.length;k++)a.push(s.charCodeAt(k)-97);return a;});D.pf=D.pf.split(',');
 const sl=s=>s.normalize('NFD').replace(/[^\x00-\x7f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
 D.C=D.C2.map(c=>{const p=D.CP[c[3]]||['',''];return [c[0],p[0],p[1],'',c[1],c[2],sl(c[0])+'-'+c[3].toLowerCase(),c[3],0];});delete D.C2;}
-document.documentElement.classList.add('boot');</script><style>
+document.documentElement.classList.add('boot');</script><style id="elenco-compatto">
+/* 24/11/2026: elenco compatto nei colori della guida (prima finiva nello stile della lingua, che viene rifatto) */
+#items .row{display:flex;align-items:center;gap:6px;padding:7px 7px 7px 12px;margin:0 2px 6px;border-radius:12px;border:1px solid var(--ln);background:var(--chip);contain-intrinsic-size:auto 58px}
+html[data-t=carta] #items .row{background:#fff;border-color:color-mix(in srgb,var(--ac) 28%,#e6ddd0);box-shadow:0 1px 2px rgba(60,40,20,.05)}
+#items .row .it{flex:1;min-width:0;display:block;padding:2px 0;border-radius:8px}
+#items .row .it>b{display:block;font-size:14.5px;line-height:1.25}
+#items .row .it .d{display:block;margin-top:2px;font-size:12.5px;line-height:1.5}
+#items .row .it .tg{display:inline-flex;flex-wrap:wrap;gap:4px;margin:0 0 0 6px;vertical-align:1px}
+#items .row .it .tg span{font-size:11px;font-weight:750;padding:0 7px;line-height:18px;border-radius:999px;color:var(--ac)!important;border:1px solid color-mix(in srgb,var(--ac) 45%,transparent)!important;background:color-mix(in srgb,var(--ac) 9%,transparent)}
+#items .row .fo,#items .row .tk{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--ln);color:var(--ink);background:none;text-decoration:none}
+#items .row .fo svg{width:18px;height:18px}
+#items .row .fo:hover,#items .row .fo:focus-visible{border-color:var(--ac);color:var(--ac)}
+.snav{position:sticky;top:-1px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;margin:2px 0 10px;padding:6px 0;background:var(--panel,inherit)}
+.snav span{font-size:12.5px;font-weight:650;color:var(--mut)}
+.snav button{height:36px;padding:0 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--ac) 50%,transparent);background:color-mix(in srgb,var(--ac) 8%,transparent);color:var(--ac);font-weight:700;font-size:13.5px}
+.snav button:disabled{opacity:.35}
+/* scheda del locale nei colori della guida: carta chiara e oro nel tema chiaro, oro anche nei temi scuri */
+html[data-t=carta] #gs{--bg:#f7f2ea;--paper:#fffdf9;--ink:#231d18;--mute:#6f655a;--faint:#8f8578;--line:#e6ddd0;--terra:#765c14;--terra-soft:#f3e9cf;--terra-ink:#523e0a;--on:#fff;--warn:#7a5200;--warn-soft:#fbf1dc;--bad:#a33a2e;--bad-soft:#fbe4e0;--ok:#2e6b3e;--ok-soft:#e3f1e6;box-shadow:0 10px 40px rgba(60,40,20,.25)}
+html:not([data-t=carta]) #gs{--terra:#e0bf6a;--terra-soft:#33290f;--terra-ink:#f0dca6;--on:#231a05}
+#gs .act.map{background:var(--terra-soft);border-color:color-mix(in srgb,var(--terra) 45%,transparent);color:var(--terra-ink)}
+html[data-t=carta] #gs .skel{background:linear-gradient(90deg,#efe8dc,#f7f2ea,#efe8dc);background-size:200% 100%}
+#gs .snav{background:var(--paper)}#gs .snav span{color:var(--mute)}
+#gs .snav button{border-color:color-mix(in srgb,var(--terra) 50%,transparent);background:var(--terra-soft);color:var(--terra-ink)}
+html[data-t=carta] #gsscrim{background:rgba(40,28,12,.35)}
+</style><style>
 #levels{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .magg{display:inline-flex;align-items:center;margin-top:1px;height:22px;border:1px solid var(--bd,#ddd1bc);border-radius:999px;background:var(--panel,#fffdf8)}
 .magg button{border:0;background:none;width:26px;height:20px;font:600 15px/1 system-ui;color:#523e0a;cursor:pointer;border-radius:999px}
@@ -417,7 +441,7 @@ const IC={ticket:'<path d="M2 9V7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2a3 3 0 0 0 0 6
 const ic=n=>`<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
 const C=DATA.C.map((c,i)=>({i,n:c[0],pr:c[1],rg:c[2],aw:c[3]||'',x:c[4],y:c[5],sl:c[6],pv:c[7],v:c[8],f:fold(c[0]+' '+c[1])}));
 const P=DATA.pc.map((ci,i)=>({i,n:'',ci,g:DATA.pg.charCodeAt(i)-48,t:DATA.pt[i].length?DATA.pt[i].map(x=>DATA.T[x]):[],fl:DATA.pf[i]||'',sx:0,k:-1,f:null}));
-const SCHELETRO=Array(5).fill('<div class="row skrow"><span class="ib"></span><span style="flex:1"><div class="skel" style="width:62%"></div><div class="skel" style="width:38%"></div></span></div>').join('');let LEGD={},PD=null,NOMI=false,XS=null,XO=null,QW='';
+const SCHELETRO=Array(5).fill('<div class="row skrow"><span class="ib"></span><span style="flex:1"><div class="skel" style="width:62%"></div><div class="skel" style="width:38%"></div></span></div>').join('');let LISTA=[],LEGD={},PD=null,NOMI=false,XS=null,XO=null,QW='';
 const XG=()=>XO||(XS?(XO=JSON.parse(XS)):{});
 function piegaNomi(){if(P.length&&P[0].f!==null)return;for(const p of P)p.f=fold(p.n);}
 const BY=C.map(()=>[]);P.forEach((p,i)=>BY[p.ci].push(i));
@@ -545,8 +569,8 @@ function lista(m,inV){
     const tags=[...p.fl].filter(x=>FLAG[x]).slice(0,2).map(x=>`<span>${FLAG[x]}</span>`).join('');
     const u=p.k>=0?[DATA.U[p.k>>1],p.k&1]:null;
     const tk=p.k===-2?`<button class="fr" data-p="${pi}">${ic('check')}Gratis</button>`:u?`<a class="tk" href="${esc(u[0])}" target="_blank" rel="noopener${u[1]?' sponsored':''}">${ic('ticket')}Biglietti</a>`:'';
-    return `<div class="row" style="--g:${g.c}"><button class="it" data-p="${pi}"><span class="ib"><i style="background:${g.c};box-shadow:0 0 14px ${g.c}"></i></span><span style="min-width:0;flex:1"><b>${esc(p.n)}</b><span class="d"><b class="cm">${esc(c.n)}</b> · ${esc(c.pr)}</span><span class="tg"><span style="--c:${g.c};color:var(--c);border-color:${g.c}55">${g.l}${p.t[0]&&p.t[0]!=='Altro'?' · '+esc(p.t[0]):''}</span>${tags}</span></span><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="rgba(210,220,245,.45)" stroke-width="1.8" stroke-linecap="round" style="flex:none;margin-top:14px"><path d="m9 18 6-6-6-6"/></svg></button><div class="rb">${tk}<a href="${photoUrl(p)}" target="_blank" rel="noopener">${ic('cam')}Foto</a></div></div>`;};
-  const box=$('items'),job=++LJ;if(!out.length){box.innerHTML='<div class="empty">Nessun locale qui con questi filtri. Allarga la mappa o togli un filtro.</div>';return;}
+    return `<div class="row"><button class="it" data-p="${pi}"><b>${esc(p.n)}</b><span class="d"><b class="cm">${esc(c.n)}</b> · ${esc(c.pr)}<span class="tg"><span>${(g.k==='seg'||g.k==='sega')&&p.t[0]&&p.t[0]!=='Altro'?esc(p.t[0]):g.l+(p.t[0]&&p.t[0]!=='Altro'?' · '+esc(p.t[0]):'')}</span>${tags}</span></span></button>${tk}<a class="fo" href="${photoUrl(p)}" target="_blank" rel="noopener" aria-label="Foto di ${esc(p.n)}" title="Foto">${ic('cam')}</a></div>`;};
+  LISTA=out;const box=$('items'),job=++LJ;if(!out.length){box.innerHTML='<div class="empty">Nessun locale qui con questi filtri. Allarga la mappa o togli un filtro.</div>';return;}
   box.innerHTML=out.slice(0,12).map(riga).join('');let i=12;
   const piu=()=>{if(job!==LJ||i>=out.length)return;box.insertAdjacentHTML('beforeend',out.slice(i,i+17).map(riga).join(''));i+=17;(window.requestIdleCallback||setTimeout)(piu);};(window.requestIdleCallback||setTimeout)(piu);}
 
@@ -651,16 +675,22 @@ function testata(p){const c=C[p.ci],g=G[p.g];return `<div class="grab2" aria-hid
   <div class="top"><span class="gtag">${g.em} ${esc(g.long)}</span><span>${esc(p.t.join(', '))}</span></div>
   <h2 class="title" id="s-title">${esc(p.n)}</h2>`;}
 function pd(){return PD||(PD=fetch(NOMED).then(r=>r.json()).then(d=>{let a=0,o=0;for(let i=0;i<P.length;i++){a+=d.LA[i];o+=d.LO[i];P[i].la=a/1e4;P[i].lo=o/1e4;P[i].di=d.DI[i];}}).catch(()=>{PD=null;}));}
-function apri(pi){aperta=pi;lastFocus=document.activeElement;const p=P[pi],c=C[p.ci],g=G[p.g],sh=$('gs');sh.style.setProperty('--g',g.c);
-  sh.innerHTML=testata(p)+`<div class="ctag">📍 ${esc(c.n)} (${esc(c.pv)})</div><div class="skel" style="width:96%"></div><div class="skel" style="width:84%"></div>`;
-  sh.scrollTop=0;sh.classList.remove('off');$('gsscrim').classList.remove('off');$('sclose').onclick=chiudi;setTimeout(()=>$('sclose')&&$('sclose').focus({preventScroll:true}),40);
+function navSch(pi){const i=LISTA.indexOf(pi),n=LISTA.length;if(i<0||n<2)return '';
+  return `<nav class="snav" aria-label="Schede dell'elenco"><button type="button" id="sprev"${i?'':' disabled'}>‹ Precedente</button><span>${i+1} di ${n}</span><button type="button" id="snext"${i<n-1?'':' disabled'}>Successivo ›</button></nav>`;}
+function navVai(d){const i=LISTA.indexOf(aperta);if(i<0)return;const j=i+d;if(j<0||j>=LISTA.length)return;const lf=lastFocus;apri(LISTA[j]);lastFocus=lf;
+  setTimeout(()=>{const b=$(d>0?'snext':'sprev');if(b&&!b.disabled)b.focus({preventScroll:true});},60);}
+function navBind(pi){const a=$('sprev'),b=$('snext');if(a)a.onclick=()=>navVai(-1);if(b)b.onclick=()=>navVai(1);}
+document.addEventListener('keydown',e=>{if(aperta==null||$('gs').classList.contains('off'))return;if(e.key==='ArrowRight')navVai(1);else if(e.key==='ArrowLeft')navVai(-1);});
+function apri(pi){aperta=pi;lastFocus=document.activeElement;const p=P[pi],c=C[p.ci],g=G[p.g],sh=$('gs');sh.style.setProperty('--g','var(--ac)');
+  sh.innerHTML=testata(p)+navSch(pi)+`<div class="ctag">📍 ${esc(c.n)} (${esc(c.pv)})</div><div class="skel" style="width:96%"></div><div class="skel" style="width:84%"></div>`;
+  sh.scrollTop=0;sh.classList.remove('off');$('gsscrim').classList.remove('off');$('sclose').onclick=chiudi;navBind(pi);setTimeout(()=>$('sclose')&&$('sclose').focus({preventScroll:true}),40);
   (async()=>{let row=null;try{await pd();const m=await man(),fn=m.files&&m.files[c.pv];if(fn){if(!DETP[fn])DETP[fn]=fetch(fn).then(r=>r.ok?r.json():[]).catch(()=>[]);const dd=await DETP[fn];row=p.di>=0?dd[p.di]:null;}}catch(e){}
     if(aperta!==pi)return;const [cods,ns,nb]=(p.gc||'||').split('|');const cs=cods?cods.split(','):[];
     const ad=row&&row[4]||'',w=row&&row[1]||'',fo=row&&row[0]||[];
     const pos=[p.la,p.lo];const gm=`https://www.google.com/maps/dir/?api=1&destination=${p.la}%2C${p.lo}`;
     const badge=cs.map(k=>{const l=LEGD[k];return l?`<span class="mst">${esc((l[1]||'').replace(/\d+/g,''))} ${esc(l[0])}</span>`:'';}).join('');
     const parti=[];if(cs.length)parti.push(cs.length+(cs.length>1?' guide':' guida'));if(+ns)parti.push(ns+(+ns>1?' articoli':' articolo'));if(+nb)parti.push(nb+' blog');
-    sh.innerHTML=testata(p)+`<div class="ctag" style="margin-top:4px">📍 ${esc(c.n)} (${esc(c.pv)})</div>
+    sh.innerHTML=testata(p)+navSch(pi)+`<div class="ctag" style="margin-top:4px">📍 ${esc(c.n)} (${esc(c.pv)})</div>
     <div class="meta">${badge}${p.fl.includes('h')?'<span class="mst">🏛️ Locale storico</span>':''}${p.fl.includes('k')?'<span class="mst">✨ Con charme</span>':''}</div>
     <p class="lead">${parti.length?'Citato da '+parti.join(' · ')+'.':'Per ora non abbiamo trovato online nessuna informazione su questo locale: è in elenco perché esiste nelle anagrafi aperte.'}</p>
     <div class="facts"><div class="fact"><span class="ic" aria-hidden="true">📍</span><small>Indirizzo</small><div>${esc(ad||c.n)}</div></div></div>
@@ -672,7 +702,7 @@ function apri(pi){aperta=pi;lastFocus=document.activeElement;const p=P[pi],c=C[p
       <a class="act" href="index.html#cerca=${encodeURIComponent(p.n)}">${ic('book')}Apri nella guida</a>
     </div>
     ${fo.length?`<div class="src"><b>Fonti</b><ul>${fo.map(s=>`<li><a href="${esc(s[2])}" target="_blank" rel="noopener">${esc(s[1])}</a><span class="rel uff">${esc(s[3]||'')}</span></li>`).join('')}</ul></div>`:''}`;
-    $('sclose').onclick=chiudi;
+    $('sclose').onclick=chiudi;navBind(pi);
     $('vedi').onclick=()=>{const q=proj(pos[0],pos[1]);S.sel=c.i;S.pin=q;chiudi();if(isPhone())sheetTo('low');vai(q[0],q[1],Math.max(S.k,26));};})();}
 function chiudi(){aperta=null;$('gs').classList.add('off');$('gsscrim').classList.add('off');if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true});}
 $('gsscrim').onclick=chiudi;addEventListener('keydown',e=>{if(e.key==='Escape'&&aperta!=null)chiudi();});
