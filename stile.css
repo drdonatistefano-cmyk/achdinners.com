@@ -523,6 +523,8 @@ h1,.cname{text-wrap:balance}
   .mast nav.ach-guide #langbtn{margin-left:6px!important}.mast nav.ach-guide .ach-guide__btn{padding-right:3px}.ach-guide__logo .lg{width:26px;height:26px}
   .mast nav.ach-guide .ach-guide__btn.ach-guide__coll{margin-left:auto;padding:0 9px;min-height:38px}.mast nav.ach-guide .ach-guide__btn.ach-guide__coll b{font-size:12.5px;white-space:nowrap}}
 .mast nav.ach-guide .ach-guide__btn:hover b{color:var(--ink)}
+/* 23/11/2026 (con Dishes le guide sono tre): sul telefono solo i tondi delle guide, come in Places; il nome resta per chi usa la lettura vocale */
+@media (max-width:640px){.mast nav.ach-guide .ach-guide__btn:not(.ach-guide__coll) .ach-guide__txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.mast nav.ach-guide .ach-guide__btn:not(.ach-guide__coll){padding:6px 4px}.ach-guide__logo .lg{width:34px!important;height:34px!important}}
 .mast nav.ach-guide b{font:600 14px/1 var(--sans)}
 @media (max-width:640px){.mast{padding-bottom:6px}.mast nav.ach-guide{width:100%;margin:0 -8px;justify-content:flex-start}
   .mast nav.ach-guide .ach-guide__btn{padding:8px;min-height:40px}.mast nav.ach-guide b{font-size:13.5px}.sig{width:46px;height:46px}.mast-nome b{font-size:1.18rem}}
