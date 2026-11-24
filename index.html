@@ -812,6 +812,7 @@ html body .ms>button{height:auto!important;min-height:2.85em}
   <a href="#ristoranti" data-v="rico"><span class="t" style="display:inline-flex;align-items:center;gap:7px"><svg class="ti" viewBox="16 12 68 76" aria-hidden="true"><path stroke-width="7" d="M34 22v18c0 6 4 9 9 9s9-3 9-9V22M43 22v56"/><path stroke-width="7" d="M66 78V22c-7 6-10 16-10 28h10"/></svg>Ristoranti</span><span class="n" id="n-rico"></span></a>
   <a href="#pizzerie" data-v="piz"><span class="t" style="display:inline-flex;align-items:center;gap:7px"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7c6-3 12-3 18 0L12 21 3 7z"/><path d="M10 10.5h.01M14 12.5h.01M12 15.5h.01"/></svg>Pizzerie</span><span class="n" id="n-piz"></span></a>
   <a href="#metodo" data-v="metodo" class="met"><span class="t" style="display:inline-flex;align-items:center;gap:7px"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M8 20h8M5 7h14M7 7l-3 6a3 3 0 0 0 6 0L7 7zM17 7l-3 6a3 3 0 0 0 6 0l-3-6z"/></svg>Metodo</span><span class="n">regole</span></a>
+  <span hidden id="n-tutti"></span><span hidden id="n-altri"></span><span hidden id="n-altp"></span><!-- contatori nascosti: li legge il programma delle pagine per Google (achdinners.com scripts/pagine.py) -->
 </nav>
 <header class="hero">
   <div class="kick">Ach’s Dinners Guide · Italia</div>
@@ -976,7 +977,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("grid").innerHTML=PRIMI.slice(0,12).map(x=>card(x,{q:[]})).join("");
   setTimeout(()=>{if(!L.length&&$("grid").children.length===12)$("grid").insertAdjacentHTML("beforeend",PRIMI.slice(12,40).map(x=>card(x,{q:[]})).join(""));},0);}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_510c58a3";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_4f9354d0";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -1032,7 +1033,7 @@ async function avvia(d){D=d;const z=d.dz;const C=d.col;const LL=new Array(C.n.le
   // 4) più articoli di stampa e blog; 5) locale storico o con storia documentata; 6) nome in ordine alfabetico.
   // (la classifica generale arriva già calcolata con la regola: qui solo i totali)
   S.n_rico=INL.n_rico;S.n_piz=L.filter(x=>x.pz&&x.s>0).length;
-  let na=0,np=0;for(const x of L)if(!(x.s>0)){if(x.pz)np++;else na++;}$("n-rico").textContent=fmt(S.n_rico+na);$("n-piz").textContent=fmt(S.n_piz+np);
+  let na=0,np=0;for(const x of L)if(!(x.s>0)){if(x.pz)np++;else na++;}$("n-rico").textContent=fmt(S.n_rico+na);$("n-piz").textContent=fmt(S.n_piz+np);$("n-tutti").textContent=fmt(L.length);$("n-altri").textContent=fmt(na);$("n-altp").textContent=fmt(np);
   
   memo.pulisci(new Set([IDXF,AUXF,EXF,...Object.values(FILES)]));setTimeout(()=>caricaExtra().catch(()=>{}),1500);
   document.querySelectorAll(".ms").forEach(prepara);
