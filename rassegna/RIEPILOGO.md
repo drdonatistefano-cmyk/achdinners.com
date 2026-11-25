@@ -1,17 +1,18 @@
 # Rassegna stampa: candidati da valutare
 
-Ultimo giro: 2026-11-21  
-Candidati in attesa di giudizio: **24** (nuovi in questo giro: 14)  
-Pagine-elenco delle guide nuove o cambiate: **13** (50toppizza, slowfood-chiocciole, identitagolose-guide, identitagolose-italia, lespresso-attualita, 50topitaly, carlino-cosafare, ilnordest-sapori, giornaledibrescia-cucina, arezzo24-winefood, siviaggia-notizie, mentelocale-milano, ladige-cronaca)
+Ultimo giro: 2026-11-25  
+Candidati in attesa di giudizio: **44** (nuovi in questo giro: 20)  
+Pagine-elenco delle guide nuove o cambiate: **11** (slowfood-chiocciole, identitagolose-guide, identitagolose-italia, lespresso-attualita, 50topitaly, carlino-cosafare, ilnordest-sapori, arezzo24-winefood, siviaggia-notizie, mentelocale-milano, ladige-cronaca)
 
 | Testata | Candidati |
 |---|---:|
-| Luciano Pignataro Wine Blog | 11 |
-| Gambero Rosso | 5 |
-| Scatti di Gusto | 5 |
+| Luciano Pignataro Wine Blog | 22 |
+| Scatti di Gusto | 9 |
+| Gambero Rosso | 8 |
 | Ristorazione Italiana Magazine | 3 |
+| il Forchettiere | 2 |
 
-Province toccate: NA (4), BS (3), RM (3), AL (1), PV (1), SI (1), MI (1), FI (1), MO (1), VE (1), PT (1), GO (1), TP (1), ME (1), AV (1), AN (1), PA (1)
+Province toccate: RM (7), NA (6), SA (3), MO (3), BS (3), MI (2), AL (2), VR (1), PU (1), CO (1), TO (1), PV (1), SI (1), FI (1), VE (1), PT (1), GO (1), TP (1), ME (1), AV (1)
 
 Il testo di ogni articolo e' gia' salvato in `rassegna/testi/<file>.txt` (colonna `testo` del CSV) e quello delle pagine-elenco nuove o cambiate in `rassegna/elenchi/<id>.txt`: **non serve aprire nessun sito**, si leggono da file.
 
