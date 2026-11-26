@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="it">
 <head>
-<link rel="preload" id="pl-mappa" href="mappa.f3d820c7fe.json" as="fetch" crossorigin="anonymous" fetchpriority="high">
+<link rel="preload" id="pl-mappa" href="mappa.b673a01ec5.json" as="fetch" crossorigin="anonymous" fetchpriority="high">
 <meta charset="utf-8">
 <script id="en-boot">/* 14/11/2026 (come Ach's Places Guide, 13/11): lingua della pagina. Scelta salvata, oppure ?lang=, altrimenti la lingua del browser
    (senza l'italiano tra le lingue del browser la guida si apre in inglese). Pulsante IT/EN in alto. */
@@ -18,8 +18,7 @@ b.innerHTML=L==="en"?"<span>IT</span>":"<span>EN</span>";
 b.onclick=function(){var n=L==="en"?"it":"en";try{localStorage.setItem("lang",n);}catch(e){}var u=location.href.replace(/([?&])lang=(it|en)&?/,"$1").replace(/[?&]$/,"");location.href=u;if(u===location.href)location.reload();};
 var g=document.querySelector(".ach-guide")||document.getElementById("gbtn");/* Dinners: nella Guida dentro il menu «Le guide di Ach», nella Mappa accanto al tasto Guida */
 var z=document.getElementById("zoom"),lb=document.getElementById("lbtn");
-if(z&&lb&&innerWidth<700){/* Mappa sul telefono: accanto a «Nascondi locali» (la colonna dello zoom è già piena) */b.className="gl lb-mob";lb.parentNode.insertBefore(b,lb.nextSibling);
- var pos=function(){b.style.top=lb.offsetTop+"px";b.style.left=(lb.offsetLeft+lb.offsetWidth+8)+"px";b.style.height=lb.offsetHeight+"px";};pos();addEventListener("resize",pos);addEventListener("load",pos);setTimeout(pos,800);}
+if(z&&lb&&innerWidth<700){/* Mappa sul telefono: nella colonna dello zoom (26/11/2026: accanto a «Mostra locali» copriva il numero) */b.className="zm lb-zoom";z.appendChild(b);}
 else if(z&&g&&g.id==="gbtn"){b.className="zm lb-zoom";z.appendChild(b);}else if(g&&g.id==="gbtn"){g.parentNode.insertBefore(b,g.nextSibling);b.classList.add("lb-map");}else if(g){g.appendChild(b);}else{b.classList.add("lb-float");document.body.appendChild(b);}}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bottone);else bottone();
 })();</script>
@@ -281,6 +280,12 @@ html.boot *,html.boot *::before,html.boot *::after{transition:none!important;ani
 #levels span:has(~ span.on){color:var(--mut)}
 #levels span.on{color:var(--ac)!important;font-weight:800}
 #q:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+/* 26/11/2026: filtri della mappa come la guida */
+#cats .sch{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#cats .sch button{min-height:50px;border-radius:14px;border:1.5px solid var(--ln);background:var(--chip,transparent);color:var(--ink);font:700 16px/1.1 inherit;cursor:pointer}
+#cats .sch button.on{background:var(--ac);border-color:var(--ac);color:#fffdf8}
+#quick .tcap{width:100%;font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);margin:4px 0 0}
+#quick .tdesc{width:100%;margin:4px 2px 0;font-size:13px;line-height:1.4;color:var(--mut)}
 /* 22/11/2026 (Stefano): sul telefono «Guida» e «Filtri» stanno in fondo allo schermo, a portata di pollice */
 @media (max-width:699.98px){
   #gbtn,#fbtn{position:fixed!important;bottom:calc(12px + env(safe-area-inset-bottom));z-index:9;height:48px!important;border-radius:999px!important;padding:0 18px 0 14px!important;font-size:15px!important;font-weight:650!important;box-shadow:0 10px 26px -8px rgba(30,20,0,.55)!important;pointer-events:auto}
@@ -303,6 +308,18 @@ html[data-t=carta] #levels span.on{color:#523e0a!important}
   #levels span{font-size:10.5px}
   #levels span+span::before{margin:0 5px}
   #zoom{top:calc(78px + env(safe-area-inset-top))!important;bottom:auto!important}
+}
+/* 26/11/2026 (Stefano, da iPhone): l'aggregatore in alto al centro, più visibile; «Mostra locali» e lo zoom sotto */
+@media (max-width:699.98px){
+  #top{justify-content:center!important}
+  #crumb{flex:0 1 auto!important;max-width:calc(100% - 8px)!important;align-items:center!important;padding:9px 18px 10px!important;border:1.5px solid color-mix(in srgb,var(--ac) 45%,var(--ln))!important;box-shadow:0 8px 22px -12px rgba(60,40,10,.5)!important}
+  #crumb .t{text-align:center}
+  #where{font-size:16px!important;text-align:center}
+  #crumb .magg{height:36px!important;margin-top:6px!important;background:var(--ac)!important;border-color:var(--ac)!important}
+  #crumb .magg button{width:44px!important;height:34px!important;font-size:21px!important;color:#fffdf8!important}
+  #crumb .magg span{font-size:14.5px!important;color:#fffdf8!important;min-width:88px!important}
+  #lbtn{top:calc(112px + env(safe-area-inset-top))!important}
+  #zoom{top:calc(112px + env(safe-area-inset-top))!important}
 }
 </style>
 <script>function espandi(D){if(!D||D.pc)return;const pc=[];D.pr.forEach((n,i)=>{for(let j=0;j<n;j++)pc.push(i);});D.pc=pc;
@@ -358,9 +375,9 @@ html[data-t=carta] #gsscrim{background:rgba(40,28,12,.35)}
       <button class="zm" id="fclose" aria-label="Chiudi i filtri"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <label class="srch"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--fa)"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Cerca un locale o un comune" aria-label="Cerca un locale o un comune"></label>
-    <div><div class="cap" style="margin-bottom:10px">Cosa vuoi vedere</div><div class="cats" id="cats"></div></div>
-    <div id="subw" hidden><div class="cap" style="margin-bottom:10px">Tipo</div><div class="chips" id="subs"></div></div>
-    <div><div class="cap" style="margin-bottom:10px">Al volo</div><div class="chips" id="quick"></div></div>
+    <div><div class="cap" style="margin-bottom:10px">Ristoranti o pizzerie</div><div id="cats"></div></div>
+    <div><div class="cap" style="margin-bottom:10px">Aree tematiche</div><div class="chips" id="quick"></div></div>
+    <div id="subw"><div class="cap" style="margin-bottom:10px">Guide</div><div class="chips" id="subs"></div></div>
     <p class="note">Confini di regioni e province: ISTAT (CC BY), elaborazione openpolis. La mappa è disegnata qui, senza servizi di terzi.</p>
     <div class="fbar"><button class="b1" id="reset">Azzera</button><button class="b2" id="show">Mostra</button></div>
   </aside>
@@ -416,17 +433,17 @@ for(let i=B.length-1;i>=0;i--){const [x,y,n,lab]=B[i],r=(W<700?Math.min(19,7+Mat
 }catch(e){}})();</script>
 <script>
 (async()=>{
-const NOME="mappa.f3d820c7fe.json",NOMEN="mappan.b0c4549772.json",NOMED="mappad.b24ba23c68.json";let DATA=null;
+const NOME="mappa.b673a01ec5.json",NOMEN="mappan.dd4a48e8bc.json",NOMED="mappad.0c66a4a896.json";let DATA=null;
 /* 12/11: i nomi, i link e le schede arrivano da un secondo file, scaricato in parallelo: la mappa si disegna prima */
 /* 13/11/2026: il file dei nomi (320 KB) parte quando e' arrivato quello della mappa (144 KB): prima si dividevano la rete e la mappa compariva dopo entrambi */
 let _mappaOk;const MAPPA_OK=new Promise(r=>_mappaOk=r);setTimeout(()=>_mappaOk(),6000);
 const PN=MAPPA_OK.then(()=>fetch(NOMEN)).then(r=>r.ok?r:fetch('manifest.json',{cache:'no-store'}).then(r=>r.json()).then(m=>fetch(m.mappan))).then(r=>r.text()).catch(()=>null);
 try{let r=await fetch(NOME);if(!r.ok){const m=await (await fetch('manifest.json',{cache:'no-store'})).json();r=await fetch(m.mappa);}DATA=await r.json();espandi(DATA);_mappaOk();}catch(e){_mappaOk();document.getElementById('nv').textContent='Dati non disponibili';return;}
 const G=[
- {k:'seg',l:'Segnalati',long:'Ristoranti segnalati',em:'🍷',c:'#F28B82',s:['Michelin','Gambero Rosso','Slow Food',"L'Espresso",'50 Top','Identità Golose',"World's 50 Best",'Emilia-Romagna a Tavola','Altre guide','Stampa','Blog']},
- {k:'sega',l:'Segnalate',long:'Pizzerie segnalate',em:'🍕',c:'#FFB86B',s:['Gambero Rosso','50 Top','Identità Golose','Michelin','Altre guide','Stampa','Blog']},
- {k:'app',l:'Apprezzati',long:'Ristoranti apprezzati',em:'🍷',c:'#86DDA0',s:['Con qualche citazione','Senza citazioni']},
- {k:'appa',l:'Apprezzate',long:'Pizzerie apprezzate',em:'🍕',c:'#A5AEFF',s:['Con qualche citazione','Senza citazioni']}];
+ {k:'seg',l:'Ristorante',long:'Ristoranti segnalati',em:'🍷',c:'#F28B82',s:['Michelin','Gambero Rosso','Slow Food',"L'Espresso",'50 Top','Identità Golose',"World's 50 Best",'Falstaff','Touring Club','Il Golosario','Emilia-Romagna a Tavola','Altre guide','Stampa','Blog']},
+ {k:'sega',l:'Pizzeria',long:'Pizzerie segnalate',em:'🍕',c:'#FFB86B',s:['Gambero Rosso','50 Top','Identità Golose','Michelin','Falstaff','Il Golosario','Altre guide','Stampa','Blog']},
+ {k:'app',l:'Ristorante',long:'Altri ristoranti',em:'🍷',c:'#86DDA0',s:['Con qualche citazione','Senza citazioni']},
+ {k:'appa',l:'Pizzeria',long:'Altre pizzerie',em:'🍕',c:'#A5AEFF',s:['Con qualche citazione','Senza citazioni']}];
 const RN={'abruzzo':'Abruzzo','basilicata':'Basilicata','calabria':'Calabria','campania':'Campania','emilia-romagna':'Emilia-Romagna','friuli-venezia-giulia':'Friuli-Venezia Giulia','lazio':'Lazio','liguria':'Liguria','lombardia':'Lombardia','marche':'Marche','molise':'Molise','piemonte':'Piemonte','puglia':'Puglia','sardegna':'Sardegna','sicilia':'Sicilia','toscana':'Toscana','trentino-alto-adige':'Trentino-Alto Adige','umbria':'Umbria','valle-d-aosta':"Valle d'Aosta",'veneto':'Veneto'};
 const QK=[['m','Michelin'],['r','Gambero Rosso'],['s','Slow Food'],['h','🏛️ Locali storici'],['k','✨ Con charme']];
 const FLAG={h:'🏛️ Storico',k:'✨ Charme'};
@@ -477,31 +494,72 @@ const proj=(lat,lng)=>[(lng-6.5)*Math.cos(42*Math.PI/180)*100,(47.2-lat)*100];
 
 /* ---------- filtri ---------- */
 let M=null,MK='';
-function passa(p,skip){
+function passa(p,skip){if(S.tema&&!temaOk(p))return false;if(skip!=='sub'&&S.gu.size&&!guOk(p))return false;
   if(skip!=='cat'&&S.cats.size&&!S.cats.has(p.g))return false;
   if(skip!=='sub'&&S.subs.size){let mine=false,ok=false;for(const k of S.subs){const j=k.indexOf('|'),g=+k.slice(0,j);if(g===p.g){mine=true;if(p.t.includes(k.slice(j+1)))ok=true;}}if(mine&&!ok)return false;}
   for(const q of S.quick){if(q==='b'||q==='a'){if(!C[p.ci].aw.includes(q))return false;}else if(!p.fl.includes(q))return false;}
   if(QW&&!(p.f&&p.f.includes(QW))&&!C[p.ci].f.includes(QW))return false;
   return true;}
-function conti(){const key=[...S.cats].join()+'/'+[...S.subs].join()+'/'+[...S.quick].join()+'/'+S.q+'/'+NOMI;if(M&&MK===key)return M;MK=key;
+function conti(){const key=[...S.cats].join()+'/'+[...S.subs].join()+'/'+[...S.quick].join()+'/'+S.tema+'/'+[...S.gu].join()+'/'+S.q+'/'+NOMI;if(M&&MK===key)return M;MK=key;
   QW=S.q?fold(S.q.trim()):'';if(QW&&NOMI)piegaNomi();
   const cc=new Uint16Array(C.length),cat=[0,0,0,0,0,0],sub={};let tot=0;
   for(const p of P){if(passa(p)){cc[p.ci]++;tot++;}if(passa(p,'cat'))cat[p.g]++;if(S.cats.has(p.g)&&passa(p,'sub'))for(const t of p.t){const k=p.g+'|'+t;sub[k]=(sub[k]||0)+1;}}
   return M={cc,cat,sub,tot};}
-const nAttivi=()=>S.cats.size+S.subs.size+S.quick.size+(S.q?1:0);
+
+S.sch='';S.solo=false;S.gu=new Set();S.tema='';
+const MTEMI={
+ r_tra:{s:'r',l:'Tradizione',d:"Osterie d'Italia di Slow Food, Golosario, guide regionali, 50 Top Trattorie e Gamberi: la cucina del territorio",c:['SF_CH','SF_SEG','GOL_R','ERT','TOP50TR','GR_3G','GR_2G','GR_1G']},
+ r_pre:{s:'r',l:'Prezzo-qualità',d:'Mangiare bene spendendo il giusto: Bib Gourmand, Gamberi, 50 Top Trattorie, Chiocciole Slow Food',c:['MICH_BIB','GR_3G','GR_2G','GR_1G','TOP50TR','SF_CH']},
+ r_alt:{s:'r',l:'Alta cucina',d:"Stelle Michelin, Forchette e Bottiglie, World's 50 Best, 50 Top Italy, L'Espresso, Identità Golose, Falstaff, Touring",c:['MICH_3','MICH_2','MICH_1','GR_3F','GR_2F','GR_3B','GR_1B','W50','TOP50GR','ESP_5','ESP_4','ESP_3','IDG','FAL','TCI_3']},
+ r_sto:{s:'r',l:'Storici e con charme',d:'Locali storici, con una storia documentata o con charme',fl:['h','k']},
+ r_sta:{s:'r',l:'Ne parla la stampa',d:'Almeno due articoli di giornalisti o blog',st:2},
+ p_imp:{s:'p',l:"L'impasto",d:"Gambero Rosso, Pizzerie d'Italia: farine, impasto, lievitazione",c:['GR_3S','GR_2S','GR_1S','GR_PIZZA_ANNO','GR_GUIDA']},
+ p_ser:{s:'p',l:'La serata',d:'50 Top Pizza e Falstaff: pizza, servizio, vini e birre, locale; più le pizzerie Michelin',c:['TOP50PIZZA','FAL','MICH_SEL','MICH_BIB','MICH_1','MICH_2','MICH_3']},
+ p_aut:{s:'p',l:"D'autore",d:'La pizza come cucina di ricerca: Identità Golose, premi speciali, pizzerie scelte da Michelin',c:['IDG','GR_PREMIO','MICH_SEL','MICH_BIB','MICH_1','MICH_2','MICH_3']},
+ p_tra:{s:'p',l:'Tradizione',d:'Slow Food, guide regionali, Golosario, pizzerie storiche',c:['SF_CH','SF_SEG','ERT','GOL_R'],fl:['h']}};
+for(const k in MTEMI)if(MTEMI[k].c)MTEMI[k].cs=new Set(MTEMI[k].c);
+function temaOk(p){const t=MTEMI[S.tema];if(!t)return true;if(t.fl&&t.fl.some(f=>p.fl.includes(f)))return true;
+  const x=(p.gc==null?'':p.gc).split('|');if(t.st)return (+x[1]||0)+(+x[2]||0)>=t.st;
+  if(!t.cs)return false;if(p.gc==null)return p.g<2;return x[0].split(',').some(c=>t.cs.has(c));}
+const GUIDE=['Michelin','Gambero Rosso','Slow Food',"L'Espresso",'50 Top','Identità Golose',"World's 50 Best",'Falstaff','Touring Club','Il Golosario','Emilia-Romagna a Tavola','Altre guide'];
+/* 26/11/2026 (Stefano: «verifica che tutte le guide siano nei filtri con i dati corretti»): la guida si riconosce dai codici del
+   locale, così entrano anche i locali citati da una guida che valgono solo come conferma (es. 77 solo Golosario, 11 solo
+   Identità Golose: punteggio 0, quindi non «segnalati», ma la guida li cita). Stessa regola di famiglia() in crea_mappa.py. */
+const famC=c=>c.startsWith('MICH')?'Michelin':c.startsWith('GR_')?'Gambero Rosso':c.startsWith('SF_')?'Slow Food':c.startsWith('ESP')?"L'Espresso":c.startsWith('TOP50')?'50 Top':c==='IDG'?'Identità Golose':c==='W50'?"World's 50 Best":c==='ERT'?'Emilia-Romagna a Tavola':c==='GOL_R'?'Il Golosario':c==='FAL'?'Falstaff':c.startsWith('TCI')?'Touring Club':'Altre guide';
+const FAMP=new Map();
+function famP(p){if(p.gc==null)return p.g<2?p.t:[];let f=FAMP.get(p);if(!f){const cs=p.gc.split('|')[0];f=cs?[...new Set(cs.split(',').map(famC))]:[];FAMP.set(p,f);}return f;}
+const guOk=p=>famP(p).some(f=>S.gu.has(f));
+function sync(){S.cats.clear();S.subs.clear();const t=MTEMI[S.tema];
+  let gs=S.sch==='r'?[0,2]:S.sch==='p'?[1,3]:[0,1,2,3];
+  if(S.solo)gs=gs.filter(g=>g<2);
+  if(gs.length<4)gs.forEach(g=>S.cats.add(g));}
+const nAttivi=()=>(S.sch?1:0)+(S.solo?1:0)+S.gu.size+(S.tema?1:0)+(S.q?1:0);
 function disegnaFiltri(){const m=conti();
-  $('cats').innerHTML=G.map((g,gi)=>{const on=S.cats.has(gi);return `<button class="cat${on?' on':''}" style="--c:${g.c}" data-cat="${gi}" aria-pressed="${on}"><i style="background:${g.c};box-shadow:0 0 12px ${g.c}"></i><span>${g.l}</span><small>${nf.format(m.cat[gi])}</small></button>`;}).join('');
-  let h='';for(const gi of [...S.cats].sort())for(const s of G[gi].s){const k=gi+'|'+s,n=m.sub[k]||0,on=S.subs.has(k);if(!n&&!on)continue;h+=`<button class="chip${on?' on':''}" data-sub="${esc(k)}" aria-pressed="${on}">${esc(s)} <small>${nf.format(n)}</small></button>`;}
-  $('subs').innerHTML=h;$('subw').hidden=!h;
-  $('quick').innerHTML=QK.map(([k,l])=>{const on=S.quick.has(k);return `<button class="chip${on?' on':''}" data-q="${k}" aria-pressed="${on}">${esc(l)}</button>`;}).join('');
+  /* conteggi delle guide e dei temi: nella scheda scelta, con gli altri filtri attivi */
+  const gs=S.sch==='r'?[0,2]:S.sch==='p'?[1,3]:[0,1,2,3],cg={};
+  for(const p of P){if(!gs.includes(p.g))continue;if(S.solo&&p.g>1)continue;if((S.q||S.tema)&&!passa(p,'sub'))continue;for(const t of famP(p))cg[t]=(cg[t]||0)+1;}
+  const B=(on,attr,lab,n,extra='')=>`<button class="chip${on?' on':''}" ${attr} aria-pressed="${on}"${extra}>${lab}${n!=null?` <small>${nf.format(n)}</small>`:''}</button>`;
+  $('cats').innerHTML=`<div class="sch" role="group" aria-label="Ristoranti o pizzerie">${[['r','🍷 Ristoranti'],['p','🍕 Pizzerie']].map(([k,l])=>`<button type="button" data-sch="${k}" class="${S.sch===k?'on':''}" aria-pressed="${S.sch===k}">${l}</button>`).join('')}</div>`
+    +`<div class="chips" style="margin-top:10px">${B(S.solo,'data-solo="1"','🏅 Solo segnalati')}</div>`;
+  const tk=Object.keys(MTEMI).filter(k=>!S.sch||MTEMI[k].s===S.sch);
+  $('quick').innerHTML=(S.sch?'':'<div class="tcap">Ristoranti</div>')+tk.filter(k=>MTEMI[k].s==='r').map(k=>B(S.tema===k,`data-tema="${k}"`,esc(MTEMI[k].l))).join('')
+    +(S.sch?'':'<div class="tcap">Pizzerie</div>')+tk.filter(k=>MTEMI[k].s==='p').map(k=>B(S.tema===k,`data-tema="${k}"`,esc(MTEMI[k].l))).join('')
+    +(S.tema?`<p class="tdesc">${esc(MTEMI[S.tema].d)}</p>`:'');
+  $('subs').innerHTML=GUIDE.filter(f=>cg[f]||S.gu.has(f)).map(f=>B(S.gu.has(f),`data-gu="${esc(f)}"`,esc(f),cg[f]||0)).join('');$('subw').hidden=false;
   const n=nAttivi();$('fbadge').textContent=n;$('fbadge').classList.toggle('on',!!n);$('rbtn').hidden=!n;$('rcount').textContent=n;$('show').textContent='Mostra '+nf.format(m.tot)+' locali';}
+$('filt').addEventListener('click',e=>{const b=e.target.closest('[data-sch],[data-solo],[data-gu],[data-tema]');if(!b)return;
+  if(b.dataset.sch){S.sch=S.sch===b.dataset.sch?'':b.dataset.sch;if(S.tema&&S.sch&&MTEMI[S.tema].s!==S.sch)S.tema='';}
+  else if(b.dataset.solo)S.solo=!S.solo;
+  else if(b.dataset.gu){const f=b.dataset.gu;S.gu.has(f)?S.gu.delete(f):S.gu.add(f);}
+  else{const k=b.dataset.tema;S.tema=S.tema===k?'':k;if(S.tema)S.sch=MTEMI[k].s;}
+  cambia();});
 $('filt').addEventListener('click',e=>{const b=e.target.closest('[data-cat],[data-sub],[data-q]');if(!b)return;
   if(b.dataset.cat!=null){const gi=+b.dataset.cat;if(S.cats.has(gi)){S.cats.delete(gi);for(const k of [...S.subs])if(k.startsWith(gi+'|'))S.subs.delete(k);}else S.cats.add(gi);}
   else if(b.dataset.sub!=null){const k=b.dataset.sub;S.subs.has(k)?S.subs.delete(k):S.subs.add(k);}
   else{const k=b.dataset.q;S.quick.has(k)?S.quick.delete(k):S.quick.add(k);}
   cambia();});
-function cambia(){disegnaFiltri();completo();}
-function azzera(){S.cats.clear();S.subs.clear();S.quick.clear();S.q='';$('q').value='';cambia();}
+function cambia(){sync();disegnaFiltri();completo();}
+function azzera(){S.cats.clear();S.subs.clear();S.quick.clear();S.sch='';S.solo=false;S.gu.clear();S.tema='';S.q='';$('q').value='';cambia();}
 
 /* ---------- disegno ----------
    Durante i gesti si sposta e si scala solo il livello già disegnato (lo fa la scheda grafica: fluido anche su iPhone).
@@ -732,7 +790,7 @@ try{document.fonts.ready.then(()=>{if(W)completo();});}catch(e){}
 function gcA(p,c,k,t){const n=slugT(p.n).slice(0,60).replace(/^-+|-+$/g,""),cc=slugT(c.n),sl=n.endsWith(cc)?n:n+"-"+cc;return ` data-goatcounter-click="locale/${k}/${sl}" data-goatcounter-title="Clic «${t}»"`;}
 document.addEventListener("click",ev=>{const a=ev.target&&ev.target.closest&&ev.target.closest("[data-goatcounter-click]");
  if(!a||a.dataset.goatcounterBound||!window.goatcounter||!goatcounter.count)return;
- try{goatcounter.count({path:a.dataset.goatcounterClick,title:a.dataset.goatcounterTitle||"",event:true});}catch(_){}},true);</script><script>(()=>{const lv=document.getElementById('levels'),lst=document.getElementById('list');if(!lv||!lst)return;const ZC=[{"n": "Romagna", "la": 44.1444, "lo": 12.2836, "k": 3.4, "q": 1384, "s": 139}, {"n": "Salento", "la": 40.314, "lo": 18.0861, "k": 3.43, "q": 997, "s": 62}, {"n": "Lario", "la": 45.8577, "lo": 9.2058, "k": 7.82, "q": 302, "s": 51}, {"n": "Langhe", "la": 44.6212, "lo": 8.0343, "k": 9.3, "q": 198, "s": 42}, {"n": "Maremma", "la": 42.891, "lo": 11.0871, "k": 3.26, "q": 411, "s": 40}, {"n": "Costiera Amalfitana", "la": 40.6377, "lo": 14.6089, "k": 14, "q": 125, "s": 39}, {"n": "Cilento", "la": 40.2301, "lo": 15.1342, "k": 6.23, "q": 281, "s": 37}, {"n": "Monferrato", "la": 44.8984, "lo": 8.2927, "k": 5.03, "q": 415, "s": 36}, {"n": "Brianza", "la": 45.653, "lo": 9.2678, "k": 10.32, "q": 797, "s": 35}, {"n": "Val di Chiana", "la": 43.2112, "lo": 11.8123, "k": 5.53, "q": 154, "s": 34}, {"n": "Penisola Sorrentina", "la": 40.6278, "lo": 14.3888, "k": 14, "q": 122, "s": 34}, {"n": "Chianti", "la": 43.5101, "lo": 11.2713, "k": 8.18, "q": 104, "s": 25}, {"n": "Irpinia", "la": 40.9295, "lo": 14.8848, "k": 4.5, "q": 380, "s": 21}, {"n": "Roero", "la": 44.7642, "lo": 7.9581, "k": 13.32, "q": 97, "s": 18}, {"n": "Etna", "la": 37.6997, "lo": 15.0344, "k": 7.43, "q": 176, "s": 18}, {"n": "Gallura", "la": 40.9279, "lo": 9.4952, "k": 5.05, "q": 178, "s": 18}, {"n": "Castelli Romani", "la": 41.7458, "lo": 12.6957, "k": 14, "q": 195, "s": 17}, {"n": "Valtellina", "la": 46.1713, "lo": 9.8709, "k": 4.02, "q": 198, "s": 16}, {"n": "Franciacorta", "la": 45.6007, "lo": 10.0232, "k": 14, "q": 138, "s": 15}, {"n": "Val d'Orcia", "la": 43.0586, "lo": 11.6045, "k": 11.65, "q": 48, "s": 15}, {"n": "Bassa mantovana", "la": 45.0661, "lo": 10.8593, "k": 6.72, "q": 149, "s": 15}, {"n": "Lunigiana", "la": 44.1558, "lo": 9.9634, "k": 9.45, "q": 145, "s": 13}, {"n": "Golfo Paradiso", "la": 44.3704, "lo": 9.1468, "k": 14, "q": 55, "s": 12}, {"n": "Mugello", "la": 43.9811, "lo": 11.3869, "k": 10.49, "q": 86, "s": 12}, {"n": "Ciociaria", "la": 41.6407, "lo": 13.4924, "k": 4.58, "q": 422, "s": 12}, {"n": "Valpolicella", "la": 45.5243, "lo": 10.9075, "k": 14, "q": 72, "s": 11}, {"n": "Carnia", "la": 46.4241, "lo": 12.9332, "k": 8.03, "q": 69, "s": 9}, {"n": "Valle d'Itria", "la": 40.7365, "lo": 17.338, "k": 11.17, "q": 83, "s": 9}, {"n": "Murge", "la": 41.0871, "lo": 16.5432, "k": 6.23, "q": 227, "s": 8}, {"n": "Pollino", "la": 39.9533, "lo": 16.1485, "k": 7.2, "q": 82, "s": 8}, {"n": "Alto Garda", "la": 45.8884, "lo": 10.8568, "k": 14, "q": 76, "s": 8}, {"n": "Lomellina", "la": 45.256, "lo": 8.8524, "k": 8.33, "q": 154, "s": 7}, {"n": "Sila", "la": 39.2627, "lo": 16.6112, "k": 6.36, "q": 76, "s": 6}, {"n": "Valnerina", "la": 42.7156, "lo": 12.9099, "k": 8.72, "q": 42, "s": 4}, {"n": "Gran Sasso", "la": 42.3533, "lo": 13.4033, "k": 7.8, "q": 115, "s": 4}, {"n": "Barbagia", "la": 40.2035, "lo": 9.255, "k": 7.31, "q": 45, "s": 4}, {"n": "Alto Molise", "la": 41.8079, "lo": 14.332, "k": 14, "q": 23, "s": 3}, {"n": "Campidano", "la": 39.4913, "lo": 8.9376, "k": 6.19, "q": 140, "s": 2}, {"n": "Altopiano del Poro", "la": 38.6474, "lo": 15.9059, "k": 14, "q": 47, "s": 1}, {"n": "Garfagnana", "la": 44.1299, "lo": 10.3763, "k": 11.76, "q": 58, "s": 0}, {"n": "Ogliastra", "la": 39.8115, "lo": 9.5001, "k": 14, "q": 2, "s": 0}];
+ try{goatcounter.count({path:a.dataset.goatcounterClick,title:a.dataset.goatcounterTitle||"",event:true});}catch(_){}},true);</script><script>(()=>{const lv=document.getElementById('levels'),lst=document.getElementById('list');if(!lv||!lst)return;const ZC=[{"n": "Romagna", "la": 44.1444, "lo": 12.2836, "k": 3.4, "q": 1384, "s": 139}, {"n": "Salento", "la": 40.314, "lo": 18.0861, "k": 3.43, "q": 997, "s": 65}, {"n": "Lario", "la": 45.8577, "lo": 9.2058, "k": 7.82, "q": 302, "s": 51}, {"n": "Langhe", "la": 44.6212, "lo": 8.0343, "k": 9.3, "q": 198, "s": 44}, {"n": "Brianza", "la": 45.653, "lo": 9.2678, "k": 10.32, "q": 797, "s": 42}, {"n": "Maremma", "la": 42.891, "lo": 11.0871, "k": 3.26, "q": 411, "s": 40}, {"n": "Monferrato", "la": 44.8984, "lo": 8.2927, "k": 5.03, "q": 415, "s": 39}, {"n": "Costiera Amalfitana", "la": 40.6377, "lo": 14.6089, "k": 14, "q": 125, "s": 39}, {"n": "Cilento", "la": 40.2301, "lo": 15.1342, "k": 6.23, "q": 281, "s": 37}, {"n": "Val di Chiana", "la": 43.2112, "lo": 11.8123, "k": 5.53, "q": 154, "s": 34}, {"n": "Penisola Sorrentina", "la": 40.6278, "lo": 14.3888, "k": 14, "q": 122, "s": 34}, {"n": "Chianti", "la": 43.5101, "lo": 11.2713, "k": 8.18, "q": 104, "s": 25}, {"n": "Irpinia", "la": 40.9295, "lo": 14.8848, "k": 4.5, "q": 380, "s": 22}, {"n": "Roero", "la": 44.7642, "lo": 7.9581, "k": 13.32, "q": 97, "s": 19}, {"n": "Etna", "la": 37.6997, "lo": 15.0344, "k": 7.43, "q": 176, "s": 18}, {"n": "Gallura", "la": 40.9279, "lo": 9.4952, "k": 5.05, "q": 178, "s": 18}, {"n": "Castelli Romani", "la": 41.7458, "lo": 12.6957, "k": 14, "q": 195, "s": 17}, {"n": "Valtellina", "la": 46.1713, "lo": 9.8709, "k": 4.02, "q": 198, "s": 16}, {"n": "Franciacorta", "la": 45.6007, "lo": 10.0232, "k": 14, "q": 138, "s": 15}, {"n": "Val d'Orcia", "la": 43.0586, "lo": 11.6045, "k": 11.65, "q": 48, "s": 15}, {"n": "Bassa mantovana", "la": 45.0661, "lo": 10.8593, "k": 6.72, "q": 149, "s": 15}, {"n": "Lunigiana", "la": 44.1558, "lo": 9.9634, "k": 9.45, "q": 145, "s": 13}, {"n": "Golfo Paradiso", "la": 44.3704, "lo": 9.1468, "k": 14, "q": 55, "s": 13}, {"n": "Mugello", "la": 43.9811, "lo": 11.3869, "k": 10.49, "q": 86, "s": 12}, {"n": "Ciociaria", "la": 41.6407, "lo": 13.4924, "k": 4.58, "q": 422, "s": 12}, {"n": "Valpolicella", "la": 45.5243, "lo": 10.9075, "k": 14, "q": 72, "s": 11}, {"n": "Valle d'Itria", "la": 40.7365, "lo": 17.338, "k": 11.17, "q": 83, "s": 10}, {"n": "Carnia", "la": 46.4241, "lo": 12.9332, "k": 8.03, "q": 69, "s": 9}, {"n": "Alto Garda", "la": 45.8884, "lo": 10.8568, "k": 14, "q": 76, "s": 9}, {"n": "Lomellina", "la": 45.256, "lo": 8.8524, "k": 8.33, "q": 154, "s": 8}, {"n": "Murge", "la": 41.0871, "lo": 16.5432, "k": 6.23, "q": 227, "s": 8}, {"n": "Pollino", "la": 39.9533, "lo": 16.1485, "k": 7.2, "q": 82, "s": 8}, {"n": "Sila", "la": 39.2627, "lo": 16.6112, "k": 6.36, "q": 76, "s": 7}, {"n": "Valnerina", "la": 42.7156, "lo": 12.9099, "k": 8.72, "q": 42, "s": 4}, {"n": "Gran Sasso", "la": 42.3533, "lo": 13.4033, "k": 7.8, "q": 115, "s": 4}, {"n": "Barbagia", "la": 40.2035, "lo": 9.255, "k": 7.31, "q": 45, "s": 4}, {"n": "Alto Molise", "la": 41.8079, "lo": 14.332, "k": 14, "q": 23, "s": 3}, {"n": "Campidano", "la": 39.4913, "lo": 8.9376, "k": 6.19, "q": 140, "s": 2}, {"n": "Altopiano del Poro", "la": 38.6474, "lo": 15.9059, "k": 14, "q": 47, "s": 1}, {"n": "Garfagnana", "la": 44.1299, "lo": 10.3763, "k": 11.76, "q": 58, "s": 0}, {"n": "Ogliastra", "la": 39.8115, "lo": 9.5001, "k": 14, "q": 2, "s": 0}];
  const L=['Comuni','Province','Zone','Regioni'];let zona=false,mio=0;
  lv.insertAdjacentHTML('afterend','<span class="magg" role="group" aria-label="Aggregatore della mappa"><button type="button" id="mg-meno" aria-label="Più dettaglio">−</button><span id="mg-lab" aria-live="polite"></span><button type="button" id="mg-piu" aria-label="Più raggruppato">+</button></span>');
  document.getElementById('items').insertAdjacentHTML('afterend','<div id="zitems" role="list" aria-label="Zone tradizionali"><div class="zh"><b>'+ZC.length+' zone</b><span>tradizionali</span></div>'+ZC.map((z,i)=>`<button type="button" data-i="${i}"><span><b>${z.n}</b><small>${z.s} segnalati · ${z.q} locali</small></span><i aria-hidden="true">›</i></button>`).join('')+'<p>Le zone tradizionali di Ach’s Dishes e Ach’s Places, con i comuni che le formano secondo unioni di comuni, parchi e disciplinari dei vini.</p></div>');
