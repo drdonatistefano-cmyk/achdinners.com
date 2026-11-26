@@ -756,7 +756,7 @@ html body nav.tabs{display:flex!important;gap:10px!important;align-items:center;
 html body nav.tabs a[data-v=rico],html body nav.tabs a[data-v=piz]{flex:0 1 240px;justify-content:center;align-items:center;flex-direction:row;gap:8px;border:1.5px solid var(--line)!important;border-radius:14px!important;background:var(--paper)!important;padding:12px 18px!important;margin:0!important;min-height:54px;font:700 18px/1.15 var(--sans)!important;color:var(--ink)!important;box-shadow:0 2px 10px -6px rgba(0,0,0,.25)!important}
 html body nav.tabs a[data-v=rico]:hover,html body nav.tabs a[data-v=piz]:hover{border-color:var(--acc)!important}
 html body nav.tabs a[data-v].on{background:var(--acc)!important;border-color:var(--acc)!important;color:var(--on)!important;box-shadow:0 8px 20px -10px var(--acc)!important}
-html body nav.tabs a[data-v=rico] .n,html body nav.tabs a[data-v=piz] .n{font:600 13px/1 var(--sans)!important;color:inherit!important;opacity:.75}
+html body nav.tabs a[data-v=rico] .n,html body nav.tabs a[data-v=piz] .n{font:600 13px/1 var(--sans)!important;color:var(--mute)!important;opacity:1!important}
 html body nav.tabs a[data-v].on .ti,html body nav.tabs a[data-v].on .n{color:var(--on)!important;stroke:var(--on)}
 html body nav.tabs a[data-v=rico] .ti,html body nav.tabs a[data-v=piz] .ti{width:22px;height:22px}
 html body nav.tabs a.met{margin-left:auto!important;border:0!important;background:none!important;padding:8px 6px!important;font-size:14px!important;min-height:44px}
