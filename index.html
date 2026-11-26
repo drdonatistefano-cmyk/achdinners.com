@@ -976,7 +976,7 @@ if(["","classifica","ordina","ristoranti"].includes((location.hash||"").slice(1)
   $("grid").innerHTML=PRIMI.slice(0,12).map(x=>card(x,{q:[]})).join("");
   setTimeout(()=>{if(!L.length&&$("grid").children.length===12)$("grid").insertAdjacentHTML("beforeend",PRIMI.slice(12,40).map(x=>card(x,{q:[]})).join(""));},0);}
 // ---- velocità (velocizza_food.py): manifest sempre fresco, istantanea, anticipo, indice delle parole ----
-const LSK="achfood_man",ISK="achfood_ist_50592f49";let TOCCO=null,AUX=null,AUXP=null;
+const LSK="achfood_man",ISK="achfood_ist_672f4573";let TOCCO=null,AUX=null,AUXP=null;
 function lsL(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function usaMan(m){if(!m||!m.idx)return;IDXF=m.idx;AUXF=m.aux;EXF=m.extra;FILES=m.files;}
@@ -1621,7 +1621,166 @@ document.addEventListener("keydown",e=>{if(e.key=="Escape"&&$("pp-pan").classLis
   addEventListener("hashchange",()=>{setTimeout(agg,80);setTimeout(agg,700);});setTimeout(agg,1500);setTimeout(agg,4000);
   $("dk-fil").onclick=apriF;$("dk-pp").onclick=()=>ppApri(true);$("dk-su").onclick=()=>scrollTo({top:0,behavior:"smooth"});})();
 $("pp-regola").onclick=()=>ppApri(true);ppTab(false);ppChips();
+/* 26/11/2026 (Stefano 15:05-15:23, «La mia guida»): ognuno salva sul suo telefono la propria guida e la ritrova.
+   Il nome «Ach's Dinners» resta; le informazioni si chiedono SOLO quando si preme il bottone; per ora solo Dinners.
+   Niente account né server: tutto in localStorage («dinners-mia») e, per un altro telefono o per gli amici, in un link
+   (#mia=…) che porta nome, pesi e preferiti. I calcoli della classifica non cambiano: si riusano i pesi di sempre
+   («dinners-pesi», «dinners-pesi-pz»). */
+const MG_K="dinners-mia";
+let MG=(()=>{try{const s=JSON.parse(localStorage.getItem(MG_K)||"null");if(s&&typeof s==="object")return {nome:String(s.nome||"").slice(0,40),cl:Array.isArray(s.cl)?s.cl:[],fav:Array.isArray(s.fav)?s.fav:[],solo:false};}catch(_){}return {nome:"",cl:[],fav:[],solo:false};})();
+const mgSalva=()=>{try{localStorage.setItem(MG_K,JSON.stringify({nome:MG.nome,cl:MG.cl,fav:MG.fav}))}catch(_){}};
+const mgT=(it,en)=>EN?en:it;
+const mgChiave=x=>x.n+"|"+x.c+"|"+x.p;
+const mgFav=x=>MG.fav.includes(mgChiave(x));
+/* pesi di una scheda (ristoranti o pizzerie) in forma corta: il tema se è un tema, altrimenti solo le guide cambiate */
+function mgPesiCorti(C){const s=C.S;if(s.prof>=0)return {p:s.prof};const w={};for(const k in s.W)if(Math.abs(s.W[k]-1)>.001)w[k]=Math.round(s.W[k]*100)/100;return {p:-1,w};}
+function mgUsaPesi(C,d){if(!d)return;const s=C.S;
+  if(d.p>=0&&C.PROF[d.p]){s.prof=d.p;s.W={...C.PROF[d.p][1]};}
+  else{s.prof=-1;s.W=Object.assign({...C.UNO},Object.fromEntries(Object.entries(d.w||{}).filter(([k,v])=>k in C.UNO&&typeof v==="number"&&v>=0&&v<=2)));}
+  try{localStorage.setItem(C.K,JSON.stringify({p:s.prof,w:s.W}))}catch(_){}}
+function mgApplica(c){mgUsaPesi(RCC,c.r);mgUsaPesi(PZC,c.z);ppRicalcola();ppChips();draw();}
+/* link personale: JSON in base64 «da indirizzo» (niente + / =) */
+const mgCod=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+const mgDec=t=>JSON.parse(decodeURIComponent(escape(atob(t.replace(/-/g,"+").replace(/_/g,"/")))));
+/* il link porta sempre al sito vero (anche da un'anteprima o dalla versione inglese resta la pagina giusta) */
+function mgLink(){const base=/(^|\.)achdinners\.com$/.test(location.hostname)?location.origin+location.pathname:"https://achdinners.com/";return base+"#mia="+mgCod({v:1,n:MG.nome,r:mgPesiCorti(RCC),z:mgPesiCorti(PZC),f:MG.fav.slice(0,200)});}
+function mgLeggiLink(h){try{const o=mgDec(h);if(!o||o.v!==1)return null;
+  return {nome:String(o.n||"").slice(0,40),r:o.r||{p:0},z:o.z||{p:0},f:Array.isArray(o.f)?o.f.filter(s=>typeof s==="string").slice(0,200):[]};}catch(_){return null;}}
+
+document.body.insertAdjacentHTML("beforeend",`<div class="pp-velo" id="mg-velo"></div>
+<section class="pp-pan mg-pan" id="mg-pan" role="dialog" aria-modal="true" aria-labelledby="mg-tit" aria-hidden="true" inert>
+ <div class="pp-testa"><div class="pp-man"></div><div class="pp-r1"><h2 id="mg-tit">${mgT("La mia guida","My guide")}</h2><button class="pp-fatto" id="mg-chiudi" type="button">${mgT("Fatto","Done")}</button></div></div>
+ <div class="pp-corpo" id="mg-corpo"></div></section>`);
+const mgEsc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let MG_IMP=null;/* guida arrivata da un link, in attesa del sì */
+function mgCorpo(){const e=$("mg-corpo");
+  if(MG_IMP){const g=MG_IMP;e.innerHTML=`<p class="mg-p">${g.nome?mgT("Hai aperto la guida di","You opened the guide of")+` <b>${mgEsc(g.nome)}</b>`:mgT("Hai aperto una guida personale","You opened a personal guide")}${g.f.length?` (${g.f.length} ${mgT("preferiti","favourites")})`:""}.</p>
+    <p class="mg-p">${mgT("Vuoi usarla su questo telefono? Le tue scelte di adesso restano salvate fra le tue classifiche.","Use it on this phone? Your current choices stay saved among your rankings.")}</p>
+    <div class="mg-az"><button class="btn pri" type="button" id="mg-imp-si">${mgT("Usa questa guida","Use this guide")}</button><button class="btn" type="button" id="mg-imp-no">${mgT("No, grazie","No, thanks")}</button></div>`;
+    $("mg-imp-si").onclick=()=>{const prima={nome:mgT("Le mie scelte di prima","My earlier choices"),r:mgPesiCorti(RCC),z:mgPesiCorti(PZC)};
+      if(!MG.cl.some(c=>JSON.stringify([c.r,c.z])===JSON.stringify([prima.r,prima.z])))MG.cl.push(prima);
+      const nome=g.nome?mgT("La guida di ","Guide of ")+g.nome:mgT("Guida ricevuta","Received guide");
+      MG.cl=MG.cl.filter(c=>c.nome!==nome);MG.cl.push({nome,r:g.r,z:g.z,f:g.f});
+      if(!MG.nome&&g.nome)MG.nome=g.nome;/* è il proprio link aperto su un altro telefono, o un amico: il nome si può cambiare */
+      for(const k of g.f)if(!MG.fav.includes(k))MG.fav.push(k);
+      MG_IMP=null;mgSalva();mgApplica({r:g.r,z:g.z});mgCorpo();mgBottone();};
+    $("mg-imp-no").onclick=()=>{MG_IMP=null;mgApri(false);};return;}
+  if(!MG.nome){e.innerHTML=`<p class="mg-p">${mgT("Salva su questo telefono la tua classifica e i tuoi locali preferiti, e ritrovali quando torni. Niente registrazione: resta tutto qui, sul telefono.","Save your ranking and your favourite places on this phone and find them when you come back. No sign-up: everything stays here, on the phone.")}</p>
+    <label class="mg-lab" for="mg-nome">${mgT("Come vuoi chiamare la tua guida?","What do you want to call your guide?")}</label>
+    <div class="mg-riga"><input id="mg-nome" class="mg-in" maxlength="40" autocomplete="given-name" placeholder="${mgT("Il tuo nome","Your name")}"><button class="btn pri" type="button" id="mg-inizia">${mgT("Inizia","Start")}</button></div>`;
+    const ok=()=>{const v=$("mg-nome").value.trim();if(!v){$("mg-nome").focus();return;}MG.nome=v.slice(0,40);mgSalva();mgCorpo();mgBottone();};
+    $("mg-inizia").onclick=ok;$("mg-nome").onkeydown=ev=>{if(ev.key==="Enter")ok();};return;}
+  const favX=MG.fav.map(k=>L.find(x=>mgChiave(x)===k)).filter(Boolean);
+  e.innerHTML=`<p class="mg-p">${mgT("La guida di","The guide of")} <b>${mgEsc(MG.nome)}</b> · <button class="pp-txt mg-mini" type="button" id="mg-rinomina">${mgT("cambia nome","rename")}</button></p>
+   <div class="pp-sez">${mgT("1. I pesi delle guide","1. The guides' weights")}</div>
+   <p class="mg-n">${mgStatoPesi()}</p>
+   <button class="btn pri mg-pesi" type="button" id="mg-pesi">${mgT("Regola i pesi","Adjust the weights")}</button>
+   <div class="pp-sez">${mgT("2. Le mie classifiche","2. My rankings")}</div>
+   <p class="mg-n">${mgT("Dai un nome ai pesi di adesso (ristoranti e pizzerie insieme) e passa da una classifica all'altra.","Name the current weights (restaurants and pizzerias together) and switch between rankings.")}</p>
+   <ul class="mg-l">${MG.cl.map((c,i)=>`<li><span>${mgEsc(c.nome)}</span><button class="btn" type="button" data-usa="${i}">${mgT("Usa","Use")}</button><button class="pp-txt mg-mini" type="button" data-via="${i}" aria-label="${mgT("Togli","Remove")} ${mgEsc(c.nome)}">${mgT("togli","remove")}</button></li>`).join("")||`<li class="mg-vuoto">${mgT("Ancora nessuna classifica salvata.","No saved ranking yet.")}</li>`}</ul>
+   <div class="mg-riga"><input id="mg-cl" class="mg-in" maxlength="40" placeholder="${mgT("Nome della classifica (es. Cene con gli amici)","Ranking name (e.g. Dinners with friends)")}"><button class="btn pri" type="button" id="mg-salva">${mgT("Salva","Save")}</button></div>
+   <div class="pp-sez">${mgT("3. I miei preferiti","3. My favourites")} · ${favX.length}</div>
+   ${favX.length?`<label class="mg-solo"><input type="checkbox" id="mg-solo"${MG.solo?" checked":""}> ${mgT("Mostra solo i miei preferiti nell'elenco","Show only my favourites in the list")}</label>
+   <ul class="mg-l">${favX.map(x=>`<li><button class="pp-txt mg-apri" type="button" data-k="${mgEsc(mgChiave(x))}">${mgEsc(x.n)}</button><small>${mgEsc(x.c)} (${mgEsc(x.p)})</small></li>`).join("")}</ul>`
+   :`<p class="mg-n">${mgT("Apri la scheda di un locale e tocca «♡ Preferito».","Open a place and tap «♡ Favourite».")}</p>`}
+   <div class="pp-sez">${mgT("4. Su un altro telefono o per un amico","4. On another phone or for a friend")}</div>
+   <p class="mg-n">${mgT("Il link porta nome, pesi e preferiti: chi lo apre sceglie se usarli.","The link carries name, weights and favourites: whoever opens it chooses whether to use them.")}</p>
+   <div class="mg-riga"><input id="mg-link" class="mg-in" readonly aria-label="${mgT("Il link della mia guida","My guide's link")}"><button class="btn pri" type="button" id="mg-cond">${navigator.share?mgT("Condividi","Share"):mgT("Copia","Copy")}</button></div>
+   <p class="mg-n" id="mg-esito" aria-live="polite"></p>
+   <p class="pp-piede"><button class="pp-txt mg-mini" type="button" id="mg-azzera">${mgT("Togli la mia guida da questo telefono","Remove my guide from this phone")}</button></p>`;
+  $("mg-pesi").onclick=()=>{MG_DAPESI=true;mgApri(false);ppApri(true);};
+  $("mg-link").value=mgLink();$("mg-link").onfocus=ev=>ev.target.select();
+  $("mg-cond").onclick=async()=>{const u=mgLink();$("mg-link").value=u;
+    if(navigator.share){try{await navigator.share({title:"Ach's Dinners",text:mgT("La guida di ","The guide of ")+MG.nome,url:u});return;}catch(err){if(err&&err.name==="AbortError")return;/* condivisione non permessa: si copia */}}
+    try{await navigator.clipboard.writeText(u);$("mg-esito").textContent=mgT("Link copiato.","Link copied.");}catch(_){$("mg-link").select();$("mg-esito").textContent=mgT("Tieni premuto sul link per copiarlo.","Press and hold the link to copy it.");}};
+  $("mg-rinomina").onclick=()=>{MG.nome="";mgCorpo();setTimeout(()=>$("mg-nome")&&$("mg-nome").focus(),50);};
+  $("mg-salva").onclick=()=>{const v=$("mg-cl").value.trim()||mgT("Classifica ","Ranking ")+(MG.cl.length+1);MG.cl=MG.cl.filter(c=>c.nome!==v);MG.cl.push({nome:v.slice(0,40),r:mgPesiCorti(RCC),z:mgPesiCorti(PZC)});mgSalva();mgCorpo();};
+  e.querySelectorAll("[data-usa]").forEach(b=>b.onclick=()=>{const c=MG.cl[+b.dataset.usa];if(c){mgApplica(c);$("mg-esito")&&($("mg-esito").textContent="");b.textContent=mgT("In uso","In use");}});
+  e.querySelectorAll("[data-via]").forEach(b=>b.onclick=()=>{MG.cl.splice(+b.dataset.via,1);mgSalva();mgCorpo();});
+  e.querySelectorAll(".mg-apri").forEach(b=>b.onclick=()=>{const x=L.find(y=>mgChiave(y)===b.dataset.k);if(x){mgApri(false);apri(x);}});
+  if($("mg-solo"))$("mg-solo").onchange=ev=>{MG.solo=ev.target.checked;S.shown=40;draw();};
+  $("mg-azzera").onclick=()=>{MG={nome:"",cl:[],fav:[],solo:false};try{localStorage.removeItem(MG_K)}catch(_){}mgCorpo();mgBottone();draw();};}
+function mgApri(on){const p=$("mg-pan");p.classList.toggle("on",on);$("mg-velo").classList.toggle("on",on);p.setAttribute("aria-hidden",!on);p.inert=!on;document.body.style.overflow=on?"hidden":"";
+  if(on){if(L&&L.length)ppPrepara();mgCorpo();$("mg-chiudi").focus();}}
+$("mg-chiudi").onclick=()=>mgApri(false);$("mg-velo").onclick=()=>mgApri(false);
+document.addEventListener("keydown",e=>{if(e.key=="Escape"&&$("mg-pan").classList.contains("on"))mgApri(false)});
+/* 26/11/2026 16:13 (Stefano: «La mia guida con il cuore al posto della scelta di Ach»): il primo tema, che era «La scelta
+   di Ach», diventa «♥ La mia guida» e parte con gli stessi pesi (PP_PROF[0]: la classifica di partenza non cambia).
+   Toccato quando non è scelto: torna alla propria guida (gli ultimi pesi scelti a mano, se ci sono) o ai pesi di partenza.
+   Toccato quando è già scelto: apre «La mia guida» (nome, classifiche, preferiti, link); solo allora si chiede il nome. */
+/* 26/11/2026 16:23 (Stefano: «Come faccio a selezionare i pesi? Non è intuitiva»): i pesi si regolano da «La mia guida»
+   (sezione 1, bottone «Regola i pesi»); chiusi i cursori con «Fatto» si torna in «La mia guida» per dare un nome alla classifica. */
+let MG_DAPESI=false;
+function mgStatoPesi(){const n=Object.keys(PP_R).filter(k=>Math.abs(PP.W[k]-1)>.04).length,cosa=PP_CTX===PZC?mgT("pizzerie","pizzerias"):mgT("ristoranti","restaurants");
+  return PP.prof===0?mgT("Ora ("+cosa+"): come la scelta di Ach, il punto di partenza. Con «Regola i pesi» decidi quanto conta ogni guida.","Now ("+cosa+"): like Ach's choice, the starting point. With «Adjust the weights» you decide how much each guide counts.")
+    :PP.prof>0?mgT("Ora ("+cosa+"): il tema «"+PP_PROF[PP.prof][0]+"».","Now ("+cosa+"): the «"+PP_PROF[PP.prof][0]+"» theme.")
+    :mgT("Ora ("+cosa+"): pesi scelti da te, "+n+(n===1?" guida cambiata.":" guide cambiate."),"Now ("+cosa+"): your own weights, "+n+" guide"+(n===1?"":"s")+" changed.");}
+const mgPP0=ppApri;ppApri=function(on){mgPP0.apply(this,arguments);if(!on&&MG_DAPESI){MG_DAPESI=false;mgApri(true);}};
+const MG_ICO='<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>';
+const mgMieiK=()=>PP_KEY+"-mia";
+const mgMieiSalva=()=>{if(PP.prof<0)try{localStorage.setItem(mgMieiK(),JSON.stringify(PP.W))}catch(_){}};
+function mgBottone(){const b=$("pp-chips")&&$("pp-chips").firstElementChild;if(!b)return;
+  const v=b.querySelector("svg");if(v)v.innerHTML=MG_ICO;
+  const t=b.querySelector("span");if(t)t.textContent=mgT("La mia guida","My guide");
+  b.title=MG.nome?mgT("La guida di ","Guide of ")+MG.nome:mgT("La mia guida","My guide");b.classList.add("mg-chip");
+  b.setAttribute("aria-pressed",PP.prof<=0);b.setAttribute("aria-haspopup","dialog");
+  b.onclick=()=>{if(PP.prof<=0){mgApri(true);return;}
+    let w=null;try{w=JSON.parse(localStorage.getItem(mgMieiK())||"null");}catch(_){}
+    if(w&&typeof w==="object"){PP.prof=-1;PP.W=Object.assign({...PP_UNO},w);}else{PP.prof=0;PP.W={...PP_PROF[0][1]};}
+    ppSalva();ppRicalcola();ppChips();draw();};
+  [...$("pp-chips").children].forEach((c,i)=>{if(i>0&&c.onclick&&!c.dataset.mg){const o=c.onclick;c.dataset.mg=1;c.onclick=()=>{mgMieiSalva();o();};}});}
+const mgChips0=ppChips;ppChips=function(){mgChips0.apply(this,arguments);mgBottone();
+  const t=$("pp-regt");if(t){const n=Object.keys(PP_R).filter(k=>Math.abs(PP.W[k]-1)>.04).length;
+    t.textContent=PP.prof<0?mgT("I tuoi pesi · ","Your weights · ")+n+(n===1?mgT(" guida cambiata"," guide changed"):mgT(" guide cambiate"," guides changed")):mgT("Regola i pesi della tua guida","Adjust your guide's weights");}};
+{const h=$("pp-tit");if(h)h.textContent=mgT("I miei pesi","My weights");}
+const mgDesc0=ppDesc;ppDesc=function(){mgDesc0.apply(this,arguments);const e=$("pp-desc");if(!e||PP.prof>0)return;
+  e.textContent=(PP.prof<0?mgT("La tua guida, con i pesi scelti da te. ","Your guide, with the weights you chose. "):mgT("La tua guida parte dalla scelta di Ach: tradizione e prezzo giusto prima di tutto. ","Your guide starts from Ach's choice: tradition and fair prices first. "))
+    +mgT("Tocca di nuovo «La mia guida» per salvarla col tuo nome, tenere i preferiti e mandarla a un amico.","Tap «My guide» again to save it with your name, keep favourites and send it to a friend.");};
+ppChips();
+/* preferiti: cuore sulle schede dell'elenco, bottone nella scheda del locale, filtro «solo preferiti» */
+const mgCard0=card;card=function(x,Q){const h=mgCard0(x,Q);return MG.fav.length&&mgFav(x)?h.replace('<div class="cname">','<div class="cname"><span class="mg-cuore" aria-label="'+mgT("preferito","favourite")+'">♥</span> '):h;};
+const mgFiltrati0=filtrati;filtrati=function(){const r=mgFiltrati0.apply(this,arguments);return MG.solo&&MG.fav.length?r.filter(mgFav):r;};
+const mgApri0=apri;apri=function(x){mgApri0(x);const a=$("sazioni");if(!a)return;
+  const b=document.createElement("button");b.type="button";b.className="btn mg-pref";
+  const t=()=>{const on=mgFav(x);b.textContent=on?"♥ "+mgT("Preferito","Favourite"):"♡ "+mgT("Preferito","Favourite");b.setAttribute("aria-pressed",on);};
+  b.onclick=()=>{const k=mgChiave(x),i=MG.fav.indexOf(k);if(i>=0)MG.fav.splice(i,1);else MG.fav.push(k);mgSalva();t();mgBottone();draw();};t();a.appendChild(b);};
+/* link #mia=… aperto: si chiede prima di usarlo (niente cambia da solo) */
+(function(){const h=location.hash||"";if(!h.startsWith("#mia="))return;const g=mgLeggiLink(h.slice(5));history.replaceState(null,"","#ristoranti");
+  /* la pagina ha già scelto la vista «Ristoranti» (un indirizzo sconosciuto vale #ristoranti): niente rotta() qui, i dati non ci sono ancora */
+  if(!g)return;MG_IMP=g;setTimeout(()=>mgApri(true),300);})();
 </script>
+<style id="la-mia-guida">
+/* 26/11/2026 (Stefano): «La mia guida» (pannello e cuore nell'elenco); il riquadro col cuore è il primo dei temi */
+.mg-p{margin:14px 0 6px;line-height:1.45}.mg-n{margin:4px 0 8px;color:var(--mute);font-size:14px;line-height:1.45}
+.mg-lab{display:block;font:600 14px var(--sans);margin:14px 0 6px}
+.mg-riga{display:flex;gap:8px;align-items:center;margin:6px 0 4px}
+.mg-in{flex:1;min-width:0;min-height:44px;border:1px solid var(--line);border-radius:12px;padding:0 12px;font:16px var(--sans);background:var(--bg);color:var(--ink)}
+.mg-l{list-style:none;margin:6px 0;padding:0}.mg-l li{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}
+.mg-l li>span,.mg-l li>.mg-apri{flex:1;text-align:left;padding:0}.mg-l small{color:var(--mute)}.mg-vuoto{color:var(--mute);font-size:14px}
+.mg-mini{min-height:36px;font-size:14px;padding:0 6px}
+.mg-solo{display:flex;gap:8px;align-items:center;min-height:44px;font-size:15px}
+.mg-az{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+/* 26/11/2026 16:34 (Stefano: «Il cuore lo voglio rosso quando attivato») */
+.mg-cuore{color:#e0262e;font-weight:700}
+#pp-chips .mg-chip[aria-pressed="true"] svg{stroke:#e0262e!important;fill:#e0262e!important;color:#e0262e!important}
+.mg-pref[aria-pressed="true"]{color:#e0262e}
+.mg-pan{height:min(80dvh,760px)}
+.mg-pesi{width:100%;justify-content:center;min-height:44px;margin:4px 0 6px}
+/* 26/11/2026 16:29 (Stefano, foto da iPhone: «in alto non è centrato»): la testa dei pannelli resta dentro lo schermo */
+.pp-r1{min-width:0}.pp-r1 h2{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pp-r1 .pp-txt,.pp-r1 .pp-fatto{flex:none;white-space:nowrap}
+@media (max-width:480px){#pp-pan .pp-r1{display:grid;grid-template-columns:minmax(0,1fr) auto auto;grid-template-areas:"tit rip fat" "come rip fat";column-gap:6px;row-gap:0;align-items:center}
+ #pp-pan .pp-r1 h2{grid-area:tit;font-size:19px;overflow:visible}#pp-pan .pp-come2{grid-area:come;justify-self:start;min-height:0;margin:0!important;padding:2px 0 0!important;font-size:13.5px;line-height:1.3}
+ #pp-pan #pp-rip{grid-area:rip;padding:0 6px;font-size:14.5px}#pp-pan #pp-fatto{grid-area:fat;padding:0 16px}}
+/* 26/11/2026 16:25 (Stefano: «su iPhone i temi giustificati»): sul telefono i sei temi in due righe di tre caselle uguali;
+   il primo (che occupava due caselle) lasciava un buco in fondo alla seconda riga */
+@media (max-width:560px){#pp-chips.pp-chips{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ #pp-chips .pp-chip:first-child{grid-column:auto!important;flex-direction:column!important;gap:0!important;font-size:12.5px!important}
+ /* pizzerie: cinque temi, due sopra e tre sotto, sempre a tutta larghezza */
+ #pp-chips.pp-chips:has(>.pp-chip:nth-child(5):last-child){grid-template-columns:repeat(6,minmax(0,1fr))!important}
+ #pp-chips:has(>.pp-chip:nth-child(5):last-child)>.pp-chip{grid-column:span 2!important}
+ #pp-chips:has(>.pp-chip:nth-child(5):last-child)>.pp-chip:nth-child(-n+2){grid-column:span 3!important}}
+</style>
 <style id="due-schede">
 /* 24/11/2026 (Stefano): le due schede ben in vista, come due grandi bottoni */
 html body nav.tabs{display:flex!important;gap:10px!important;align-items:center;border:0!important;background:none!important;box-shadow:none!important;padding:12px 0 8px!important;margin:0!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important}
