@@ -1949,6 +1949,9 @@
 "CH-ristorantetraboccopescepalom-fossacesia": {
 "ora": "trabocco-pesce-palombo-fossacesia"
 },
+"CH-traboccomucchiolagliostinati-riparibard": {
+"ora": "trabocco-mucchiola-san-vito-chietino"
+},
 "CH-villamaiella-guardiagre": {
 "ora": "villa-maiella-guardiagrele"
 },
@@ -3685,6 +3688,9 @@
 },
 "LE-brancibrunchandspecialtycoff-lecce": {
 "ora": "branci-brunch-and-specialty-coffee-lecce"
+},
+"LE-carmalmohala-diso": {
+"ora": "carem-al-mohala-diso"
 },
 "LE-daantimo-portocesar": {
 "ora": "da-antimo-porto-cesareo"
@@ -8027,6 +8033,9 @@
 "TE-osteriadeimaltagliati-toranonuov": {
 "ora": "osteria-dei-maltagliati-torano-nuovo"
 },
+"TE-relaisvillacorallo-santomero": {
+"ora": "villa-corallo-sant-omero"
+},
 "TE-ristorantebacuccodoro-mutignano": {
 "ora": "bacucco-d-oro-pineto"
 },
@@ -9101,6 +9110,9 @@
 "VI-lacaprallegra-gallio": {
 "ora": "la-capr-allegra-gallio"
 },
+"VI-laitalacontradadelgusto-crespadoro": {
+"ora": "laita-crespadoro"
+},
 "VI-lalocanda-asiago": {
 "ora": "la-locanda-asiago"
 },
@@ -9515,53 +9527,236 @@
 "VV-sandomenico-pizzo": {
 "ora": "san-domenico-ristorante-pizzo"
 },
+"n_05500e7abe": {
+"ora": "il-mattacchione-estro-in-cucina-olbia"
+},
+"n_077530066a": {
+"ora": "gusto-primitivo-manduria"
+},
 "n_0ce304d248": {
 "ora": "pizzeria-bianco-farina-bologna"
 },
 "n_0d146d1dcf": {
 "ora": "forno-brisa-castiglione-bologna"
 },
+"n_0e66ff71ff": {
+"ora": "kay-essenza-peruviana-and-piscobar-torino"
+},
+"n_11a7a42c25": {
+"ora": "luigi-lepore-ristorante-lamezia-terme"
+},
+"n_133ee36400": {
+"ora": "ristorante-aciniello-campobasso"
+},
 "n_158d452f6c": {
 "ora": "domenico-dal-1968-roma"
+},
+"n_17f3050cc4": {
+"ora": "lorto-di-nordelaia-cremolino"
+},
+"n_184b1f29a4": {
+"ora": "frank-sushi-club-terlizzi"
+},
+"n_1b36fe9819": {
+"ora": "cipria-di-mare-ristorante-teramo"
 },
 "n_1eba5095b9": {
 "ora": "la-fugascina-ristorante-mergozzo"
 },
+"n_2540b5b25a": {
+"ora": "octavin-arezzo"
+},
+"n_2ac27f896c": {
+"ora": "aqua-dune-restaurant-porto-cesareo"
+},
+"n_2c2fbdcbc4": {
+"ora": "tavernetta-all-androna-grado"
+},
+"n_2c9b0e403f": {
+"ora": "sepia-by-niko-senigallia"
+},
+"n_2ce8c23dfa": {
+"ora": "naiade-restaurant-abano-terme"
+},
 "n_2d0975f5f6": {
 "ora": "bros-trattoria-martina-franca"
+},
+"n_2ee4add0da": {
+"ora": "cubique-torino"
+},
+"n_32c284b303": {
+"ora": "pietra-rossa-venezia"
 },
 "n_34aaf81059": {
 "ora": "berbere-castel-maggiore"
 },
+"n_3619f50a75": {
+"ora": "guarini-torino"
+},
+"n_37e2f7fa9e": {
+"ora": "doba-restaurant-and-terrace-palermo"
+},
+"n_3cdf8e27dc": {
+"ora": "meja-restaurant-gradisca-d-isonzo"
+},
+"n_3ed509dcfa": {
+"ora": "yamaneko-masato-udine"
+},
+"n_4254e0722d": {
+"ora": "lievin-ian-spampatti-castione-della-presolana"
+},
+"n_446b023c4e": {
+"ora": "isaulle-quart"
+},
+"n_4567560478": {
+"ora": "contaminazioni-restaurant-somma-vesuviana"
+},
+"n_473fb2c2f9": {
+"ora": "ada-ristorante-san-sperate"
+},
+"n_484299e51d": {
+"ora": "muro-torino"
+},
+"n_48b7b36081": {
+"ora": "vela-ristorante-sciacca"
+},
+"n_497e472929": {
+"ora": "ristorante-ispinigoli-dorgali"
+},
+"n_4d2ad0cb9f": {
+"ora": "nascostoposto-terni"
+},
 "n_4d825b7b59": {
 "ora": "lo-stornello-stresa"
+},
+"n_4e33aec2e7": {
+"ora": "scjabica-santa-croce-camerina"
+},
+"n_4eb5bd4e82": {
+"ora": "due-spade-cernusco-sul-naviglio"
+},
+"n_5018d0967c": {
+"ora": "quattro-passi-massa-lubrense"
+},
+"n_51e8bb991a": {
+"ora": "tracina-cesenatico"
+},
+"n_5214c447bc": {
+"ora": "coxinendi-sanluri"
+},
+"n_5806d0d69c": {
+"ora": "bu-r-di-eugenio-boer-milano"
+},
+"n_59cc469020": {
+"ora": "scolla-baradili-sa-baradili"
+},
+"n_59e12c0d19": {
+"ora": "legami-senigallia"
+},
+"n_5a0d5af203": {
+"ora": "ristorante-la-corniola-pescocostanzo"
+},
+"n_5bf7348f95": {
+"ora": "antica-pizzeria-ciro-gaeta"
+},
+"n_5f1ea59fe6": {
+"ora": "ristorante-scrap-savona"
 },
 "n_5fc658454c": {
 "ora": "ristorante-lucia-giulianova"
 },
+"n_609f6164f4": {
+"ora": "futura-ristorante-roma"
+},
+"n_623caa81b9": {
+"ora": "ristorante-lido-vesta-vieste"
+},
+"n_6390f79059": {
+"ora": "restaurant-1500-lana"
+},
 "n_64f9122a06": {
 "ora": "trattoria-rensin-campomorone"
+},
+"n_654a22871c": {
+"ora": "acciuga-roma"
+},
+"n_65668d8142": {
+"ora": "ristorante-il-pantaleone-ristorante-belvedere-ravello"
+},
+"n_68876d457f": {
+"ora": "ristorante-la-lampara-sciacca"
+},
+"n_6ab0bff0f3": {
+"ora": "llama-maki-nikkei-milano"
 },
 "n_7a5f273189": {
 "ora": "poggio-rosso-ristorante-castelnuovo-berardenga"
 },
+"n_7a743c2a4f": {
+"ora": "der-unterwirt-restaurant-guesthouse-chiusa"
+},
 "n_7ebeaa2ab8": {
 "ora": "ristorante-lorenzo-ruta-modica"
+},
+"n_7f70f3f430": {
+"ora": "impronta-ristorante-bassano-del-grappa"
 },
 "n_800fe1db37": {
 "ora": "caffe-delle-rose-verbania"
 },
+"n_817b79171b": {
+"ora": "palais-royal-restaurant-venezia"
+},
+"n_827f23008a": {
+"ora": "la-cucina-di-san-pietro-a-pettine-trevi"
+},
+"n_833373e7f1": {
+"ora": "brace-pura-torino"
+},
 "n_83743402f5": {
 "ora": "cafe-les-paillotes-pescara"
+},
+"n_846eaa125e": {
+"ora": "hasekura-ristorante-giapponese-roma"
+},
+"n_84b127b9d0": {
+"ora": "casamatta-restaurant-manduria"
+},
+"n_84f839d8e0": {
+"ora": "ristorante-giapponese-miyabi-torino"
+},
+"n_85bc6be6f5": {
+"ora": "hostaria-ducale-genova"
 },
 "n_85df7dfc1c": {
 "ora": "osteria-mercato-stresa"
 },
+"n_88afc12e41": {
+"ora": "linearetta-milano"
+},
 "n_89e4de244e": {
 "ora": "caffe-grande-rivergaro"
 },
+"n_8b9119bb1f": {
+"ora": "osteria-bakare-peschiera-del-garda"
+},
+"n_8f1bbd22da": {
+"ora": "shiro-poporoya-milano"
+},
+"n_8f62445286": {
+"ora": "albori-bellagio"
+},
 "n_90a89d4314": {
 "ora": "luisl-s-keller-lagundo"
+},
+"n_913cdc65c7": {
+"ora": "trattoria-sarda-armidda-abbasanta"
+},
+"n_92181e3db5": {
+"ora": "bottega-dannunziana-pescara"
+},
+"n_95b1e5fbbe": {
+"ora": "a-grillo-imperia"
 },
 "n_9647119791": {
 "ora": "il-becco-della-civetta-hotel-ristorante-castelmezzano"
@@ -9569,17 +9764,71 @@
 "n_97d5b6ca7e": {
 "ora": "marco-bottega-ristorante-aminta-resort-genazzano"
 },
+"n_991214ccd4": {
+"ora": "cardamomo-ristorante-grado"
+},
+"n_9a30ef64ce": {
+"ora": "leiter-am-waal-lagundo"
+},
+"n_9afe962535": {
+"ora": "le-scodelle-cucina-e-vini-torino"
+},
+"n_9bb0661dd2": {
+"ora": "azabu-10-milano"
+},
 "n_9ccac0ac71": {
 "ora": "ristorante-lo-squalo-tortoreto"
+},
+"n_9e504610f4": {
+"ora": "ristorante-il-cormorano-castelsardo"
+},
+"n_9f4e1afa73": {
+"ora": "le-petit-restaurant-japonais-avigliana"
+},
+"n_a013ef740d": {
+"ora": "biga-milano"
+},
+"n_a52dac56ea": {
+"ora": "lido-84-gardone-riviera"
+},
+"n_a5d03c91cf": {
+"ora": "wasabi-torino"
 },
 "n_a6847c4cb0": {
 "ora": "da-mo-ristorante-matera"
 },
+"n_a6d70f80c9": {
+"ora": "ristorante-santa-elisabetta-firenze"
+},
 "n_abb00424ae": {
 "ora": "matteo-caffe-e-cucina-biella"
 },
+"n_ac92a985af": {
+"ora": "casa-colet-monastero-di-vasco"
+},
+"n_acf4bcb4fa": {
+"ora": "le-cheval-gourmet-avelengo"
+},
+"n_ad3a839efe": {
+"ora": "restaurant-tschein-nova-levante"
+},
 "n_aecfba3871": {
 "ora": "silene-seggiano"
+},
+"n_af7a7d5481": {
+"ora": "gasthof-restaurant-jager-nalles"
+},
+"n_b1b77a013d": {
+"ora": "june-collective-milano"
+},
+"n_b4cf7abb60": {
+"ora": "gaudenzio-vino-e-cucina-torino"
+},
+"n_b634a103b2": {
+"ora": "ristorante-marchese-del-grillo-fabriano"
+},
+"n_b6d4d7c8d4": {
+"ora": "osteria-alla-chiesa-monfumo"
 },
 "n_b7f93fbdb8": {
 "ora": "il-giardinetto-pettenasco"
@@ -9587,20 +9836,104 @@
 "n_b89bee1c0c": {
 "ora": "la-quartina-mergozzo"
 },
+"n_b9eef99f3c": {
+"ora": "ral-3000-cucina-di-fuoco-alassio"
+},
+"n_bcb5a35513": {
+"ora": "agriturismo-quac-bereguardo"
+},
+"n_bd46a2a3eb": {
+"ora": "impronte-bergamo"
+},
+"n_bf168c6d49": {
+"ora": "restaurant-burje-1968-corvara-in-badia"
+},
 "n_bf33b7c648": {
 "ora": "mamesa-gourmetrestaurant-malles-venosta"
 },
 "n_bf873903af": {
 "ora": "trattoria-la-botte-stresa"
 },
+"n_c07e49e589": {
+"ora": "oinos-ristorante-torino"
+},
+"n_c1e1f106ec": {
+"ora": "bifro-torino"
+},
 "n_c3104286d4": {
 "ora": "restaurant-kirchsteiger-lana"
+},
+"n_c47028405a": {
+"ora": "ristrot-guviol-torino"
+},
+"n_c6547fb4b6": {
+"ora": "anciovi-taormina"
+},
+"n_c657eb15c3": {
+"ora": "gerani-ristorante-sant-antonio-abate"
+},
+"n_c7d172c166": {
+"ora": "pirbamer-renon"
+},
+"n_c9e2cbd936": {
+"ora": "foraging-lucio-pompili-cartoceto"
+},
+"n_cad74170af": {
+"ora": "ippolito-fiumicino"
+},
+"n_d2034d952b": {
+"ora": "yoshinobu-milano"
+},
+"n_d53461f001": {
+"ora": "da-lionello-succivo"
+},
+"n_d71bbb01b0": {
+"ora": "buatta-cucina-popolana-torino"
+},
+"n_d721aac36f": {
+"ora": "maturazioni-pizzeria-san-giuseppe-vesuviano"
+},
+"n_dbd0abfcc8": {
+"ora": "gousto-torino"
+},
+"n_df5fab0938": {
+"ora": "ristorante-miseria-e-nobilta-campobasso"
+},
+"n_df935583aa": {
+"ora": "ruris-ristorante-isola-di-capo-rizzuto"
+},
+"n_e30d6ffc48": {
+"ora": "fase-cucina-spontanea-roma"
+},
+"n_e42b76d0ae": {
+"ora": "li-jalantuumene-monte-sant-angelo"
+},
+"n_e5f64db6a3": {
+"ora": "la-mugnaia-ivrea"
 },
 "n_e6e1b42139": {
 "ora": "mozzabella-street-food-bologna"
 },
+"n_e7a065f9cf": {
+"ora": "koen-restaurant-paratico"
+},
+"n_e7c8d3b2b2": {
+"ora": "antonio-chiodi-latini-torino"
+},
+"n_e8018f5942": {
+"ora": "mano-sirmione"
+},
+"n_eae571572d": {
+"ora": "matteo-grandi-in-basilica-vicenza"
+},
 "n_ec66c8f0d6": {
 "ora": "lebolle-restaurant-stresa"
+},
+"n_f0b502c732": {
+"ora": "il-circolino-monza"
+},
+"n_f55f80f8e6": {
+"ora": "testina-firenze"
 },
 "n_f56cda2ac9": {
 "ora": "laqua-by-the-lake-bistrot-pettenasco"
@@ -9611,7 +9944,16 @@
 "n_f7694a30aa": {
 "ora": "ostaria-tyrol-moena"
 },
+"n_fc4ebdbd68": {
+"ora": "n-ata-luna-restaurant-grottaminarda"
+},
 "n_fe0c99b3ad": {
 "ora": "resilienza-pineto"
+},
+"n_fe7bbee667": {
+"ora": "stadera-milano"
+},
+"n_ff5a67b339": {
+"ora": "cucina-valoria-genova"
 }
 }
