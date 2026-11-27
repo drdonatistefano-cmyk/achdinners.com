@@ -143,6 +143,9 @@
 "AN-osteriasanbiagio-fabriano": {
 "ora": "osteria-san-biagio-fabriano"
 },
+"AN-pandefrlab-senigallia": {
+"ora": "pandefra-senigallia"
+},
 "AN-pesceazzurrosenigallia-senigallia": {
 "ora": "pesceazzurro-senigallia"
 },
@@ -368,6 +371,9 @@
 "AR-relaischateauxilfalconieresp-cortona": {
 "ora": "il-falconiere-cortona"
 },
+"AR-ristorantefalterona-stia": {
+"ora": "ristorante-falterona-pratovecchio-stia"
+},
 "AR-ristorantefiorentinolocandad-sansepolcr": {
 "ora": "ristorante-fiorentino-sansepolcro"
 },
@@ -515,6 +521,9 @@
 "AV-valleverdezipasqualinadal195-atripalda": {
 "ora": "osteria-valleverde-zi-pasqualina-atripalda"
 },
+"BA-alpescatore-bari": {
+"ora": "al-pescatore-bari"
+},
 "BA-angelosabatelliristorante-putignano": {
 "ora": "angelo-sabatelli-putignano"
 },
@@ -601,6 +610,9 @@
 },
 "BG-bollerestaurant-lallio": {
 "ora": "bolle-restaurant-lallio"
+},
+"BG-circolinocittalta-bergamo": {
+"ora": "da-mimmo-ristorante-citta-alta-bergamo"
 },
 "BG-contradabricconi-oltressend": {
 "ora": "contrada-bricconi-oltressenda-alta"
@@ -1355,6 +1367,9 @@
 "BS-ristorantecasaleali-puegnagode": {
 "ora": "ristorante-casa-leali-puegnago-del-garda"
 },
+"BS-ristorantecavallino10-cecina": {
+"ora": "cavallino-10-toscolano-maderno"
+},
 "BS-ristorantedasap-esine": {
 "ora": "ristorante-da-sapi-esine"
 },
@@ -1402,6 +1417,9 @@
 },
 "BS-sensolakegarda-limonesulg": {
 "ora": "senso-lake-garda-limone-sul-garda"
+},
+"BS-sensolelocandacontemporanea-monteisola": {
+"ora": "albergo-ristorante-sensole-monte-isola"
 },
 "BS-tamiristorantetrattoriadilaz-collio": {
 "ora": "tami-ristorante-trattoria-collio"
@@ -1472,6 +1490,9 @@
 "BT-masseriabarberafarmhouse-minervinom": {
 "ora": "masseria-barbera-farmhouse-minervino-murge"
 },
+"BT-oltrelapizzacontemporanea-barletta": {
+"ora": "oltre-la-pizza-contemporanea-barletta"
+},
 "BT-osteriafrangipane-trani": {
 "ora": "osteria-frangipane-trani"
 },
@@ -1532,6 +1553,9 @@
 "BZ-cocuncellarrestaurant-sancassian": {
 "ora": "cocun-cellar-restaurant-corvara-in-badia"
 },
+"BZ-colalt-corvarainb": {
+"ora": "rifugio-col-alto-2000-mt-corvara-in-badia"
+},
 "BZ-dininglivingalpenrose-brixen": {
 "ora": "alpenrose-bressanone"
 },
@@ -1540,6 +1564,9 @@
 },
 "BZ-flurinbarrestaurantsuites-glorenza": {
 "ora": "flurin-bar-restaurant-suites-glorenza"
+},
+"BZ-gassenwirtrestaurante-chienes": {
+"ora": "hotel-und-suedtiroler-gasthaus-restaurant-gassenwirt-chienes"
 },
 "BZ-gasthausapollonia-sirmiano": {
 "ora": "gasthaus-apollonia-nalles"
@@ -1663,6 +1690,9 @@
 },
 "BZ-restaurantzurrose-appianosul": {
 "ora": "zur-rose-appiano-sulla-strada-del-vino"
+},
+"BZ-ristorantedrumlerhof-campotures": {
+"ora": "drumlerhof-campo-tures"
 },
 "BZ-ristorantefanaladina-svigilio": {
 "ora": "ristorante-fana-ladina-marebbe"
@@ -1950,7 +1980,10 @@
 "ora": "fuoritempo-canale"
 },
 "CN-gennarodipace-perno": {
-"ora": "gennaro-di-pace-castiglione-falletto"
+"ora": "gennaro-di-pace-monforte-d-alba",
+"prima": [
+"gennaro-di-pace-castiglione-falletto"
+]
 },
 "CN-guidodacostigliole-santostefa": {
 "ora": "guido-da-costigliole-santo-stefano-belbo"
@@ -2168,6 +2201,9 @@
 "CO-ilcantuccio-albavilla": {
 "ora": "il-cantuccio-albavilla"
 },
+"CO-ilserenoallagorestaurant-torno": {
+"ora": "il-sereno-al-lago-restaurant-torno"
+},
 "CO-kitchen-como": {
 "ora": "kitchen-como"
 },
@@ -2360,6 +2396,9 @@
 "CT-denatalepizzaecucina-fiumefredd": {
 "ora": "ristorante-pizzeria-de-natale-fiumefreddo-di-sicilia"
 },
+"CT-faraglionirestaurant-acicastell": {
+"ora": "faraglioni-aci-castello"
+},
 "CT-frumentosenzafretta-acireale": {
 "ora": "frumento-senzafretta-acireale"
 },
@@ -2444,6 +2483,9 @@
 "CT-vuciata-catania": {
 "ora": "vuciata-kitchen-market-catania"
 },
+"CT-zashristorante-riposto": {
+"ora": "zash-ristorante-riposto"
+},
 "CZ-abbruzzinooltre-lameziater": {
 "ora": "abbruzzino-oltre-lamezia-terme"
 },
@@ -2455,6 +2497,9 @@
 },
 "CZ-brezzafishandchill-soverato": {
 "ora": "brezza-fish-and-chill-soverato"
+},
+"CZ-calabrialcuboagriturismo-nocerateri": {
+"ora": "ristorante-agriturismo-calabrialcubo-nocera-terinese"
 },
 "CZ-curacucinacontemporanea-marinadida": {
 "ora": "cura-cucina-contemporanea-soverato"
@@ -2506,6 +2551,9 @@
 },
 "FC-lamarpizzeriaforl-forl": {
 "ora": "la-mari-pizzeria-forli"
+},
+"FC-marcucinacaffspiaggiabottega-cesenatico": {
+"ora": "la-spiaggia-cesenatico"
 },
 "FC-ondablu-sanmauroam": {
 "ora": "onda-blu-cesenatico"
@@ -2756,8 +2804,17 @@
 "FI-cestellofirenzeristorantedip-firenze": {
 "ora": "cestello-firenze-ristorante-di-pesce-firenze"
 },
+"FI-cibrocaff-firenze": {
+"ora": "cibreo-ristorante-firenze-fi-2"
+},
+"FI-cibroristorante-firenze": {
+"ora": "cibreo-ristorante-firenze"
+},
 "FI-cibroristorantecocktailbar-firenze": {
 "ora": "cibreo-ristorante-cocktail-bar-firenze"
+},
+"FI-cibrotrattoria-firenze": {
+"ora": "cibreo-ristorante-firenze-fi"
 },
 "FI-ciprianopizzeria-firenze": {
 "ora": "cipriano-pizzeria-firenze"
@@ -3152,6 +3209,9 @@
 "GE-etra-genova": {
 "ora": "etra-genova"
 },
+"GE-friggitoriasangiorgio-genova": {
+"ora": "friggitoria-san-giorgio-genova"
+},
 "GE-ilgenovese-genova": {
 "ora": "il-genovese-genova"
 },
@@ -3205,6 +3265,12 @@
 },
 "GE-lordnelsonpubrestaurant-chiavari": {
 "ora": "lord-nelson-pub-chiavari"
+},
+"GE-manuelinafocacceriabistrot-recco": {
+"ora": "manuelina-focacceria-bistrot-recco-ge"
+},
+"GE-manuelinaristorante-recco": {
+"ora": "manuelina-focacceria-bistrot-recco"
 },
 "GE-montallegrorestaurant-genova": {
 "ora": "ristorante-montallegro-genova"
@@ -3385,6 +3451,9 @@
 },
 "GR-ristorantelecciomoro-tirli": {
 "ora": "ristorante-leccio-moro-scarlino"
+},
+"GR-ristoranteoasi-follonica": {
+"ora": "ristorante-oasi-follonica"
 },
 "GR-trattoriacacciaconti-rocchetted": {
 "ora": "trattoria-cacciaconti-semproniano"
@@ -3619,6 +3688,9 @@
 },
 "LE-lirisi-lecce": {
 "ora": "li-risi-lecce"
+},
+"LE-lostricaubriacadivialedellal-lecce": {
+"ora": "l-ostrica-ubriaca-lecce"
 },
 "LE-marenuesciu-squinzano": {
 "ora": "marenuesciu-cucina-tipica-marinara-squinzano"
@@ -4139,6 +4211,9 @@
 "MI-burlagi-milano": {
 "ora": "trattoria-burla-gio-milano"
 },
+"MI-casacamperiobyrobertoconti-milano": {
+"ora": "casa-camperio-restaurant-and-cocktail-milano"
+},
 "MI-cascinamoro-locateditr": {
 "ora": "cascina-moro-locate-di-triulzi"
 },
@@ -4159,6 +4234,9 @@
 },
 "MI-credagastronomiapopolare-milano": {
 "ora": "creda-gastronomia-popolare-milano"
+},
+"MI-dagianninolangolodabruzzo-milano": {
+"ora": "da-giannino-l-angolo-d-abruzzo-milano"
 },
 "MI-danielcanzianristorantemilan-milano": {
 "ora": "danielcanzian-ristorante-milano"
@@ -4370,6 +4448,9 @@
 "MI-pepebarraitaliana-milano": {
 "ora": "pepe-barra-italiana-milano"
 },
+"MI-pizzeriamodus-milano-IJsZdU": {
+"ora": "modus-milano"
+},
 "MI-pizzeriamontegrignatrictrac-legnano": {
 "ora": "pizzeria-montegrigna-legnano"
 },
@@ -4499,6 +4580,9 @@
 "MI-trattoriatrippa-milano": {
 "ora": "trattoria-trippa-milano"
 },
+"MI-velavevodettoaportavenezia-milano": {
+"ora": "velavevodetto-a-porta-venezia-milano"
+},
 "MI-versoristorantecapitaneo-milano": {
 "ora": "verso-ristorante-capitaneo-milano"
 },
@@ -4603,6 +4687,9 @@
 },
 "MO-franceschetta58-modena": {
 "ora": "franceschetta-58-modena"
+},
+"MO-hosteriagiusti-modena": {
+"ora": "salumeria-hosteria-giusti-modena"
 },
 "MO-ilcantacucco-zocca": {
 "ora": "il-cantacucco-zocca"
@@ -4859,6 +4946,9 @@
 "NA-gianfrancoiervolinopizzaefri-ottaviano": {
 "ora": "gianfranco-iervolino-pizza-fritti-ottaviano"
 },
+"NA-ginoetotosorbillo-napoli": {
+"ora": "pizzeria-antonio-sorbillo-napoli"
+},
 "NA-ginosorbillolievitomadrealma-napoli": {
 "ora": "gino-sorbillo-lievito-madre-al-mare-napoli"
 },
@@ -5071,6 +5161,9 @@
 },
 "NA-ristorantedatonino-capri": {
 "ora": "ristorante-da-tonino-capri"
+},
+"NA-ristorantedonalfonso1890-massalubre": {
+"ora": "ristorante-don-alfonso-1890-massa-lubrense"
 },
 "NA-ristoranteepizzeriacastelnuo-napoli": {
 "ora": "ristorante-e-pizzeria-castel-nuovo-napoli"
@@ -5345,6 +5438,9 @@
 "PA-palazzaccioristorante-castelbuon": {
 "ora": "palazzaccio-ristorante-castelbuono"
 },
+"PA-ristorantecharlestonpalermoc-palermo": {
+"ora": "ristorante-charleston-palermo"
+},
 "PA-ristorantenangalarruni-castelbuon": {
 "ora": "ristorante-nangalarruni-castelbuono"
 },
@@ -5606,6 +5702,9 @@
 "PG-hosteriailgrottino-gualdocatt": {
 "ora": "il-grottino-bistrot-gualdo-cattaneo"
 },
+"PG-hotellocandastella-perugia": {
+"ora": "stella-ristorante-vineria-e-locanda-perugia"
+},
 "PG-ilgiurista-perugia": {
 "ora": "ristorante-il-giurista-perugia"
 },
@@ -5687,6 +5786,9 @@
 "PG-tipicoosteriadeisensi-montone": {
 "ora": "tipico-osteria-dei-sensi-montone"
 },
+"PG-turrenocaff-perugia": {
+"ora": "osteria-del-turreno-perugia"
+},
 "PG-vilvizio-perugia": {
 "ora": "il-vizio-perugia"
 },
@@ -5710,6 +5812,9 @@
 },
 "PI-laripadoroagriturismo-rivalto": {
 "ora": "la-ripadoro-agri-ristorante-chianni"
+},
+"PI-locandasantagataristorante-sangiulian": {
+"ora": "locanda-sant-agata-san-giuliano-terme"
 },
 "PI-osteriavecchianoceristorante-vicopisano": {
 "ora": "osteria-vecchia-noce-vicopisano"
@@ -6191,6 +6296,9 @@
 "RA-trattoriamanueli-santalucia": {
 "ora": "ristorante-trattoria-manueli-faenza"
 },
+"RA-unijapaneserestaurant-cervia": {
+"ora": "uni-omakase-cervia"
+},
 "RA-valentino-ravenna": {
 "ora": "valentino-ravenna"
 },
@@ -6374,6 +6482,9 @@
 "RM-anticapesa-roma": {
 "ora": "antica-pesa-roma"
 },
+"RM-anticofornoroscioli-roma": {
+"ora": "roscioli-roma"
+},
 "RM-antonellocolonnaresortspa-labico": {
 "ora": "antonello-colonna-resort-spa-labico"
 },
@@ -6410,11 +6521,17 @@
 "RM-boncipizzarium-roma": {
 "ora": "bonci-pizzarium-roma"
 },
+"RM-caccianiristorante-frascati": {
+"ora": "cacciani-frascati"
+},
 "RM-campocorirestaurant-roma": {
 "ora": "campocori-restaurant-roma"
 },
 "RM-carteroblio-roma": {
 "ora": "carter-oblio-roma"
+},
+"RM-casaclementina-fiumicino": {
+"ora": "pizzeria-clementina-fiumicino-rm"
 },
 "RM-casacoppelle-roma": {
 "ora": "casa-coppelle-roma"
@@ -6446,6 +6563,9 @@
 "RM-enotecacavour313-roma": {
 "ora": "enoteca-cavour-313-roma"
 },
+"RM-enotecalatorre-roma": {
+"ora": "enoteca-la-torre-roma"
+},
 "RM-feliceatestaccioroma-roma": {
 "ora": "felice-a-testaccio-roma"
 },
@@ -6454,6 +6574,9 @@
 },
 "RM-forma-civitavecc": {
 "ora": "forma-civitavecchia"
+},
+"RM-fornacestellapiazzalecce-roma": {
+"ora": "fornace-stella-roma"
 },
 "RM-frumentario-roma": {
 "ora": "frumentario-roma"
@@ -6557,6 +6680,9 @@
 "RM-lelementaretrastevere-roma": {
 "ora": "l-elementare-roma"
 },
+"RM-lievitofrancescoarnesano-roma": {
+"ora": "lievito-francesco-arnesano-roma"
+},
 "RM-lisomaritrattoriafuoriporta-tivoli": {
 "ora": "li-somari-trattoria-fuori-porta-tivoli"
 },
@@ -6617,6 +6743,9 @@
 "RM-osteriabonelli-roma": {
 "ora": "osteria-bonelli-roma"
 },
+"RM-osteriadafortunata-roma": {
+"ora": "osteria-da-fortunata-roma"
+},
 "RM-osteriadellelefante-torrimpiet": {
 "ora": "osteria-dell-elefante-cerveteri"
 },
@@ -6662,14 +6791,23 @@
 "RM-piro-roma": {
 "ora": "piro-roma"
 },
+"RM-pizzabollelanapoletanaprati-roma": {
+"ora": "sant-isidoro-pizza-e-bolle-roma"
+},
 "RM-pizzabollelanapoletanasangio-roma": {
 "ora": "fry-hard-san-giovanni-roma"
 },
 "RM-pizzabollelaromanagasometro-roma": {
 "ora": "pizza-bolle-la-romana-gasometro-roma"
 },
+"RM-pizzabolletogoprati-roma": {
+"ora": "sant-isidoro-pizza-e-bolle-roma-rm"
+},
 "RM-pizzachefroma-roma": {
 "ora": "pizza-chef-roma"
+},
+"RM-pizzeriaclementina-fiumicino": {
+"ora": "pizzeria-clementina-fiumicino"
 },
 "RM-pizzeriaiquintilifuriocamill-roma": {
 "ora": "iquintili-furio-camillo-roma"
@@ -6731,8 +6869,14 @@
 "RM-roman-roma": {
 "ora": "romane-roma"
 },
+"RM-romanapizzeriadicasa-roma": {
+"ora": "romana-pizzeria-di-casa-roma"
+},
 "RM-romoloalporto-anzio": {
 "ora": "romolo-al-porto-anzio"
+},
+"RM-rosciolisalumeriaconcucina-roma": {
+"ora": "roscioli-roma-rm"
 },
 "RM-ruvertegliafrazionata-roma": {
 "ora": "ruver-teglia-frazionata-roma"
@@ -6895,6 +7039,9 @@
 },
 "RN-lamarianna-rimini": {
 "ora": "la-marianna-rimini"
+},
+"RN-lasangiovesa-santarcang": {
+"ora": "la-sangiovesa-santarcangelo-di-romagna"
 },
 "RN-locandadavenerina-saludecio": {
 "ora": "locanda-da-venerina-saludecio"
@@ -7178,6 +7325,9 @@
 "SA-pizzeriamdia-salerno": {
 "ora": "madia-salerno"
 },
+"SA-polichettiesperienzedipizza-casalisanp": {
+"ora": "polichetti-esperienze-di-pizza-roccapiemonte"
+},
 "SA-portodelfico-pioppi": {
 "ora": "porto-del-fico-casal-velino"
 },
@@ -7261,6 +7411,9 @@
 },
 "SA-vinartepizzacucina-agropoli": {
 "ora": "vinarte-pizza-e-fuoco-agropoli"
+},
+"SA-voltadelfuenti-vietrisulm": {
+"ora": "volta-del-fuenti-vietri-sul-mare"
 },
 "SA-zass-positano": {
 "ora": "zass-positano"
@@ -7424,6 +7577,9 @@
 "SI-ristoranteredaelliwalter-bettolle": {
 "ora": "ristorante-redaelli-walter-torrita-di-siena"
 },
+"SI-ristorantetrattoriatoscanaal-sanquirico": {
+"ora": "trattoria-toscana-al-vecchio-forno-san-quirico-d-orcia"
+},
 "SI-salchetoindigeno-montepulci": {
 "ora": "salcheto-indigeno-montepulciano"
 },
@@ -7552,6 +7708,9 @@
 },
 "SR-anticaosteriausuliccenti-rosolini": {
 "ora": "antica-osteria-u-suliccenti-rosolini"
+},
+"SR-chiodoristoranteortigia-siracusa": {
+"ora": "casa-trimarchi-ristorante-in-ortigia-siracusa"
 },
 "SR-cortilespiritosanto-siracusa": {
 "ora": "cortile-spirito-santo-siracusa"
@@ -7987,6 +8146,9 @@
 },
 "TN-ristorantevillamadruzzo-cognola": {
 "ora": "ristorante-villa-madruzzo-trento"
+},
+"TN-stubehermitage-madonnadic": {
+"ora": "stube-hermitage-carisolo"
 },
 "TN-vecchiasorni-sorni": {
 "ora": "vecchia-sorni-san-michele-all-adige"
@@ -8432,6 +8594,9 @@
 "UD-lalimentaregastronomiaconcuc-udine": {
 "ora": "l-alimentare-gastronomia-con-cucina-udine"
 },
+"UD-lefucinegourmet-buttrio": {
+"ora": "le-fucine-gourmet-buttrio"
+},
 "UD-osteriaalcappello-udine": {
 "ora": "osteria-al-cappello-udine"
 },
@@ -8654,6 +8819,9 @@
 "VE-cantinaaziendeagricole-venezia": {
 "ora": "cantina-aziende-agricole-venezia"
 },
+"VE-cantinadospade-venezia": {
+"ora": "cantina-do-spade-venezia"
+},
 "VE-cantinedelvinogischiavi-venezia": {
 "ora": "cantinone-del-vino-gia-schiavi-venezia"
 },
@@ -8717,6 +8885,9 @@
 "VE-lbacarodebischeri-venezia": {
 "ora": "bacaro-de-bischeri-venezia"
 },
+"VE-losteriadisantamarina-venezia": {
+"ora": "l-osteria-di-santa-marina-venezia"
+},
 "VE-maremagno-venezia": {
 "ora": "osteria-mare-magno-venezia"
 },
@@ -8737,6 +8908,9 @@
 },
 "VE-osteriadalpupi-cavallinot": {
 "ora": "osteria-dal-pupi-cavallino-treporti"
+},
+"VE-osteriagiorgionedamasa-venezia": {
+"ora": "osteria-giorgione-da-masa-venezia"
 },
 "VE-panisfiziosedestorica-lidodijeso": {
 "ora": "panisfizio-jesolo"
@@ -8803,6 +8977,9 @@
 },
 "VE-trattoriapizzeradomori-venezia": {
 "ora": "trattoria-pizzeria-do-mori-venezia"
+},
+"VE-venissa-venezia": {
+"ora": "venissa-venezia"
 },
 "VE-vero-venezia": {
 "ora": "vero-venetian-roots-venezia"
@@ -9125,6 +9302,9 @@
 "VR-osterianumerouno-fumane": {
 "ora": "osteria-numero-uno-fumane"
 },
+"VR-osteriatrattoriaalduomo-verona": {
+"ora": "osteria-trattoria-al-duomo-verona"
+},
 "VR-pizzeriadudecope-verona": {
 "ora": "pizzeria-du-de-cope-verona"
 },
@@ -9139,6 +9319,9 @@
 },
 "VR-ristorantecavour-dossobuono": {
 "ora": "ristorante-cavour-castel-d-azzano"
+},
+"VR-ristorantecountryhotelvillad-tregnago": {
+"ora": "villa-de-winckels-tregnago"
 },
 "VR-ristorantedar-verona": {
 "ora": "dari-ristorante-enoteca-verona"
@@ -9260,6 +9443,9 @@
 "VT-trattoriadelciminodal1895-caprarola": {
 "ora": "trattoria-del-cimino-caprarola"
 },
+"VV-casaklopbyluigilepore-francavill": {
+"ora": "villa-klope-francavilla-angitola"
+},
 "VV-ristorantedeminimi-tropea": {
 "ora": "de-minimi-restaurant-tropea"
 },
@@ -9278,6 +9464,9 @@
 "n_0d146d1dcf": {
 "ora": "forno-brisa-castiglione-bologna"
 },
+"n_158d452f6c": {
+"ora": "domenico-dal-1968-roma"
+},
 "n_1eba5095b9": {
 "ora": "la-fugascina-ristorante-mergozzo"
 },
@@ -9289,6 +9478,9 @@
 },
 "n_4d825b7b59": {
 "ora": "lo-stornello-stresa"
+},
+"n_5fc658454c": {
+"ora": "ristorante-lucia-giulianova"
 },
 "n_64f9122a06": {
 "ora": "trattoria-rensin-campomorone"
@@ -9343,6 +9535,9 @@
 },
 "n_bf873903af": {
 "ora": "trattoria-la-botte-stresa"
+},
+"n_c3104286d4": {
+"ora": "restaurant-kirchsteiger-lana"
 },
 "n_e6e1b42139": {
 "ora": "mozzabella-street-food-bologna"
