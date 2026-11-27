@@ -122,6 +122,7 @@
 <url><loc>https://achdinners.com/citta/longiano-fc/</loc></url>
 <url><loc>https://achdinners.com/citta/lucca-lu/</loc></url>
 <url><loc>https://achdinners.com/citta/madesimo-so/</loc></url>
+<url><loc>https://achdinners.com/citta/malnate-va/</loc></url>
 <url><loc>https://achdinners.com/citta/mantova-mn/</loc></url>
 <url><loc>https://achdinners.com/citta/maranello-mo/</loc></url>
 <url><loc>https://achdinners.com/citta/marostica-vi/</loc></url>
@@ -142,6 +143,7 @@
 <url><loc>https://achdinners.com/citta/napoli-na/</loc></url>
 <url><loc>https://achdinners.com/citta/noto-sr/</loc></url>
 <url><loc>https://achdinners.com/citta/olbia-ss/</loc></url>
+<url><loc>https://achdinners.com/citta/origgio-va/</loc></url>
 <url><loc>https://achdinners.com/citta/orvieto-tr/</loc></url>
 <url><loc>https://achdinners.com/citta/ostuni-br/</loc></url>
 <url><loc>https://achdinners.com/citta/padenghe-sul-garda-bs/</loc></url>
@@ -345,6 +347,7 @@
 <url><loc>https://achdinners.com/locale/al-vecchio-convento-varese/</loc></url>
 <url><loc>https://achdinners.com/locale/al-vedel-colorno/</loc></url>
 <url><loc>https://achdinners.com/locale/al-vigneto-gallipoli/</loc></url>
+<url><loc>https://achdinners.com/locale/al-vigneto-grumello-del-monte/</loc></url>
 <url><loc>https://achdinners.com/locale/al-volto-longare/</loc></url>
 <url><loc>https://achdinners.com/locale/alain-ducasse-at-romeo-roma/</loc></url>
 <url><loc>https://achdinners.com/locale/alajmo-cortina-cortina-d-ampezzo/</loc></url>
@@ -690,6 +693,7 @@
 <url><loc>https://achdinners.com/locale/casa-e-ciliegie-loro-ciuffenna/</loc></url>
 <url><loc>https://achdinners.com/locale/casa-e-putia-messina/</loc></url>
 <url><loc>https://achdinners.com/locale/casa-federici-montoro/</loc></url>
+<url><loc>https://achdinners.com/locale/casa-leone-trattoria-paladina/</loc></url>
 <url><loc>https://achdinners.com/locale/casa-lo-schiavo-fornelli-e-putia-santa-marina-salina/</loc></url>
 <url><loc>https://achdinners.com/locale/casa-matta-santarcangelo-santarcangelo-di-romagna/</loc></url>
 <url><loc>https://achdinners.com/locale/casa-mazzucchelli-sasso-marconi/</loc></url>
@@ -707,7 +711,9 @@
 <url><loc>https://achdinners.com/locale/casanova-polignano-a-mare/</loc></url>
 <url><loc>https://achdinners.com/locale/cascina-faletta-1881-casale-monferrato/</loc></url>
 <url><loc>https://achdinners.com/locale/cascina-lago-scuro-stagno-lombardo/</loc></url>
+<url><loc>https://achdinners.com/locale/cascina-malingamba-origgio/</loc></url>
 <url><loc>https://achdinners.com/locale/cascina-moro-locate-di-triulzi/</loc></url>
+<url><loc>https://achdinners.com/locale/cascina-rosengana-cocconato/</loc></url>
 <url><loc>https://achdinners.com/locale/cascina-vittoria-rognano/</loc></url>
 <url><loc>https://achdinners.com/locale/casetta-rossa-roma/</loc></url>
 <url><loc>https://achdinners.com/locale/casina-del-bosco-rimini/</loc></url>
@@ -774,6 +780,7 @@
 <url><loc>https://achdinners.com/locale/corbezzoli-bologna/</loc></url>
 <url><loc>https://achdinners.com/locale/cormorano-ristorante-agropoli/</loc></url>
 <url><loc>https://achdinners.com/locale/coro-orvieto/</loc></url>
+<url><loc>https://achdinners.com/locale/corona-reale-trattoria-vineria-moncalvo/</loc></url>
 <url><loc>https://achdinners.com/locale/corona-trattoria-palermo/</loc></url>
 <url><loc>https://achdinners.com/locale/corte-matilde-ostiglia/</loc></url>
 <url><loc>https://achdinners.com/locale/corte-sconta-padova/</loc></url>
@@ -798,6 +805,7 @@
 <url><loc>https://achdinners.com/locale/crudore-napoli/</loc></url>
 <url><loc>https://achdinners.com/locale/crunch-roma/</loc></url>
 <url><loc>https://achdinners.com/locale/cucina-bacilieri-ferrara/</loc></url>
+<url><loc>https://achdinners.com/locale/cucina-barzetti-malnate/</loc></url>
 <url><loc>https://achdinners.com/locale/cucina-cereda-ponte-san-pietro/</loc></url>
 <url><loc>https://achdinners.com/locale/cucina-conviviale-firenze/</loc></url>
 <url><loc>https://achdinners.com/locale/cucina-del-condominio-ravenna/</loc></url>
@@ -1034,6 +1042,7 @@
 <url><loc>https://achdinners.com/locale/fre-monforte-d-alba/</loc></url>
 <url><loc>https://achdinners.com/locale/friggitoria-san-giorgio-genova/</loc></url>
 <url><loc>https://achdinners.com/locale/frosch-restaurant-cavalese/</loc></url>
+<url><loc>https://achdinners.com/locale/frosio-alme/</loc></url>
 <url><loc>https://achdinners.com/locale/frumentario-roma/</loc></url>
 <url><loc>https://achdinners.com/locale/frumento-senzafretta-acireale/</loc></url>
 <url><loc>https://achdinners.com/locale/fry-hard-san-giovanni-roma/</loc></url>
@@ -1126,12 +1135,14 @@
 <url><loc>https://achdinners.com/locale/hosteria-grappolo-d-oro-roma/</loc></url>
 <url><loc>https://achdinners.com/locale/hosteria-la-cave-casteggio/</loc></url>
 <url><loc>https://achdinners.com/locale/hosteria-toblino-madruzzo/</loc></url>
+<url><loc>https://achdinners.com/locale/hosteria-treville/</loc></url>
 <url><loc>https://achdinners.com/locale/hotel-cravero-caltignaga/</loc></url>
 <url><loc>https://achdinners.com/locale/hotel-floren-firenze/</loc></url>
 <url><loc>https://achdinners.com/locale/hotel-gasthof-zum-hirschen-san-genesio-atesino/</loc></url>
 <url><loc>https://achdinners.com/locale/hotel-la-perla-corvara-in-badia/</loc></url>
 <url><loc>https://achdinners.com/locale/hotel-lido-palace-riva-del-garda/</loc></url>
 <url><loc>https://achdinners.com/locale/hotel-restaurant-bad-schorgau-sarentino/</loc></url>
+<url><loc>https://achdinners.com/locale/hotel-ristorante-fatur-cisano-bergamasco/</loc></url>
 <url><loc>https://achdinners.com/locale/hotel-ristorante-la-bilancia-loreto-aprutino/</loc></url>
 <url><loc>https://achdinners.com/locale/hotel-ristorante-lido-degli-scogli-crotone/</loc></url>
 <url><loc>https://achdinners.com/locale/hotel-ristorante-su-gologone-oliena/</loc></url>
@@ -1425,6 +1436,7 @@
 <url><loc>https://achdinners.com/locale/la-bottegaia-pistoia/</loc></url>
 <url><loc>https://achdinners.com/locale/la-bottiglieria-enoteca-del-teatro-sarteano/</loc></url>
 <url><loc>https://achdinners.com/locale/la-braja-montemagno/</loc></url>
+<url><loc>https://achdinners.com/locale/la-brasa-osteria-caravaggio/</loc></url>
 <url><loc>https://achdinners.com/locale/la-braseria-osio-sotto/</loc></url>
 <url><loc>https://achdinners.com/locale/la-brasserie-du-bon-bec-cogne/</loc></url>
 <url><loc>https://achdinners.com/locale/la-brinca-ne/</loc></url>
@@ -1452,6 +1464,7 @@
 <url><loc>https://achdinners.com/locale/la-ciambella-roma/</loc></url>
 <url><loc>https://achdinners.com/locale/la-ciau-del-tornavento-treiso/</loc></url>
 <url><loc>https://achdinners.com/locale/la-ciottolona-montieri/</loc></url>
+<url><loc>https://achdinners.com/locale/la-clessidra-terni/</loc></url>
 <url><loc>https://achdinners.com/locale/la-coldana-lodi/</loc></url>
 <url><loc>https://achdinners.com/locale/la-collina-dei-ciliegi-grezzana/</loc></url>
 <url><loc>https://achdinners.com/locale/la-collinetta-gioiosa-ionica/</loc></url>
@@ -1878,6 +1891,7 @@
 <url><loc>https://achdinners.com/locale/na-fojetta-frascati/</loc></url>
 <url><loc>https://achdinners.com/locale/nakoa-cagliari/</loc></url>
 <url><loc>https://achdinners.com/locale/namo-ristobottega-tarquinia/</loc></url>
+<url><loc>https://achdinners.com/locale/nasti-bergamo/</loc></url>
 <url><loc>https://achdinners.com/locale/necessaire-rimini/</loc></url>
 <url><loc>https://achdinners.com/locale/nicolin-restaurant-and-hotel-lecco/</loc></url>
 <url><loc>https://achdinners.com/locale/nida-lucca/</loc></url>
@@ -2057,6 +2071,7 @@
 <url><loc>https://achdinners.com/locale/osteria-del-noce-marciana/</loc></url>
 <url><loc>https://achdinners.com/locale/osteria-del-ponte-trezzano-sul-naviglio/</loc></url>
 <url><loc>https://achdinners.com/locale/osteria-del-posto-corciano/</loc></url>
+<url><loc>https://achdinners.com/locale/osteria-del-sass-besozzo/</loc></url>
 <url><loc>https://achdinners.com/locale/osteria-del-tasso-castagneto-carducci/</loc></url>
 <url><loc>https://achdinners.com/locale/osteria-del-teatro-cortona/</loc></url>
 <url><loc>https://achdinners.com/locale/osteria-del-tempo-perso-ravenna/</loc></url>
@@ -2161,6 +2176,7 @@
 <url><loc>https://achdinners.com/locale/osteria-magona-bibbona/</loc></url>
 <url><loc>https://achdinners.com/locale/osteria-mammarossa-avezzano/</loc></url>
 <url><loc>https://achdinners.com/locale/osteria-mare-magno-venezia/</loc></url>
+<url><loc>https://achdinners.com/locale/osteria-melograno-angera/</loc></url>
 <url><loc>https://achdinners.com/locale/osteria-mercato-stresa/</loc></url>
 <url><loc>https://achdinners.com/locale/osteria-mercede-palermo/</loc></url>
 <url><loc>https://achdinners.com/locale/osteria-michiletta-cesena/</loc></url>
@@ -2420,6 +2436,7 @@
 <url><loc>https://achdinners.com/locale/ristorante-acquadolce-lago-di-como-carate-urio/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-acquerello-fagnano-olona/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-agriturismo-calabrialcubo-nocera-terinese/</loc></url>
+<url><loc>https://achdinners.com/locale/ristorante-al-16-samarate/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-al-588-bagno-a-ripoli/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-al-borgo-belluno/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-al-cambio-bologna/</loc></url>
@@ -2498,6 +2515,7 @@
 <url><loc>https://achdinners.com/locale/ristorante-cavallini-san-severino-marche/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-cavallino-maranello/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-cavour-castel-d-azzano/</loc></url>
+<url><loc>https://achdinners.com/locale/ristorante-centrale-moncalvo/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-chalet-capriolo-madesimo/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-charleston-palermo/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-christian-manuel-vercelli/</loc></url>
@@ -2602,6 +2620,7 @@
 <url><loc>https://achdinners.com/locale/ristorante-gilioli-reggio-nell-emilia/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-glam-venezia/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-grual-pinzolo/</loc></url>
+<url><loc>https://achdinners.com/locale/ristorante-gustoo-busto-arsizio/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-hostaria-savonarola-ferrara/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-hydra-salerno/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-i-castagni-vigevano/</loc></url>
@@ -2667,6 +2686,7 @@
 <url><loc>https://achdinners.com/locale/ristorante-la-civetta-urbe/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-la-colonna-calendasco/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-la-conchiglia-taggia/</loc></url>
+<url><loc>https://achdinners.com/locale/ristorante-la-corte-del-noce-villa-d-adda/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-la-corte-follina/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-la-corte-palazzolo-sull-oglio/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-la-credenza-san-maurizio-canavese/</loc></url>
@@ -2850,6 +2870,7 @@
 <url><loc>https://achdinners.com/locale/ristorante-signum-malfa/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-silvestro-monza/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-sinodia-corigliano-d-otranto/</loc></url>
+<url><loc>https://achdinners.com/locale/ristorante-sorriso-selvino/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-sotajarchi-ancona/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-sottovoce-como/</loc></url>
 <url><loc>https://achdinners.com/locale/ristorante-stefano-paganini-magliano-alfieri/</loc></url>

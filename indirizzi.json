@@ -65,6 +65,9 @@
 "AL-duomo-alessandri": {
 "ora": "duomo-alessandria"
 },
+"AL-hosteriatreville-treville": {
+"ora": "hosteria-treville"
+},
 "AL-ilfiorile-casteldrat": {
 "ora": "il-fiorile-borghetto-di-borbera"
 },
@@ -407,6 +410,9 @@
 "AT-cantinanicola-cocconato": {
 "ora": "cantina-nicola-cocconato"
 },
+"AT-coronarealetrattoriavineria-moncalvo": {
+"ora": "corona-reale-trattoria-vineria-moncalvo"
+},
 "AT-cuginiditorino-nizzamonfe": {
 "ora": "cugini-di-torino-nizza-monferrato"
 },
@@ -454,6 +460,12 @@
 },
 "AT-ristorantealbergomadonnadell-cessole": {
 "ora": "madonna-della-neve-cessole"
+},
+"AT-ristorantecascinarosengana-cocconato": {
+"ora": "cascina-rosengana-cocconato"
+},
+"AT-ristorantecentrale-moncalvo": {
+"ora": "ristorante-centrale-moncalvo"
 },
 "AT-ristorantesanmarcocanelli-canelli": {
 "ora": "ristorante-san-marco-canelli"
@@ -596,6 +608,9 @@
 "BG-alcarroponte-bergamo": {
 "ora": "al-carroponte-bergamo"
 },
+"BG-alvigneto-grumellode": {
+"ora": "al-vigneto-grumello-del-monte"
+},
 "BG-anticaosteriadeicamel-ambivere": {
 "ora": "antica-osteria-dei-cameli-ambivere"
 },
@@ -610,6 +625,9 @@
 },
 "BG-bollerestaurant-lallio": {
 "ora": "bolle-restaurant-lallio"
+},
+"BG-casaleonetrattoria-paladina": {
+"ora": "casa-leone-trattoria-paladina"
 },
 "BG-circolinocittalta-bergamo": {
 "ora": "da-mimmo-ristorante-citta-alta-bergamo"
@@ -635,14 +653,23 @@
 "BG-florianmaison-sanpaoloda": {
 "ora": "florian-maison-san-paolo-d-argon"
 },
+"BG-frosio-alm": {
+"ora": "frosio-alme"
+},
 "BG-hosteriadelvaporeristoranteb-cicola": {
 "ora": "hosteria-del-vapore-carobbio-degli-angeli"
+},
+"BG-hotelristorantefatur-cisanoberg": {
+"ora": "hotel-ristorante-fatur-cisano-bergamasco"
 },
 "BG-hotelristorantemiranda-rivadisolt": {
 "ora": "ristorante-miranda-riva-di-solto"
 },
 "BG-kantonrestaurant-capriatesa": {
 "ora": "kanton-restaurant-capriate-san-gervasio"
+},
+"BG-labrasaosteria-caravaggio": {
+"ora": "la-brasa-osteria-caravaggio"
 },
 "BG-labraseria-osiosotto": {
 "ora": "la-braseria-osio-sotto"
@@ -664,6 +691,9 @@
 },
 "BG-marelet-treviglio": {
 "ora": "marelet-treviglio"
+},
+"BG-nasti-bergamo": {
+"ora": "nasti-bergamo"
 },
 "BG-osteriaalgigianca-bergamo": {
 "ora": "osteria-al-gigianca-bergamo"
@@ -692,11 +722,17 @@
 "BG-ristoranteilsaraceno-cavernago": {
 "ora": "ristorante-il-saraceno-cavernago"
 },
+"BG-ristorantelacortedelnoce-villadadda": {
+"ora": "ristorante-la-corte-del-noce-villa-d-adda"
+},
 "BG-ristorantelatana-bergamo": {
 "ora": "ristorante-la-tana-bergamo"
 },
 "BG-ristorantemascalbergocommerc-clusone": {
 "ora": "mas-ci-clusone"
+},
+"BG-ristorantesorriso-selvino": {
+"ora": "ristorante-sorriso-selvino"
 },
 "BG-ristoranteumbertodemartino-sanpaoloda": {
 "ora": "ristorante-umberto-de-martino-san-paolo-d-argon"
@@ -8390,6 +8426,9 @@
 "TR-isetteconsoli-orvieto": {
 "ora": "i-sette-consoli-orvieto"
 },
+"TR-laclessidra-terni": {
+"ora": "la-clessidra-terni"
+},
 "TR-lillerotrattoria-terni": {
 "ora": "lillero-trattoria-terni"
 },
@@ -8654,11 +8693,17 @@
 "VA-anticapizza-bustoarsiz": {
 "ora": "antica-pizza-busto-arsizio"
 },
+"VA-cascinamalingamba-origgio": {
+"ora": "cascina-malingamba-origgio"
+},
 "VA-cortevisconti-sommalomba": {
 "ora": "corte-visconti-somma-lombardo"
 },
 "VA-crottovaltellina-malnate": {
 "ora": "crotto-valtellina-malnate"
+},
+"VA-cucinabarzetti-malnate": {
+"ora": "cucina-barzetti-malnate"
 },
 "VA-degristorante-bustoarsiz": {
 "ora": "deg-ristorante-busto-arsizio"
@@ -8693,14 +8738,26 @@
 "VA-osteriadegliangeli-malnate": {
 "ora": "osteria-degli-angeli-malnate"
 },
+"VA-osteriadelsass-besozzo": {
+"ora": "osteria-del-sass-besozzo"
+},
+"VA-osteriamelograno-angera": {
+"ora": "osteria-melograno-angera"
+},
 "VA-radiciosteriacontemporanea-gallarate": {
 "ora": "radici-osteria-contemporanea-gallarate"
 },
 "VA-ristoranteacquerello-fagnanoolo": {
 "ora": "ristorante-acquerello-fagnano-olona"
 },
+"VA-ristoranteal16-samarate": {
+"ora": "ristorante-al-16-samarate"
+},
 "VA-ristorantealvecchioconvento-varese": {
 "ora": "al-vecchio-convento-varese"
+},
+"VA-ristorantegustoo-bustoarsiz": {
+"ora": "ristorante-gustoo-busto-arsizio"
 },
 "VA-ristoranteolio-origgio": {
 "ora": "ristorante-olio-origgio"
