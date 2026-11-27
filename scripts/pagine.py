@@ -225,6 +225,7 @@ def costruisci(dati, P):
         while base in visti:
             base += "-2"
         visti[base] = 1
+        x["rid"] = x["id"]   # 27/11/2026: identità stabile del locale (dalla guida), per i rimandi
         x["id"] = base
     provn, et = dati["provn"], dati["etichette"]
     tabs = dati["tabs"]
@@ -294,13 +295,55 @@ def costruisci(dati, P):
             "https://achplaces.com/", nome, v, f"<b>{n}</b> ristoranti segnalati in provincia di {e(nome)} · ordinati per citazioni",
             altri_html, f"Ristoranti in provincia di {nome}: i {n} migliori | Ach’s Dinners",
             f"I {n} ristoranti della provincia di {nome} segnalati da guide, stampa e altre fonti online. Gratuita e senza pubblicità.")
+    pagine.update(rimandi(L, pagine))
     return pagine
+
+
+# 27/11/2026 (Stefano 15:20, «Ok» alla proposta per Gennaro Di Pace): l'indirizzo di una pagina è «nome-comune»; se cambia
+# il nome o il comune di un locale (correzione), la pagina vecchia non si cancella più: diventa un rimando alla nuova, così
+# chi ha il link vecchio (il locale stesso, Google, un sito) arriva sempre alla scheda giusta. indirizzi.json tiene, per
+# ogni locale, l'indirizzo attuale e quelli di prima.
+INDIRIZZI = os.path.join(RADICE, "indirizzi.json")
+SEGNO_RIMANDO = "<!-- rimando ach -->"
+
+
+def rimando(vecchio, nuovo, nome):
+    u = f"{SITO}/locale/{nuovo}/"
+    return (f"<!doctype html>\n{SEGNO_RIMANDO}\n<html lang=\"it\"><head><meta charset=\"utf-8\">"
+            f"<title>{e(nome)} – Ach's Dinners Guide</title><meta name=\"description\" content=\"La scheda di {e(nome)} si è spostata.\">"
+            f"<link rel=\"canonical\" href=\"{u}\"><meta name=\"robots\" content=\"noindex\">"
+            f"<meta http-equiv=\"refresh\" content=\"0; url=/locale/{nuovo}/\"></head>"
+            f"<body><p>La scheda di {e(nome)} è qui: <a href=\"/locale/{nuovo}/\">{u}</a></p></body></html>\n")
+
+
+def rimandi(L, pagine, file=INDIRIZZI):
+    """Pagine di rimando per gli indirizzi vecchi dei locali che hanno ancora una pagina con un indirizzo nuovo."""
+    try:
+        prima = json.load(open(file, encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        prima = {}
+    ora = {x["rid"]: x["id"] for x in L if x.get("rid") and f"locale/{x['id']}/index.html" in pagine}
+    nomi = {x["rid"]: x["n"] for x in L if x.get("rid")}
+    out, nuovo = {}, {}
+    for rid, slug_ora in ora.items():
+        vecchi = [s for s in ([prima[rid]["ora"]] if rid in prima else []) + (prima.get(rid, {}).get("prima") or []) if s and s != slug_ora]
+        vecchi = [s for s in dict.fromkeys(vecchi) if f"locale/{s}/index.html" not in pagine]   # mai sopra una pagina vera
+        nuovo[rid] = {"ora": slug_ora, **({"prima": vecchi} if vecchi else {})}
+        for s in vecchi:
+            out[f"locale/{s}/index.html"] = rimando(s, slug_ora, nomi.get(rid, ""))
+    for rid, v in prima.items():   # un locale senza pagina oggi: si ricorda com'era, senza rimandi
+        nuovo.setdefault(rid, v)
+    if file:
+        testo = json.dumps(nuovo, ensure_ascii=False, indent=0, sort_keys=True)
+        if not os.path.exists(file) or open(file, encoding="utf-8").read() != testo:
+            open(file, "w", encoding="utf-8").write(testo)
+    return out
 
 
 def scrivi(pagine, P):
     oggi = datetime.date.today().isoformat()
     fisse = {"stile.css": P["stile"]}
-    urls = [f"{SITO}/"] + [f"{SITO}/{k[:-len('index.html')]}" for k in sorted(pagine)]
+    urls = [f"{SITO}/"] + [f"{SITO}/{k[:-len('index.html')]}" for k in sorted(pagine) if SEGNO_RIMANDO not in pagine[k]]   # i rimandi non vanno nella sitemap
     fisse["sitemap-pagine.xml"] = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                                    + "".join(f"<url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")
     fisse["sitemap.xml"] = ('<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -338,6 +381,8 @@ def controlli(pagine):
     vietati = re.compile(r'"place_id"|googleusercontent|maps\.googleapis|"recensioni"|"rating"')
     for rel, t in pagine.items():
         assert not vietati.search(t), f"dati Google in {rel}"
+        if SEGNO_RIMANDO in t:
+            continue
         assert "<title>" in t and 'name="description"' in t, f"titolo o descrizione mancante in {rel}"
         assert 'class="card' in t or 'class="sheet pagina"' in t, f"pagina vuota: {rel}"
 
