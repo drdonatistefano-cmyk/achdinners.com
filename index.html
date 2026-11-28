@@ -1836,7 +1836,23 @@ function agDraw(){const g=$("grid"),m=$("more"),a=$("agg");const c=document.quer
  a.querySelectorAll("button[data-i]").forEach(b=>b.onclick=()=>{const o=v[+b.dataset.i];for(const id in SEL)if(/^f-(reg|prov|com)$/.test(id))SEL[id].clear();
   if(AGLV===2)SEL["f-prov"].add(o.k);else if(AGLV===4)SEL["f-reg"].add(o.k);else if(AGLV===5)Object.keys(AGAREA).filter(r=>AGAREA[r]===o.k).forEach(r=>SEL["f-reg"].add(r));
   else o.m.forEach(x=>SEL["f-com"].add(x.p+"|"+x.c));
+  /* 27/11/2026 (Stefano: «questa cosa con tutti i comuni deve sparire»): una zona o un'area resta UNA etichetta («Romagna ×»),
+     non 67 comuni o 4 regioni; il filtro sotto resta quello di prima */
+  AGGR=(AGLV===3||AGLV===5)?{id:AGLV===3?"f-com":"f-reg",k:new Set(SEL[AGLV===3?"f-com":"f-reg"]),t:o.t}:null;
   AGLV=0;cascata();document.querySelectorAll(".ms").forEach(etichetta);S.shown=40;draw();$("count").scrollIntoView({block:"start",behavior:"smooth"});});}
+/* 27/11/2026: etichetta unica del gruppo scelto con l'aggregatore (zona, area). Vale finché la scelta resta dentro il gruppo;
+   se si toglie qualche comune resta «Romagna · 66 di 67», mai l'elenco intero */
+let AGGR=null;
+function agGrp(id){if(!AGGR||AGGR.id!==id)return null;const s=SEL[id];if(!s.size){AGGR=null;return null;}for(const v of s)if(!AGGR.k.has(v)){AGGR=null;return null;}
+ return s.size===AGGR.k.size?AGGR.t:`${AGGR.t} · ${s.size} di ${AGGR.k.size}`;}
+(()=>{const e0=etichetta;etichetta=function(m){e0.apply(this,arguments);const t=m&&agGrp(m.id);if(t){const b=m.querySelector("button");if(b)b.textContent=t;}};
+ const n0=nAttivi;nAttivi=function(){let n=n0.apply(this,arguments);if(AGGR&&agGrp(AGGR.id))n-=SEL[AGGR.id].size-1;return n;};
+ const a0=attivi;attivi=function(){a0.apply(this,arguments);if(!AGGR)return;const t=agGrp(AGGR.id);if(!t)return;const box=$("attivi"),id=AGGR.id;
+  const tolti=[...box.querySelectorAll(".at[data-f]")].filter(b=>b.dataset.f===id);if(!tolti.length)return;
+  tolti[0].insertAdjacentHTML("beforebegin",`<button type="button" class="at" data-grp="1">${esc(t)}<b aria-hidden="true">×</b></button>`);tolti.forEach(b=>b.remove());
+  if(box.querySelectorAll(".at:not(.az)").length<2){const az=box.querySelector(".at.az");if(az)az.remove();}};
+ $("attivi").addEventListener("click",e=>{const b=e.target.closest(".at[data-grp]");if(!b||!AGGR)return;e.stopImmediatePropagation();
+  SEL[AGGR.id].clear();AGGR=null;cascata();document.querySelectorAll(".ms").forEach(etichetta);S.shown=40;draw();},true);})();
 (()=>{const lab=document.querySelector(".pp-lab");if(!lab)return;
  lab.insertAdjacentHTML("beforeend",`<span class="agg-ctl" role="group" aria-label="Aggregatore: raggruppa i locali"><button type="button" id="agg-meno" aria-label="Meno raggruppato">−</button><span id="agg-lab" aria-live="polite">Aggregatore</span><button type="button" id="agg-piu" aria-label="Più raggruppato">+</button></span>`);
  $("grid").insertAdjacentHTML("afterend",`<div id="agg" hidden></div>`);
