@@ -1913,8 +1913,11 @@ html body .hero h1{font-size:clamp(1.7rem,4.6vw,2.6rem)!important;letter-spacing
 html body .hero .decl{color:var(--mute,#7a6f63)!important}
 
 /* ===== ricerca e comandi ===== */
-html body .tools .search{border-radius:999px!important;border:1px solid var(--d30-line)!important;background:var(--d30-carta)!important;box-shadow:var(--d30-ombra)!important}
-html body .tools .search input{border:0!important;box-shadow:none!important;background:transparent!important}
+/* 28/11 20:05 (WebAbility): il bordo sta sulla casella stessa, abbastanza scuro (4,1:1), e il fuoco si vede */
+html body .tools .search{border:0!important;background:transparent!important;box-shadow:none!important;border-radius:999px!important}
+html body .tools .search input,html body #q{border:1.5px solid #8a7a60!important;border-radius:999px!important;background:var(--d30-carta)!important;box-shadow:var(--d30-ombra)!important}
+html body #q:focus-visible,html body #q:focus{outline:2.5px solid #6e5114!important;outline-offset:2px!important}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]) body #q{border-color:#a8956b!important}html:not([data-theme="light"]) body #q:focus{outline-color:#d9b866!important}}
 html body .tools .tbtn{border-radius:999px!important;border:1px solid var(--d30-line)!important;background:var(--d30-carta)!important;box-shadow:var(--d30-ombra)!important}
 html body .tools .tbtn.mapbtn{background:linear-gradient(180deg,var(--d30-oro2),var(--d30-oro))!important;color:#fff!important;border-color:transparent!important}
 html body .dove .ms>button{border-radius:14px!important;border:1px solid var(--d30-line)!important;background:var(--d30-carta)!important;box-shadow:var(--d30-ombra)!important}
@@ -1941,7 +1944,8 @@ html body #grid .card .cbody{min-width:0!important}
 html body #grid .card::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:0 4px 4px 0;
  background:linear-gradient(180deg,var(--d30-oro3),var(--d30-oro2))}
 @media(hover:hover){html body #grid .card:hover{transform:translateY(-2px);box-shadow:var(--d30-ombra-su)!important}}
-html body #grid .card .cpos{background:linear-gradient(150deg,var(--d30-oro2),var(--d30-oro))!important;color:#fff!important;border:0!important;
+/* tinta unita (WebAbility 28/11: il bianco sulla sfumatura si misurava male nelle schede più in basso) */
+html body #grid .card .cpos{background:#6e5114!important;background-image:none!important;color:#fff!important;border:0!important;
  box-shadow:0 0 0 3px var(--d30-soft),0 3px 8px -2px rgba(122,90,23,.55)!important}
 html body #grid .card .cname{letter-spacing:-.02em!important}
 html body #grid .card .badges .b{background:var(--d30-soft)!important;border-radius:999px!important;padding:2px 9px!important;margin:0 5px 5px 0!important;
