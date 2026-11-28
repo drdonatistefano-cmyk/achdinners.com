@@ -1864,5 +1864,136 @@ function agDraw(){const g=$("grid"),m=$("more"),a=$("agg");const c=document.quer
  metti();let t;addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(metti,150);});
  /* il numero: solo «N ristoranti …» senza «ordinati per …» */
  const cnt=q('#count');new MutationObserver(()=>{const h=cnt.innerHTML,i=h.indexOf(' · ');if(i>0&&!/comuni|province|zone|regioni|aree/.test(h)){cnt.innerHTML=h.slice(0,i);}}).observe(cnt,{childList:true,subtree:true,characterData:true});
-})();</script></body>
+})();</script><style id="dinners-2030">
+/* 28/11 19:54: oro dei bottoni scurito (#8c6a20→#6e5114) perché il bianco sull'oro chiaro aveva contrasto 3,17 (WebAbility); ora 5,00 */
+/* 28/11/2026, Stefano: «garantire un look moderno come Events, le funzioni vanno bene, ragiona solo sulla grafica.
+   Mantieni il tema dell'oro». Pubblicata col «pubblica» di Stefano del 28/11 19:54 (prima prototipo). Solo grafica, nessuna funzione cambiata. Linguaggio di Events 2030:
+   fondo morbido, comandi in rilievo, scelte a piastrella con l'icona, ogni locale una scheda sollevata. */
+html{--d30-oro:#6e5114;--d30-oro2:#8c6a20;--d30-oro3:#d9b866;--d30-soft:#f5ecd6;--d30-line:rgba(122,90,23,.16);
+ --d30-ombra:0 1px 2px rgba(60,45,10,.05),0 6px 16px -6px rgba(60,45,10,.16);
+ --d30-ombra-su:0 2px 4px rgba(60,45,10,.07),0 18px 32px -12px rgba(60,45,10,.28);
+ --d30-fondo:linear-gradient(180deg,#fbf7ee 0,#f5eddc 460px,#f2e9d7 100%);--d30-carta:#fffdf8}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){--d30-soft:#2a2316;--d30-line:rgba(217,184,102,.16);--d30-carta:#1f1b15;
+ --d30-ombra:0 1px 0 rgba(255,255,255,.03),0 8px 20px -8px rgba(0,0,0,.6);--d30-ombra-su:0 18px 34px -12px rgba(0,0,0,.75);
+ --d30-fondo:linear-gradient(180deg,#1b1712 0,#13100c 520px)}}
+html body{background:var(--d30-fondo) fixed!important}
+
+/* ===== testata: le guide sorelle in tondi piccoli in alto a destra, come in Events ===== */
+html body .mast{position:relative;padding-top:max(14px,env(safe-area-inset-top))!important;border:0!important}
+html body .mast-logo{gap:12px!important}
+html body .mast-nome b{font-size:22px!important;letter-spacing:-.02em!important}
+html body .mast .ach-guide{gap:6px!important;flex-wrap:nowrap!important}
+html body .mast .ach-guide .ach-guide__btn:not(.ach-guide__coll){width:38px!important;height:38px!important;min-width:0!important;padding:0!important;border-radius:50%!important;
+ background:var(--d30-carta)!important;border:1px solid var(--d30-line)!important;box-shadow:var(--d30-ombra)!important;justify-content:center!important;transition:transform .15s}
+html body .mast .ach-guide .ach-guide__btn:not(.ach-guide__coll) .ach-guide__txt{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
+html body .mast .ach-guide .ach-guide__btn:not(.ach-guide__coll) .ach-guide__ico,html body .mast .ach-guide .ach-guide__btn:not(.ach-guide__coll) .ach-guide__ico svg{width:30px!important;height:30px!important}
+@media(hover:hover){html body .mast .ach-guide .ach-guide__btn:hover{transform:translateY(-1px)}}
+html body .ach-guide__coll{border-radius:999px!important;background:linear-gradient(180deg,#fbf1d8,#f1e2bb)!important;border:1px solid rgba(122,90,23,.28)!important;
+ box-shadow:var(--d30-ombra)!important;height:38px!important;padding:0 14px!important}
+html body #langbtn{border-radius:999px!important;background:var(--d30-carta)!important;border:1px solid var(--d30-line)!important;box-shadow:var(--d30-ombra)!important;height:38px!important;min-width:44px}
+@media(max-width:759px){
+ html body .mast .ach-guide{position:absolute!important;top:max(10px,env(safe-area-inset-top));right:12px!important;left:auto!important;width:auto!important;margin:0!important;justify-content:flex-end!important}
+ html body .mast .ach-guide .ach-guide__btn:not(.ach-guide__coll){width:32px!important;height:32px!important}
+ html body .mast .ach-guide .ach-guide__btn:not(.ach-guide__coll) .ach-guide__ico,html body .mast .ach-guide .ach-guide__btn:not(.ach-guide__coll) .ach-guide__ico svg{width:26px!important;height:26px!important}
+ html body .mast .ach-guide__coll,html body .mast #langbtn{display:none!important}
+ html body .mast{padding-top:max(52px,calc(env(safe-area-inset-top) + 44px))!important;min-height:0!important}
+ html body .mast-nome b{font-size:20px!important}
+}
+
+/* ===== Ristoranti / Pizzerie: un interruttore unico in rilievo ===== */
+html body .tabs{gap:0!important;padding:4px!important;border-radius:20px!important;background:var(--d30-carta)!important;border:1px solid var(--d30-line)!important;
+ box-shadow:var(--d30-ombra)!important;width:max-content;max-width:100%}
+html body .tabs a:not(.met){border:0!important;box-shadow:none!important;border-radius:16px!important;background:transparent!important;min-height:50px!important;padding:6px 18px!important}
+html body .tabs a.on:not(.met){background:linear-gradient(180deg,var(--d30-oro2),var(--d30-oro))!important;color:#fff!important;box-shadow:0 6px 14px -8px rgba(122,90,23,.9)!important}
+html body .tabs a.on .n{color:rgba(255,255,255,.85)!important}
+html body .tabs a.met{border-radius:999px!important}
+
+/* ===== titolo ===== */
+html body .hero h1{font-size:clamp(1.7rem,4.6vw,2.6rem)!important;letter-spacing:-.03em!important;line-height:1.05!important}
+html body .hero .decl{color:var(--mute,#7a6f63)!important}
+
+/* ===== ricerca e comandi ===== */
+html body .tools .search{border-radius:999px!important;border:1px solid var(--d30-line)!important;background:var(--d30-carta)!important;box-shadow:var(--d30-ombra)!important}
+html body .tools .search input{border:0!important;box-shadow:none!important;background:transparent!important}
+html body .tools .tbtn{border-radius:999px!important;border:1px solid var(--d30-line)!important;background:var(--d30-carta)!important;box-shadow:var(--d30-ombra)!important}
+html body .tools .tbtn.mapbtn{background:linear-gradient(180deg,var(--d30-oro2),var(--d30-oro))!important;color:#fff!important;border-color:transparent!important}
+html body .dove .ms>button{border-radius:14px!important;border:1px solid var(--d30-line)!important;background:var(--d30-carta)!important;box-shadow:var(--d30-ombra)!important}
+
+/* ===== le scelte (La mia guida, Tradizione…): piastrelle con l'icona, come le sezioni di Events ===== */
+html body .pp-chips{gap:10px!important}
+html body .pp-chip{border-radius:20px!important;background:var(--d30-carta)!important;border:1px solid var(--d30-line)!important;box-shadow:var(--d30-ombra)!important;
+ transition:transform .15s,box-shadow .15s;font-weight:700!important}
+html body .pp-chip svg{width:40px!important;height:40px!important;padding:9px;border-radius:13px;box-sizing:border-box;stroke:var(--d30-oro)!important;
+ background:linear-gradient(160deg,#f8eccc,#efdcae);box-shadow:inset 0 0 0 1px rgba(122,90,23,.18),0 3px 8px -3px rgba(122,90,23,.45)}
+html body .pp-chip[aria-pressed="true"]{background:linear-gradient(180deg,var(--d30-oro2),var(--d30-oro))!important;color:#fff!important;border-color:transparent!important;
+ box-shadow:0 10px 20px -10px rgba(122,90,23,.95)!important}
+html body .pp-chip[aria-pressed="true"] svg{background:rgba(255,255,255,.18);box-shadow:none}
+html body .pp-chip.mg-chip[aria-pressed="true"] svg{stroke:#fff!important}
+@media(hover:hover){html body .pp-chip:hover{transform:translateY(-2px);box-shadow:var(--d30-ombra-su)!important}}
+html body .pp-regola{background:linear-gradient(180deg,var(--d30-oro2),var(--d30-oro))!important;box-shadow:0 10px 22px -12px rgba(122,90,23,.95)!important}
+html body .agg-ctl{background:var(--d30-carta)!important;border:1px solid var(--d30-line)!important;box-shadow:var(--d30-ombra)!important;border-radius:999px!important}
+
+/* ===== elenco: ogni locale una scheda sollevata, barra d'oro a sinistra, numero d'oro ===== */
+html body #grid.grid{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important;gap:14px!important}
+html body #grid .card{background:var(--d30-carta)!important;border:1px solid var(--d30-line)!important;border-radius:20px!important;box-shadow:var(--d30-ombra)!important;
+ position:relative;overflow:hidden;transition:transform .18s,box-shadow .18s;padding:16px 18px 16px 22px!important}
+html body #grid .card .cbody{min-width:0!important}
+html body #grid .card::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:0 4px 4px 0;
+ background:linear-gradient(180deg,var(--d30-oro3),var(--d30-oro2))}
+@media(hover:hover){html body #grid .card:hover{transform:translateY(-2px);box-shadow:var(--d30-ombra-su)!important}}
+html body #grid .card .cpos{background:linear-gradient(150deg,var(--d30-oro2),var(--d30-oro))!important;color:#fff!important;border:0!important;
+ box-shadow:0 0 0 3px var(--d30-soft),0 3px 8px -2px rgba(122,90,23,.55)!important}
+html body #grid .card .cname{letter-spacing:-.02em!important}
+html body #grid .card .badges .b{background:var(--d30-soft)!important;border-radius:999px!important;padding:2px 9px!important;margin:0 5px 5px 0!important;
+ letter-spacing:.05em!important;display:inline-block;font-size:11.5px!important;line-height:1.5!important}
+html body #grid .card .badges .b::before,html body #grid .card .badges .b::after{content:none!important;display:none!important}
+html body #grid .card .badges .brow{display:flex!important;flex-wrap:wrap}
+html body #grid .card .citda{color:var(--mute,#7a6f63)!important;font-weight:600!important}
+html body .conta #count b{letter-spacing:-.03em!important}
+/* ===== iPhone (Stefano 28/11 19:46 «su iPhone togli le scritte e comprimi la parte iniziale»): come Events, sul telefono
+   via titolo, spiegazioni e descrizioni (restano leggibili ai lettori di schermo e su iPad/computer); tutto più basso ===== */
+@media(max-width:759px){
+ html body .hero h1,html body .hero .decl,html body .pp-desc,html body .tabs a.met .n{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;margin:0!important;padding:0!important}
+ html body .hero{padding:0!important;margin:0!important;min-height:0!important}
+ html body .mast{padding-top:max(10px,env(safe-area-inset-top))!important;padding-bottom:6px!important}
+ html body .mast-logo{gap:9px!important}
+ html body .mast-logo>svg,html body .mast-logo>img,html body .mast-logo .mast-ico{width:40px!important;height:40px!important}
+ html body .mast-nome b{font-size:18px!important}
+ html body .mast-nome small{font-size:9.5px!important;letter-spacing:.12em!important}
+ html body .mast .ach-guide{top:max(12px,env(safe-area-inset-top))!important}
+ html body .tabs{margin:4px 0 10px!important;padding:3px!important;border-radius:16px!important}
+ html body .tabs a:not(.met){min-height:40px!important;padding:4px 12px!important;flex-direction:row!important;gap:6px!important;align-items:center!important}
+ html body .tabs a:not(.met) .t{font-size:16px!important}
+ html body .tabs a:not(.met) .n{font-size:12px!important}
+ html body .tabs{width:100%!important;display:flex!important}
+ html body .tabs a:not(.met){flex:1 1 0!important;justify-content:center!important;min-width:0!important}
+ html body .tabs a.met{padding:0 8px!important;min-height:40px!important;flex:0 0 auto!important;font-size:0!important}
+ html body .tabs a.met svg{width:20px!important;height:20px!important}
+ html body .tabs a.met .t{font-size:0!important;gap:0!important}
+ html body .tools{padding-top:0!important}
+ html body .tools .row{gap:8px!important}
+ html body .tools .search,html body .tools .tbtn{height:44px!important;min-height:44px!important}
+ html body .pp-riga{margin-top:6px!important}
+ html body .pp-chips{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;scrollbar-width:none;gap:8px!important;padding:2px 2px 8px!important;margin:0 -2px!important;scroll-snap-type:x proximity}
+ html body .pp-chips::-webkit-scrollbar{display:none}
+ html body .pp-chip{flex:0 0 auto!important;width:auto!important;min-width:86px!important;min-height:0!important;height:auto!important;padding:8px 10px!important;gap:4px!important;border-radius:16px!important;font-size:13px!important;scroll-snap-align:start}
+ html body .pp-chip svg{width:30px!important;height:30px!important;padding:6px;border-radius:10px}
+ html body .pp-regola{height:42px!important;min-height:42px!important;margin-top:4px!important}
+ html body .conta{padding-top:6px!important;padding-bottom:6px!important}
+ html body .conta #count b{font-size:26px!important}
+
+ html body #grid .card{padding:14px 16px 14px 20px!important}
+ html body #grid .card .cbody{min-width:0!important}
+ html body #grid .card .cname{overflow-wrap:anywhere;padding-right:2px}
+ html body #grid .card .cpos{width:24px!important;height:24px!important;min-width:24px!important;font-size:13px!important;line-height:24px!important;margin-right:8px!important;box-shadow:0 0 0 2px var(--d30-soft)!important}
+ html body .tabs a:not(.met){padding:4px 8px!important;gap:5px!important}
+ html body .tabs a:not(.met) .t{font-size:15px!important;gap:5px!important}
+ html body .tabs a:not(.met) .t svg{width:18px!important;height:18px!important}
+ html body .tabs a:not(.met) .n{font-size:11px!important;white-space:nowrap}
+ html body .pp-chips .pp-chip.mg-chip{min-width:0!important;width:auto!important;height:auto!important;padding:6px 10px!important;font-size:12.5px!important;border-radius:14px!important;align-self:center!important;flex-direction:column!important;gap:2px!important}
+ html body .pp-chips .pp-chip.mg-chip svg{width:22px!important;height:22px!important;padding:3px!important;border-radius:7px!important}
+}
+@media (prefers-reduced-motion:reduce){html body #grid .card,html body .pp-chip,html body .ach-guide__btn{transition:none!important}}
+</style>
+</body>
 </html>
